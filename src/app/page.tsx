@@ -1,33 +1,29 @@
-import CTA from '@/components/home/CTA';
-import Feature from '@/components/home/Feature';
-import FeatureV2 from '@/components/home/FeatureV2';
-import Hero from '@/components/home/Hero';
-import Integration from '@/components/home/Integration';
-import Pricing from '@/components/home/Pricing';
-import Publish from '@/components/home/Publish';
-import Reviews from '@/components/home/Reviews';
-import Steps from '@/components/home/Steps';
-import { defaultMetadata } from '@/utils/generateMetaData';
-import { Metadata } from 'next';
+import Navbar from '@/components/home/Navbar';
+import HeroSection from '@/components/home/HeroSection';
+import LogoBar from '@/components/home/LogoBar';
+import ProblemSolution from '@/components/home/ProblemSolution';
+import ProcessSection from '@/components/home/ProcessSection';
+import ExpertsSection from '@/components/home/ExpertsSection';
+import ResultsSection from '@/components/home/ResultsSection';
+import PricingSection from '@/components/home/PricingSection';
+import FAQSection from '@/components/home/FAQSection';
+import CTAFinal from '@/components/home/CTAFinal';
+import Footer from '@/components/home/Footer';
 
-export const metadata: Metadata = {
-  ...defaultMetadata,
-  title: 'App Builder - NextSaaS',
-};
-const page = () => {
+export default function Home() {
   return (
-    <main className="dark:bg-background-6">
-      <Hero />
-      <Integration />
-      <Feature />
-      <Steps />
-      <FeatureV2 />
-      <Reviews />
-      <Pricing />
-      <Publish />
-      <CTA />
+    <main className="bg-black text-[#F5F5F1]">
+      <Navbar />
+      <HeroSection />
+      <LogoBar />
+      <ProblemSolution />
+      <ProcessSection />
+      <ExpertsSection />
+      <ResultsSection />
+      <PricingSection />
+      <FAQSection />
+      <CTAFinal />
+      <Footer />
     </main>
   );
-};
-
-export default page;
+}
