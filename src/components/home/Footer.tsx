@@ -10,7 +10,7 @@ const navLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/[0.06] bg-black py-12 md:py-16">
+    <footer className="border-t border-[color:var(--border-subtle)] bg-black py-12 md:py-16">
       <div className="uclic-container px-4 md:px-6">
 
         {/* Top row */}

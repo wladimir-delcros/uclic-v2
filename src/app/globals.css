@@ -1,15 +1,939 @@
 @import 'tailwindcss';
-@import '../styles/variables.css';
-@import '../styles/uclic-tokens.css';
-@import '../styles/icon-font.css';
-@import '../styles/typography.css';
-@import '../styles/common.css';
-@import '../styles/base.css';
-@import '../styles/button.css';
-@import '../styles/badge.css';
-@import '../styles/header.css';
-@import '../styles/custom-swiper.css';
-@import '../styles/number-animation.css';
-@import '../styles/lenis.css';
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant light (&:where(.light, .light *));
+
+@theme {
+  --color-bg: #060403;
+  --color-surface: #15110F;
+  --color-accent: #6BFF95;
+  --color-accent-soft: rgba(107, 255, 149, 0.20);
+  --color-ink: #FFFFFF;
+  --color-ink-muted: rgba(255, 255, 255, 0.88);
+  --color-ink-dim: rgba(255, 255, 255, 0.60);
+  --color-teal: #056162;
+  --color-brand-blue: #007AFF;
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+  --font-display: var(--font-inter), 'Inter', system-ui, sans-serif;
+  --font-sans: var(--font-inter), 'Inter', system-ui, sans-serif;
+  --font-hand: var(--font-instrument-serif), 'Instrument Serif', 'Garamond', serif;
+}
+
+:root {
+  /* DARK tokens (default — next-themes applies .dark on <html> for explicit dark) */
+  --bg: #060403;
+  --surface: #15110F;
+  --surface-raised: #1a1512;
+  --card: rgba(255, 255, 255, 0.022);
+  --card-elev-1: rgba(255, 255, 255, 0.055);
+  --card-elev-2: rgba(255, 255, 255, 0.078);
+  --accent: #6BFF95;
+  --accent-soft: rgba(107, 255, 149, 0.20);
+  --accent-text: #6BFF95;
+  --accent-ink: #052010;
+  --ink: #EDEAE4;
+  --ink-muted: rgba(237, 234, 228, 0.82);
+  --ink-dim: rgba(237, 234, 228, 0.56);
+  --ink-inverse: #060403;
+  --teal: #056162;
+  --brand-blue: #007AFF;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --hairline-bright: rgba(255, 255, 255, 0.10);
+  --hairline-dim: rgba(0, 0, 0, 0.35);
+  --card-gradient: radial-gradient(100% 100% at 50% 0%, rgba(255,255,255,0.04) 0%, transparent 100%);
+  --shadow-card: 0 20px 40px -20px rgba(0, 0, 0, 0.50);
+  --shadow-card-hover: 0 24px 48px -20px rgba(0, 0, 0, 0.60);
+  --scrim-top: rgba(0, 0, 0, 0.25);
+  --noise-blend: overlay;
+  --bg-rgb: 6, 4, 3;
+}
+
+.light {
+  /* LIGHT tokens — editorial paper feel */
+  --bg: #FAFAF5;
+  --surface: #FFFFFF;
+  --surface-raised: #FFFFFF;
+  --card: rgba(10, 8, 7, 0.015);
+  --card-elev-1: rgba(10, 8, 7, 0.025);
+  --card-elev-2: rgba(10, 8, 7, 0.04);
+  --accent: #0F9347;
+  --accent-soft: rgba(15, 147, 71, 0.12);
+  --accent-text: #0A7A3A;
+  --accent-ink: #FFFFFF;
+  --ink: #0A0807;
+  --ink-muted: rgba(10, 8, 7, 0.92);
+  --ink-dim: rgba(10, 8, 7, 0.75);
+  --ink-inverse: #FAFAF5;
+  --border-subtle: rgba(10, 8, 7, 0.08);
+  --border-strong: rgba(10, 8, 7, 0.16);
+  --hairline-bright: rgba(10, 8, 7, 0.10);
+  --hairline-dim: rgba(10, 8, 7, 0.20);
+  --card-gradient: radial-gradient(100% 100% at 50% 0%, rgba(10,8,7,0.025) 0%, transparent 100%);
+  --shadow-card: 0 12px 30px -14px rgba(10, 8, 7, 0.12), 0 2px 6px -2px rgba(10, 8, 7, 0.06);
+  --shadow-card-hover: 0 20px 44px -18px rgba(10, 8, 7, 0.18), 0 4px 12px -4px rgba(10, 8, 7, 0.08);
+  --scrim-top: rgba(10, 8, 7, 0.04);
+  --noise-blend: multiply;
+  --bg-rgb: 250, 250, 245;
+}
+
+html, body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+::selection { background: var(--accent); color: #000; }
+
+/* ============================================================
+   GLASSMORPHISM — frosted glass primitives
+   ============================================================ */
+
+.glass {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 40%, rgba(255,255,255,0.01) 100%);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.10),
+    inset 0 -1px 0 rgba(0,0,0,0.35),
+    0 10px 30px -12px rgba(0,0,0,0.55),
+    0 2px 8px -2px rgba(0,0,0,0.40);
+}
+
+.glass { isolation: isolate; }
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,0.14), transparent 30%);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.glass-strong {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0.01) 100%);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.16),
+    inset 0 -1px 0 rgba(0,0,0,0.40),
+    0 20px 48px -16px rgba(0,0,0,0.60),
+    0 4px 14px -4px rgba(0,0,0,0.45);
+}
+
+.glass-strong { isolation: isolate; }
+.glass-strong::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,0.18), transparent 35%);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Tinted glass variants */
+.glass-amber {
+  background:
+    linear-gradient(180deg, rgba(107,255,149,0.14) 0%, rgba(107,255,149,0.03) 50%, rgba(255,255,255,0.01) 100%);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid rgba(107,255,149,0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255,220,180,0.22),
+    inset 0 -1px 0 rgba(0,0,0,0.35),
+    0 10px 30px -12px rgba(107,255,149,0.35),
+    0 2px 8px -2px rgba(0,0,0,0.40);
+}
+
+.card-surface {
+  position: relative;
+  background:
+    linear-gradient(180deg, var(--card-elev-1) 0%, var(--card) 60%, var(--card) 100%);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
+  box-shadow:
+    inset 0 1px 0 var(--hairline-bright),
+    var(--shadow-card);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.light .card-surface { background: var(--surface); }
+.card-surface:hover {
+  border-color: var(--border-strong);
+  box-shadow:
+    inset 0 1px 0 var(--hairline-bright),
+    var(--shadow-card-hover);
+}
+
+.card-inner {
+  background-color: var(--card);
+  background-image: var(--card-gradient);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* ============================================================
+   PILLS — glassmorphic capsules with specular highlights
+   ============================================================ */
+
+/* Header fullwidth : blur progressif via <div> dédié (plus fiable que ::before) */
+.header-blur { position: sticky; }
+
+.header-blur-bg {
+  position: absolute;
+  left: 0; right: 0;
+  top: 0;
+  bottom: -28px;
+  backdrop-filter: blur(0px) saturate(100%);
+  -webkit-backdrop-filter: blur(0px) saturate(100%);
+  background: rgba(6, 4, 3, 0);
+  mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
+  transition:
+    backdrop-filter 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    -webkit-backdrop-filter 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+.header-blur.is-scrolled .header-blur-bg {
+  backdrop-filter: blur(60px) saturate(220%);
+  -webkit-backdrop-filter: blur(60px) saturate(220%);
+  background: rgba(var(--bg-rgb), 0.80);
+}
+.light .header-blur.is-scrolled .header-blur-bg {
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  background: rgba(var(--bg-rgb), 0.60);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.nav-pill {
+  position: relative;
+  padding: 4px;
+  border-radius: 9999px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+}
+.nav-pill > li > a:hover {
+  background: var(--card-elev-1);
+}
+
+/* Glassmorphism pill with diagonal gradient border (reproduces the reference UI) */
+.glass-pill {
+  position: relative;
+  border-radius: 9999px;
+  background: rgba(20, 18, 16, 0.55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 8px 24px -12px rgba(0, 0, 0, 0.5);
+}
+.glass-pill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.04) 32%,
+    rgba(255, 255, 255, 0.02) 68%,
+    rgba(255, 255, 255, 0.5) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+          mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+.light .glass-pill {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+}
+.light .glass-pill::before {
+  background: linear-gradient(
+    135deg,
+    rgba(10, 8, 7, 0.22) 0%,
+    rgba(10, 8, 7, 0.03) 32%,
+    rgba(10, 8, 7, 0.02) 68%,
+    rgba(10, 8, 7, 0.2) 100%
+  );
+}
+
+.pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+/* ============================================================
+   SKEUOMORPHIC BUTTONS
+   ============================================================ */
+
+/* ── CTA base styles (no hover effects) ── */
+.btn-accent-3d,
+.btn-glass {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  font-size: 14px;
+}
+
+/* Rotating conic-gradient beam border (infinite) */
+@keyframes cta-beam-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+.btn-glass::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 300%;
+  aspect-ratio: 1;
+  background: conic-gradient(
+    from 0deg,
+    var(--beam-color) 0deg,
+    var(--beam-color) 30deg,
+    transparent 60deg,
+    transparent 360deg
+  );
+  animation: cta-beam-spin 4s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+.btn-glass::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: var(--beam-inner-bg);
+  pointer-events: none;
+  z-index: 1;
+}
+.btn-glass { --beam-color: var(--accent); --beam-inner-bg: var(--surface); }
+
+/* Children above beam + mask layers */
+.btn-accent-3d > *,
+.btn-glass > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Primary (accent green) — black text on bright green (dark), white on deep green (light) */
+.btn-accent-3d {
+  color: #052010;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  box-shadow: 0 4px 14px -4px rgba(107, 255, 149, 0.35);
+}
+.light .btn-accent-3d { color: #FFFFFF; box-shadow: 0 4px 14px -4px rgba(15, 147, 71, 0.35); }
+
+/* Secondary (glass) — white in dark, black in light */
+.btn-glass {
+  color: var(--ink);
+  font-weight: 500;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+}
+
+/* ── Shiny text sweep animation on CTA labels ── */
+@keyframes cta-shiny {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.cta-shiny-text {
+  display: inline-block;
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: cta-shiny 3s linear infinite;
+}
+
+/* Dark sweep on accent CTA (dark mode — bright green bg) */
+.btn-accent-3d .cta-shiny-text {
+  background-image: linear-gradient(
+    120deg,
+    #052010 0%,
+    #052010 40%,
+    rgba(5, 32, 16, 0.25) 50%,
+    #052010 60%,
+    #052010 100%
+  );
+}
+/* Light sweep on accent CTA (light mode — deep green bg → white text) */
+.light .btn-accent-3d .cta-shiny-text {
+  background-image: linear-gradient(
+    120deg,
+    #FFFFFF 0%,
+    #FFFFFF 40%,
+    rgba(255, 255, 255, 0.55) 50%,
+    #FFFFFF 60%,
+    #FFFFFF 100%
+  );
+}
+
+/* Light sweep for dark bg (glass CTA in dark mode) */
+.btn-glass .cta-shiny-text {
+  background-image: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.75) 0%,
+    rgba(255, 255, 255, 0.75) 40%,
+    #ffffff 50%,
+    rgba(255, 255, 255, 0.75) 60%,
+    rgba(255, 255, 255, 0.75) 100%
+  );
+}
+/* Dark sweep on light bg (glass CTA in light mode) */
+.light .btn-glass .cta-shiny-text {
+  background-image: linear-gradient(
+    120deg,
+    rgba(10, 8, 7, 0.80) 0%,
+    rgba(10, 8, 7, 0.80) 40%,
+    #0A0807 50%,
+    rgba(10, 8, 7, 0.80) 60%,
+    rgba(10, 8, 7, 0.80) 100%
+  );
+}
+
+/* ============================================================
+   REVIEW BADGES — glass capsules with embossed feel
+   ============================================================ */
+
+.review-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 9999px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  box-shadow: none;
+  font-size: 12px;
+  color: var(--ink-muted);
+  transition: all 0.2s ease;
+}
+
+.review-badge:hover {
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  color: var(--ink);
+  box-shadow: 0 6px 16px -4px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* ============================================================
+   GRID BACKGROUNDS (multiple layers)
+   ============================================================ */
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(107, 255, 149, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(107, 255, 149, 0.14) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: center center;
+  background-blend-mode: lighten;
+  mask-image: radial-gradient(ellipse 80% 70% at center, #000 25%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at center, #000 25%, transparent 85%);
+}
+.light .grid-bg {
+  background-image:
+    linear-gradient(rgba(10, 8, 7, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 8, 7, 0.14) 1px, transparent 1px);
+  background-blend-mode: multiply;
+}
+
+/* ============================================================
+   PLANET HORIZON BG — sharp white rim, TrustChain-like
+   ============================================================ */
+.planet-bg {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    /* Starfield sparse */
+    radial-gradient(circle at 18% 22%, rgba(255,255,255,0.5) 0.8px, transparent 1.2px),
+    radial-gradient(circle at 72% 15%, rgba(255,255,255,0.4) 0.8px, transparent 1.2px),
+    radial-gradient(circle at 45% 38%, rgba(255,255,255,0.35) 0.6px, transparent 1px),
+    radial-gradient(circle at 88% 50%, rgba(255,255,255,0.55) 0.9px, transparent 1.3px),
+    radial-gradient(circle at 12% 60%, rgba(255,255,255,0.4) 0.7px, transparent 1.1px),
+    radial-gradient(circle at 32% 18%, rgba(255,255,255,0.5) 0.8px, transparent 1.2px),
+    radial-gradient(circle at 62% 45%, rgba(255,255,255,0.3) 0.6px, transparent 1px),
+    radial-gradient(circle at 82% 28%, rgba(255,255,255,0.45) 0.8px, transparent 1.2px),
+    /* Soft atmosphere above horizon */
+    radial-gradient(ellipse 120% 45% at 50% 100%,
+      rgba(255,255,255,0.08) 0%,
+      rgba(167, 139, 250, 0.10) 30%,
+      transparent 60%),
+    /* Base deep black */
+    #000;
+  background-size:
+    100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%,
+    100% 100%, 100% 100%;
+}
+.planet-bg::before {
+  /* Planet body — matte black circle with crisp white rim */
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 62%;
+  width: 280%;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: #050508;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 -1px 0 0 rgba(255,255,255,0.6),
+    0 -8px 24px 0 rgba(255,255,255,0.18),
+    0 -30px 80px -10px rgba(99, 102, 241, 0.20),
+    0 -60px 140px -20px rgba(139, 92, 246, 0.14);
+  pointer-events: none;
+  z-index: 0;
+}
+.planet-bg::after {
+  /* Central column glow emerging from horizon */
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 30%;
+  width: 40%;
+  height: 70%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse 100% 60% at 50% 100%,
+    rgba(255,255,255,0.12) 0%,
+    rgba(167, 139, 250, 0.10) 40%,
+    transparent 75%);
+  filter: blur(50px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Light mode : inverse tones */
+.light .planet-bg {
+  background:
+    radial-gradient(circle at 18% 22%, rgba(10,8,7,0.25) 0.8px, transparent 1.2px),
+    radial-gradient(circle at 72% 15%, rgba(10,8,7,0.2) 0.8px, transparent 1.2px),
+    radial-gradient(circle at 45% 38%, rgba(10,8,7,0.18) 0.6px, transparent 1px),
+    radial-gradient(circle at 88% 50%, rgba(10,8,7,0.28) 0.9px, transparent 1.3px),
+    radial-gradient(circle at 12% 60%, rgba(10,8,7,0.2) 0.7px, transparent 1.1px),
+    radial-gradient(circle at 32% 18%, rgba(10,8,7,0.25) 0.8px, transparent 1.2px),
+    radial-gradient(circle at 62% 45%, rgba(10,8,7,0.15) 0.6px, transparent 1px),
+    radial-gradient(circle at 82% 28%, rgba(10,8,7,0.22) 0.8px, transparent 1.2px),
+    radial-gradient(ellipse 120% 45% at 50% 100%,
+      rgba(15, 147, 71, 0.06) 0%,
+      rgba(15, 147, 71, 0.08) 30%,
+      transparent 60%),
+    var(--bg);
+}
+.light .planet-bg::before {
+  background: #F5F3EC;
+  border-top-color: rgba(10, 8, 7, 0.85);
+  box-shadow:
+    0 -1px 0 0 rgba(10, 8, 7, 0.4),
+    0 -8px 24px 0 rgba(10, 8, 7, 0.10),
+    0 -30px 80px -10px rgba(15, 147, 71, 0.12),
+    0 -60px 140px -20px rgba(15, 147, 71, 0.08);
+}
+.light .planet-bg::after {
+  background: radial-gradient(ellipse 100% 60% at 50% 100%,
+    rgba(10, 8, 7, 0.06) 0%,
+    rgba(15, 147, 71, 0.08) 40%,
+    transparent 75%);
+}
+
+.grid-bg-dots {
+  background-image:
+    radial-gradient(circle, rgba(107, 255, 149, 0.55) 1.2px, transparent 1.6px);
+  background-size: 56px 56px;
+  background-position: center center;
+  mask-image: radial-gradient(ellipse 70% 60% at center, #000 20%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at center, #000 20%, transparent 80%);
+}
+.light .grid-bg-dots {
+  background-image:
+    radial-gradient(circle, rgba(10, 8, 7, 0.32) 1.2px, transparent 1.6px);
+}
+
+.grid-bg-fine {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 14px 14px;
+  background-blend-mode: lighten;
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+}
+
+.noise-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  mix-blend-mode: var(--noise-blend);
+  opacity: 0.35;
+}
+.light .noise-overlay { opacity: 0.18; }
+
+/* ============================================================
+   HALOS & ATMOSPHERIC LIGHTING
+   ============================================================ */
+
+/* Soft breathing animation for hero background gradients */
+@keyframes halo-breathe {
+  0%, 100% { opacity: var(--halo-opacity-min, 0.55); }
+  50%      { opacity: var(--halo-opacity-max, 1); }
+}
+
+.halo {
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(107,255,149,0.35) 0%, transparent 60%);
+  filter: blur(80px);
+  pointer-events: none;
+  --halo-opacity-min: 0.55;
+  --halo-opacity-max: 1;
+  animation: halo-breathe 7s ease-in-out infinite;
+}
+
+.halo-teal {
+  position: absolute;
+  width: 520px; height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(5,97,98,0.55) 0%, transparent 65%);
+  filter: blur(90px);
+  pointer-events: none;
+  --halo-opacity-min: 0.45;
+  --halo-opacity-max: 0.9;
+  animation: halo-breathe 8.5s ease-in-out infinite;
+  animation-delay: 1.2s;
+}
+
+.halo-blue {
+  position: absolute;
+  width: 480px; height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,122,255,0.30) 0%, transparent 65%);
+  filter: blur(100px);
+  pointer-events: none;
+  --halo-opacity-min: 0.50;
+  --halo-opacity-max: 1;
+  animation: halo-breathe 9s ease-in-out infinite;
+  animation-delay: 2.5s;
+}
+
+.conic-glow {
+  position: absolute;
+  width: 900px; height: 900px;
+  border-radius: 50%;
+  background: conic-gradient(from 90deg at 50% 50%, rgba(107,255,149,0.12), rgba(5,97,98,0.12), rgba(0,122,255,0.10), rgba(107,255,149,0.12));
+  filter: blur(60px);
+  pointer-events: none;
+  --halo-opacity-min: 0.35;
+  --halo-opacity-max: 0.75;
+  animation: halo-breathe 10s ease-in-out infinite;
+}
+
+/* Light mode: halos deutés pour ne pas cramer le fond clair */
+.light .halo,
+.light .halo-teal,
+.light .halo-blue,
+.light .conic-glow {
+  --halo-opacity-min: 0.08;
+  --halo-opacity-max: 0.18;
+  filter: blur(120px);
+}
+
+.crosshair {
+  position: absolute;
+  width: 14px; height: 14px;
+  pointer-events: none;
+}
+.crosshair::before,
+.crosshair::after {
+  content: "";
+  position: absolute;
+  background: rgba(107, 255, 149, 0.65);
+  box-shadow: 0 0 6px rgba(107, 255, 149, 0.55);
+}
+.light .crosshair::before,
+.light .crosshair::after {
+  background: #0F9347;
+  box-shadow: 0 0 6px rgba(15, 147, 71, 0.55);
+}
+.crosshair::before { left: 50%; top: 0; bottom: 0; width: 1px; transform: translateX(-50%); }
+.crosshair::after  { top: 50%; left: 0; right: 0; height: 1px; transform: translateY(-50%); }
+
+.scanline {
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(107,255,149,0.55) 30%, rgba(107,255,149,0.55) 70%, transparent);
+  pointer-events: none;
+}
+
+/* Subtle floating particles (dots) */
+.particles {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 12% 22%, rgba(107,255,149,0.55) 1px, transparent 1.5px),
+    radial-gradient(circle at 88% 18%, rgba(255,255,255,0.35) 1px, transparent 1.5px),
+    radial-gradient(circle at 25% 78%, rgba(0,122,255,0.50) 1px, transparent 1.5px),
+    radial-gradient(circle at 72% 62%, rgba(107,255,149,0.50) 1px, transparent 1.5px),
+    radial-gradient(circle at 55% 32%, rgba(255,255,255,0.25) 1px, transparent 1.5px),
+    radial-gradient(circle at 40% 55%, rgba(5,97,98,0.60) 1px, transparent 1.5px);
+  background-repeat: no-repeat;
+  pointer-events: none;
+  animation: particles-float 10s ease-in-out infinite alternate;
+}
+@keyframes particles-float {
+  from { transform: translateY(0); opacity: 0.8; }
+  to   { transform: translateY(-6px); opacity: 1; }
+}
+
+/* ── Neon flow on organigramme connectors ──
+   Background-position animation (not transform/::after) so the neon
+   is mathematically contained within the element's bounds. */
+@keyframes neon-bg-flow-h {
+  0%   { background-position: -70% 0; }
+  100% { background-position: 170% 0; }
+}
+@keyframes neon-bg-flow-v {
+  0%   { background-position: 0 -160%; }
+  100% { background-position: 0 260%; }
+}
+
+.neon-line-h {
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--neon-color, var(--accent)) 50%,
+    transparent 100%
+  );
+  background-size: 40% 100%;
+  background-repeat: no-repeat;
+  animation: neon-bg-flow-h var(--neon-duration, 3s) linear infinite;
+  animation-delay: var(--neon-delay, 0s);
+}
+
+.neon-line-v {
+  position: relative;
+  overflow: hidden;
+}
+.neon-line-v::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--neon-color, var(--accent)) 50%,
+    transparent 100%
+  );
+  background-size: 100% 60%;
+  background-repeat: no-repeat;
+  animation: neon-bg-flow-v var(--neon-duration, 2.2s) linear infinite;
+  animation-delay: var(--neon-delay, 0s);
+  pointer-events: none;
+}
+
+/* ============================================================
+   MARQUEE
+   ============================================================ */
+
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-track { display: flex; gap: 48px; animation: marquee 60s linear infinite; flex-shrink: 0; }
+.marquee-wrap { display: flex; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+
+/* Reviews marquee — larger cards, slower, supports reverse direction */
+.marquee-track-reviews { display: flex; gap: 16px; animation: marquee 120s linear infinite; flex-shrink: 0; }
+.marquee-track-reverse { animation-direction: reverse; }
+
+@keyframes pulse-soft { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+.pulse-soft { animation: pulse-soft 2.4s ease-in-out infinite; }
+
+/* ============================================================
+   DASHBOARD MOCKUP — skeuomorphic device
+   ============================================================ */
+
+.dashboard-mockup {
+  position: relative;
+  background:
+    linear-gradient(180deg, var(--surface-raised) 0%, var(--surface) 100%);
+  border: 1px solid var(--border-strong);
+  border-radius: 24px;
+  box-shadow:
+    inset 0 1px 0 var(--hairline-bright),
+    inset 0 -1px 0 rgba(0,0,0,0.20),
+    0 0 0 1px var(--border-subtle),
+    0 40px 80px -20px color-mix(in srgb, var(--accent) 28%, transparent),
+    0 60px 100px -40px rgba(0,0,0,0.30);
+}
+.dashboard-mockup::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 12%; right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  pointer-events: none;
+}
+
+/* ============================================================
+   AVATAR STACK — skeuomorphic pills with ring highlight
+   ============================================================ */
+
+.avatar-stack > * + * { margin-left: -6px; }
+
+/* Force PNG/SVG logos to neutral theme ink */
+.logo-white { filter: brightness(0) invert(1); }
+.light .logo-white { filter: brightness(0) invert(0); opacity: 0.8; }
+
+/* Brand logo (#F7F7F1 fills) — invert to dark ink on light theme */
+.logo-themed {
+  transition: filter 0.2s ease;
+}
+.light .logo-themed { filter: brightness(0) saturate(100%); }
+.avatar-stack > * {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    inset 0 -1px 0 rgba(0,0,0,0.30),
+    0 2px 6px rgba(0,0,0,0.45),
+    0 0 0 2px var(--bg);
+}
+
+/* ============================================================
+   NAV — frosted glass header with richer depth
+   ============================================================ */
+
+.nav-glass {
+  background:
+    linear-gradient(180deg, rgba(var(--bg-rgb),0.85) 0%, rgba(var(--bg-rgb),0.60) 100%),
+    radial-gradient(120% 180% at 20% 0%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 55%),
+    radial-gradient(120% 180% at 80% 0%, rgba(0,122,255,0.10), transparent 55%);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border-bottom: 1px solid var(--border-subtle);
+  box-shadow:
+    inset 0 1px 0 var(--hairline-bright),
+    0 10px 30px -14px rgba(0,0,0,0.30);
+}
+.nav-glass::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(107,255,149,0.45) 20%, rgba(0,122,255,0.45) 80%, transparent);
+  pointer-events: none;
+}
+
+/* Top bar refinement (skeuomorphic) */
+.topbar-glow {
+  position: relative;
+  background:
+    linear-gradient(180deg, #0a84ff 0%, #0062cc 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.25),
+    inset 0 -1px 0 rgba(0,0,0,0.35),
+    0 2px 8px -2px rgba(0,122,255,0.40);
+}
+.topbar-glow { isolation: isolate; }
+.topbar-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 200% at 50% 0%, rgba(255,255,255,0.18), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ============================================================
+   LOGO BADGE — skeuomorphic button look
+   ============================================================ */
+
+.logo-badge {
+  position: relative;
+  background:
+    linear-gradient(180deg, #7FFFA5 0%, #6BFF95 100%);
+  border: 1px solid rgba(63,204,117,0.50);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.40),
+    0 2px 6px rgba(107,255,149,0.30);
+}
+
+/* ============================================================
+   SCROLL INDICATOR (hero)
+   ============================================================ */
+
+.scroll-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow:
+    0 0 0 4px rgba(107,255,149,0.18),
+    0 0 12px 4px rgba(107,255,149,0.55);
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+body { overflow-x: clip; }
+
+/* Hero planet curved-top halo : drift latéral lent + respiration d'opacité = effet brume */
+@keyframes halo-mist {
+  0%   { transform: translateX(-18px); opacity: 0.7; }
+  50%  { transform: translateX(18px);  opacity: 1; }
+  100% { transform: translateX(-18px); opacity: 0.7; }
+}
+.halo-mist {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: halo-mist 14s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+@media (prefers-reduced-motion: reduce) {
+  .halo-mist { animation: none; }
+}

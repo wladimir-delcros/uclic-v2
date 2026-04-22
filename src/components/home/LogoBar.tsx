@@ -26,7 +26,7 @@ export default function LogoBar() {
   const { ref, isVisible } = useScrollAnimation<HTMLDivElement>();
 
   return (
-    <section className="py-12 border-y border-white/[0.06] bg-black overflow-hidden">
+    <section className="py-12 border-y border-[color:var(--border-subtle)] bg-black overflow-hidden">
       <div className="uclic-container px-4 md:px-6 mb-8">
         <p
           ref={ref}

@@ -54,7 +54,7 @@ export default function ProblemSolution() {
           {/* Left — Problem */}
           <div
             ref={leftRef}
-            className={`uclic-reveal ${leftVisible ? 'is-visible' : ''} p-8 md:p-12 rounded-2xl md:rounded-r-none rounded-r-2xl bg-[rgba(245,245,241,0.02)] border border-white/[0.06] md:border-r-0`}
+            className={`uclic-reveal ${leftVisible ? 'is-visible' : ''} p-8 md:p-12 rounded-2xl md:rounded-r-none rounded-r-2xl bg-[rgba(245,245,241,0.02)] border border-[color:var(--border-subtle)] md:border-r-0`}
           >
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full bg-[rgba(245,245,241,0.3)]" />

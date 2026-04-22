@@ -30,7 +30,7 @@ function FAQItem({ faq, index }: { faq: (typeof faqs)[0]; index: number }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border-b border-white/[0.06]">
+    <div className="border-b border-[color:var(--border-subtle)]">
       <button
         className="w-full flex items-center justify-between py-5 text-left gap-4 group"
         onClick={() => setOpen(!open)}

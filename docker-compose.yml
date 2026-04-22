@@ -1,0 +1,16 @@
+services:
+  uclic-v2:
+    image: uclic-v2
+    build: .
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    ports:
+      - "3905:3000"
+    networks:
+      - dokploy-network
+
+networks:
+  dokploy-network:
+    external: true

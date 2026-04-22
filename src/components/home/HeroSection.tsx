@@ -106,12 +106,12 @@ export default function HeroSection() {
           {/* Stats */}
           <div
             data-hero-animate
-            className="flex flex-col sm:flex-row items-start sm:items-center gap-8 pt-8 border-t border-white/[0.08]"
+            className="flex flex-col sm:flex-row items-start sm:items-center gap-8 pt-8 border-t border-[color:var(--border-subtle)]"
           >
             <StatItem value="+300%" label="MQLs générés" />
-            <div className="hidden sm:block w-px h-10 bg-white/[0.08]" />
+            <div className="hidden sm:block w-px h-10 bg-[color:var(--card-elev-2)]" />
             <StatItem value="-60%" label="CAC moyen constaté" />
-            <div className="hidden sm:block w-px h-10 bg-white/[0.08]" />
+            <div className="hidden sm:block w-px h-10 bg-[color:var(--card-elev-2)]" />
             <StatItem value="48h" label="pour démarrer" />
           </div>
         </div>

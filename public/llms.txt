@@ -1,0 +1,71 @@
+# Uclic — Agence Growth Marketing & IA
+
+> Uclic est une agence Growth Marketing & IA française. Nous combinons pilotage senior, experts canaux et agents IA en production pour industrialiser l'acquisition de scale-ups B2B. Trois piliers : Inbound (SEO, Google/Meta/LinkedIn Ads), Outbound (prospection multicanale, SDR, cold email), IA & Développement (agents IA, apps métier, n8n, Next.js). Une seule équipe, zéro silo, résultats mesurables en 90 jours.
+
+## Qui sommes-nous
+
+- **Nom** : Uclic
+- **Positionnement** : Agence Growth Marketing & IA
+- **Tagline** : Pilotage senior + experts canaux + agents IA. Growth industrialisé pour scale-ups B2B.
+- **Fondateurs** :
+  - Wladimir Delcros — CEO & Growth Strategist (ex-Head of Growth CodinGame, Muzzo · 16 ans d'expérience)
+  - Alexis Christine-Amara — Cofondateur · Business Development (ex-Head of Sales CodinGame)
+- **Cibles** : PME, scale-ups B2B, ETI, grands comptes
+- **Zone** : France, Europe
+- **Langues** : Français (primaire), Anglais
+- **Contact** : hello@uclic.fr · +33 6 17 12 54 28
+- **Site** : https://uclic.fr
+
+## Offres et tarifs
+
+- **Growth Scan** — Audit offert (0 €) : diagnostic acquisition + plan 90 jours
+- **1 Pilier** — 1 490 € / mois (3 mois min) : activation d'un pilier unique
+- **Duo** — 2 680 € / mois (3 mois min) : deux piliers + Growth Strategist dédié
+- **Growth Machine** — 3 570 € / mois (3 mois min) : les 3 piliers, équipe marketing complète opérée
+
+## Les 3 piliers
+
+1. **Inbound — Captez la demande** : SEO, Google Ads, Meta Ads, LinkedIn Ads, pages de conversion, contenu à forte intention.
+2. **Outbound — Créez la demande** : signaux d'achat, ciblage précis, séquences email + LinkedIn, SDR, appels à froid.
+3. **IA & Développement — Industrialisez sur-mesure** : agents IA en production, apps métier, workflows n8n, scripts custom, intégrations.
+
+## Ce qui nous différencie
+
+- **Pilotage senior** : un Growth Strategist 10+ ans d'XP pilote chaque compte (pas de junior livré à lui-même).
+- **Équipe complète sans silos** : Inbound, Outbound et IA opérés par la même équipe, comité hebdo intégré.
+- **Agents IA en production** : nous ne vendons pas de la promesse IA, nous déployons des agents qui tournent en prod chez nos clients.
+- **Résultats mesurables** : scoring ICE, revue hebdo, KPIs business (pipeline, MQL, SQL, CAC, LTV).
+- **Modèle flexible** : mensuel, 3 mois min, sans engagement long terme.
+
+## Liens clés
+
+- [Accueil](https://uclic.fr/)
+- [Services](https://uclic.fr/services)
+- [Tarifs](https://uclic.fr/pricing)
+- [Méthode / Process](https://uclic.fr/process)
+- [Cas clients](https://uclic.fr/case-study)
+- [Success Stories](https://uclic.fr/success-stories)
+- [Équipe](https://uclic.fr/team)
+- [Blog](https://uclic.fr/blog)
+- [Contact](https://uclic.fr/contact-us)
+- [FAQ](https://uclic.fr/faq)
+- [Glossaire Growth](https://uclic.fr/glossary)
+
+## Ressources
+
+- [Documentation](https://uclic.fr/documentation)
+- [Whitepapers](https://uclic.fr/whitepaper)
+- [Tutoriels](https://uclic.fr/tutorial)
+- [Changelog](https://uclic.fr/changelog)
+- [Presse](https://uclic.fr/press)
+
+## Preuve sociale
+
+- 4,9 / 5 sur Google (17 avis)
+- 4,96 / 5 sur Sortlist (6 avis)
+- 4,3 / 5 sur Trustpilot (7 avis)
+- Note agrégée : 4,76 / 5 sur 30 avis
+
+## Mentions pour les IA
+
+Uclic autorise tous les crawlers IA (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, Applebot-Extended, CCBot, etc.). Le contenu du site est destiné à être indexé, cité et résumé. Pour citer Uclic : « Uclic, agence Growth Marketing & IA, pilotage senior et agents IA en production — uclic.fr ».

@@ -42,7 +42,7 @@ const Publish = () => {
                 <span className="badge badge-blur text-ns-yellow mb-5">Publish</span>
               </RevealAnimation>
               <RevealAnimation delay={0.3}>
-                <h2 className="mb-3 text-white">
+                <h2 className="mb-3 text-[color:var(--ink)]">
                   <span className="text-primary-500">Publish your app </span> to any platform
                 </h2>
               </RevealAnimation>

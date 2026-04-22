@@ -62,7 +62,7 @@ function CaseStudyCard({ cs, index }: { cs: (typeof caseStudies)[0]; index: numb
       </h3>
 
       {/* Metrics */}
-      <div className="grid grid-cols-3 gap-4 mb-8 pb-8 border-b border-white/[0.06]">
+      <div className="grid grid-cols-3 gap-4 mb-8 pb-8 border-b border-[color:var(--border-subtle)]">
         {cs.metrics.map((m) => (
           <MetricBadge key={m.label} value={m.value} label={m.label} />
         ))}
@@ -80,7 +80,7 @@ function CaseStudyCard({ cs, index }: { cs: (typeof caseStudies)[0]; index: numb
           {cs.levers.map((lever) => (
             <span
               key={lever}
-              className="text-xs px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-[rgba(245,245,241,0.5)]"
+              className="text-xs px-2.5 py-1 rounded-full bg-[color:var(--card-elev-1)] border border-[color:var(--border-subtle)] text-[rgba(245,245,241,0.5)]"
             >
               {lever}
             </span>
