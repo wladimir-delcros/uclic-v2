@@ -34,7 +34,7 @@ export default function ConvergingLinesBridge({
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el) {return;}
 
     const observer = new IntersectionObserver(
       ([entry]) => {

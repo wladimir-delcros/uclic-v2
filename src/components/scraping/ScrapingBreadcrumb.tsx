@@ -6,7 +6,7 @@ export interface Crumb {
 }
 
 export default function ScrapingBreadcrumb({ items }: { items: Crumb[] }) {
-  if (!items || items.length === 0) return null;
+  if (!items || items.length === 0) {return null;}
   const last = items[items.length - 1];
   const parent = items.length >= 2 ? items[items.length - 2] : null;
   return (

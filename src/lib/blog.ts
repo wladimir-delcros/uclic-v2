@@ -70,8 +70,8 @@ export function getImageUrl(
     format?: 'origin' | 'webp';
   }
 ): string {
-  if (!url) return '';
-  if (url.includes('placeholder') || url.startsWith('/images/')) return url;
+  if (!url) {return '';}
+  if (url.includes('placeholder') || url.startsWith('/images/')) {return url;}
 
   const cdnBase = process.env.NEXT_PUBLIC_STORAGE_CDN_BASE_URL;
   const baseUrl = cdnBase || getSupabaseUrl();
@@ -103,11 +103,11 @@ export function getImageUrl(
 
         const params = new URLSearchParams();
         if (options.width && options.width > 0)
-          params.set('width', options.width.toString());
+          {params.set('width', options.width.toString());}
         if (options.height && options.height > 0)
-          params.set('height', options.height.toString());
-        if (options.quality) params.set('quality', options.quality.toString());
-        if (options.resize) params.set('resize', options.resize);
+          {params.set('height', options.height.toString());}
+        if (options.quality) {params.set('quality', options.quality.toString());}
+        if (options.resize) {params.set('resize', options.resize);}
         if (options.format && options.format !== 'webp') {
           params.set('format', options.format);
         }
@@ -133,7 +133,7 @@ export function getFeaturedImageUrl(
     format?: 'origin' | 'webp';
   },
 ): string {
-  if (!featuredImageUrl) return '';
+  if (!featuredImageUrl) {return '';}
   const cleanUrl = featuredImageUrl.split('?')[0].replace(/[?&]$/, '').trim();
 
   if (customOptions) {
@@ -164,7 +164,7 @@ export function getFeaturedImageUrl(
 
   const sizeConfig = sizeMap[size] || sizeMap.medium;
 
-  if (size === 'full') return normalizeImageUrl(cleanUrl) || cleanUrl;
+  if (size === 'full') {return normalizeImageUrl(cleanUrl) || cleanUrl;}
 
   const transformed = getImageUrl(cleanUrl, {
     width: sizeConfig.width || undefined,
@@ -195,7 +195,7 @@ export function estimateReadingTime(content: string): string {
 }
 
 function cleanSlug(slug: string): string {
-  if (!slug) return '';
+  if (!slug) {return '';}
   return String(slug)
     .trim()
     .replace(/%ef%b8%8f/gi, '')
@@ -281,7 +281,7 @@ export async function getLatestPosts(
 
   const rows = (data || []) as BlogPostRow[];
   const postIds = rows.map((p) => p.id);
-  if (postIds.length === 0) return { posts: [], total, totalPages };
+  if (postIds.length === 0) {return { posts: [], total, totalPages };}
 
   // Batch-fetch categories
   const { data: allPostCategories } = await supabase
@@ -364,7 +364,7 @@ export async function getLatestPosts(
  * Get a single published blog post by slug.
  */
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
-  if (!slug || slug === 'undefined') return null;
+  if (!slug || slug === 'undefined') {return null;}
   const normalizedSlug = cleanSlug(slug);
   const supabase = createAdminClient();
 
@@ -389,10 +389,10 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     const matching = candidates.find(
       (post) => cleanSlug(post.slug || '') === normalizedSlug,
     );
-    if (matching) row = matching;
+    if (matching) {row = matching;}
   }
 
-  if (!row) return null;
+  if (!row) {return null;}
 
   const [pcRes, ptRes] = await Promise.all([
     supabase
@@ -429,10 +429,10 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   ]);
 
   const catData = (catRes.data || []) as Array<{ id: number; name: string }>;
-  if (catData.length > 0) categoryName = catData[0].name;
+  if (catData.length > 0) {categoryName = catData[0].name;}
 
   const tagData = (tagsRes.data || []) as Array<{ id: number; name: string }>;
-  if (tagData.length > 0) tags = tagData.map((t) => t.name);
+  if (tagData.length > 0) {tags = tagData.map((t) => t.name);}
 
   return mapRowToBlogPost(row, categoryName, tags);
 }
@@ -452,7 +452,7 @@ export async function getAllBlogSlugs(
     .eq('status', 'publish')
     .order('published_at', { ascending: false, nullsFirst: false });
 
-  if (limit && limit > 0) query = query.limit(limit);
+  if (limit && limit > 0) {query = query.limit(limit);}
 
   const { data, error } = await query;
 
@@ -496,7 +496,7 @@ export async function getBlogPostsCount(): Promise<number> {
  * Get author by slug (returns minimal author info for post detail page).
  */
 export async function getAuthorBySlug(slug: string): Promise<BlogAuthor | null> {
-  if (!slug) return null;
+  if (!slug) {return null;}
   const supabase = createAdminClient();
 
   const { data, error } = await supabase
@@ -505,7 +505,7 @@ export async function getAuthorBySlug(slug: string): Promise<BlogAuthor | null> 
     .eq('slug', slug)
     .maybeSingle();
 
-  if (error || !data) return null;
+  if (error || !data) {return null;}
 
   const row = data as {
     id: number;
@@ -543,7 +543,7 @@ export function buildPlainExcerpt(
     ? post.excerpt
     : post.content;
   const plain = stripHtml(raw || '');
-  if (plain.length <= maxLength) return plain;
+  if (plain.length <= maxLength) {return plain;}
   return `${plain.substring(0, maxLength - 3).trimEnd()}...`;
 }
 
@@ -551,9 +551,9 @@ export function buildPlainExcerpt(
  * Format ISO date to FR short date (e.g. "24 avr. 2026").
  */
 export function formatDateFr(iso?: string): string {
-  if (!iso) return '';
+  if (!iso) {return '';}
   const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return '';
+  if (Number.isNaN(d.getTime())) {return '';}
   return new Intl.DateTimeFormat('fr-FR', {
     year: 'numeric',
     month: 'short',
@@ -584,7 +584,7 @@ export async function getAllBlogCategories(): Promise<BlogCategory[]> {
     .select('id, slug, name, description')
     .order('name', { ascending: true });
 
-  if (error || !cats) return [];
+  if (error || !cats) {return [];}
 
   // Count published posts per category
   const { data: pcRows } = await supabase
@@ -602,7 +602,7 @@ export async function getAllBlogCategories(): Promise<BlogCategory[]> {
       ((publishedIds || []) as Array<{ id: number }>).map((r) => r.id),
     );
     for (const pc of pcRows as Array<{ category_id: number; post_id: number }>) {
-      if (!publishedSet.has(pc.post_id)) continue;
+      if (!publishedSet.has(pc.post_id)) {continue;}
       counts.set(pc.category_id, (counts.get(pc.category_id) || 0) + 1);
     }
   }
@@ -621,7 +621,7 @@ export async function getBlogCategoryBySlug(
     .select('id, slug, name, description')
     .eq('slug', slug)
     .maybeSingle();
-  if (error || !data) return null;
+  if (error || !data) {return null;}
   return data as BlogCategory;
 }
 
@@ -636,7 +636,7 @@ export async function getPostsByCategory(
   const supabase = createAdminClient();
 
   const cat = await getBlogCategoryBySlug(categorySlug);
-  if (!cat) return { posts: [], total: 0, totalPages: 0 };
+  if (!cat) {return { posts: [], total: 0, totalPages: 0 };}
 
   // Post ids in this category
   const { data: pcRows } = await supabase
@@ -645,7 +645,7 @@ export async function getPostsByCategory(
     .eq('category_id', cat.id);
 
   const postIds = ((pcRows || []) as Array<{ post_id: number }>).map((r) => r.post_id);
-  if (postIds.length === 0) return { posts: [], total: 0, totalPages: 0 };
+  if (postIds.length === 0) {return { posts: [], total: 0, totalPages: 0 };}
 
   const { count } = await supabase
     .from(POSTS_TABLE)
@@ -683,7 +683,7 @@ export async function getAllBlogAuthors(): Promise<Array<BlogAuthor & { count: n
     .from(AUTHORS_TABLE)
     .select('id, name, slug, avatar_url, bio')
     .order('name', { ascending: true });
-  if (!authors) return [];
+  if (!authors) {return [];}
 
   // Count posts per author
   const { data: posts } = await supabase
@@ -692,7 +692,7 @@ export async function getAllBlogAuthors(): Promise<Array<BlogAuthor & { count: n
     .eq('status', 'publish');
   const counts = new Map<number, number>();
   for (const p of (posts || []) as Array<{ author_id: number | null }>) {
-    if (p.author_id == null) continue;
+    if (p.author_id == null) {continue;}
     counts.set(p.author_id, (counts.get(p.author_id) || 0) + 1);
   }
 
@@ -716,7 +716,7 @@ export async function getPostsByAuthor(
   totalPages: number;
 }> {
   const author = await getAuthorBySlug(authorSlug);
-  if (!author) return { author: null, posts: [], total: 0, totalPages: 0 };
+  if (!author) {return { author: null, posts: [], total: 0, totalPages: 0 };}
 
   const supabase = createAdminClient();
   const { count } = await supabase

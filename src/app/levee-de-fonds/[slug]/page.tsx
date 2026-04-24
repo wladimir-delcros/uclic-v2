@@ -70,7 +70,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (isNumericSlug(slug)) {
     const page = parseInt(slug, 10);
-    if (page < 2) return { title: 'Levées de fonds' };
+    if (page < 2) {return { title: 'Levées de fonds' };}
     const title = `Levées de fonds startups françaises — Page ${page}`;
     const description = `Page ${page} de la veille levées de fonds Uclic.`;
     return {
@@ -140,10 +140,10 @@ export default async function LeveeDetailPage({ params }: PageProps) {
 
   if (isNumericSlug(slug)) {
     const page = parseInt(slug, 10);
-    if (!Number.isInteger(page) || page < 1) notFound();
-    if (page === 1) redirect('/levee-de-fonds');
+    if (!Number.isInteger(page) || page < 1) {notFound();}
+    if (page === 1) {redirect('/levee-de-fonds');}
     const { levees, total, totalPages } = await getLeveesPaginated(page, LEVEE_PER_PAGE);
-    if (page > totalPages || levees.length === 0) notFound();
+    if (page > totalPages || levees.length === 0) {notFound();}
     return (
       <LeveeListingSection
         levees={levees}

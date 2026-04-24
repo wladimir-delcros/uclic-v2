@@ -94,7 +94,7 @@ export default function WorkflowGraph({ n8nJson, nodeDescriptions = {} }: Workfl
         group.forEach((c) => {
           const source = fromName;
           const target = c.node;
-          if (!source || !target) return;
+          if (!source || !target) {return;}
           const id = `${source}-${target}-${edges.length}`;
           edges.push({
             id,

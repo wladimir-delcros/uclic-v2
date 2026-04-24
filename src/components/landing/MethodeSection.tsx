@@ -721,23 +721,23 @@ function FeaturedVideos() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
 
   useEffect(() => {
-    if (openIdx === null) return;
+    if (openIdx === null) {return;}
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpenIdx(null);
+      if (e.key === 'Escape') {setOpenIdx(null);}
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, [openIdx]);
 
   const Icon = ({ platform, size = 22 }: { platform: VideoSource; size?: number }) => {
-    if (platform === 'youtube') return <YoutubeIcon size={size} />;
-    if (platform === 'linkedin') return <LinkedinIcon size={size} />;
+    if (platform === 'youtube') {return <YoutubeIcon size={size} />;}
+    if (platform === 'linkedin') {return <LinkedinIcon size={size} />;}
     return <SpotifyIcon size={size} />;
   };
 
   const platformColor = (p: VideoSource) => {
-    if (p === 'youtube') return '#FF0000';
-    if (p === 'linkedin') return '#0A66C2';
+    if (p === 'youtube') {return '#FF0000';}
+    if (p === 'linkedin') {return '#0A66C2';}
     return '#1DB954';
   };
 
@@ -877,7 +877,7 @@ export default function MethodeSection() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const idx = stepRefs.findIndex((r) => r.current === entry.target);
-            if (idx >= 0) setActive(idx);
+            if (idx >= 0) {setActive(idx);}
           }
         });
       },

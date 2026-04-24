@@ -69,7 +69,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ActivityPage({ params }: PageProps) {
   const { service: serviceSlug, category: categorySlug, activity: activitySlug } = await params;
   const data = await getRegionsForActivity(serviceSlug, categorySlug, activitySlug);
-  if (!data) notFound();
+  if (!data) {notFound();}
   const { service, category, activity, regions } = data;
 
   const faqs = await getScrapingFaqs({

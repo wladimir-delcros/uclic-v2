@@ -19,7 +19,7 @@ export async function getLegalPageBySlug(slug: string): Promise<LegalPage | null
     .eq('slug', slug)
     .eq('status', 'publish')
     .maybeSingle();
-  if (error || !data) return null;
+  if (error || !data) {return null;}
   return data as LegalPage;
 }
 

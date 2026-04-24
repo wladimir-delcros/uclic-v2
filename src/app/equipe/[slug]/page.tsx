@@ -30,7 +30,7 @@ export async function generateStaticParams() {
 
 function buildDescription(member: TeamMember): string {
   const extrait = member.equipeFields.extrait?.trim();
-  if (extrait) return extrait;
+  if (extrait) {return extrait;}
   const role = member.equipeFields.role || 'Expert Growth';
   return `${member.title}, ${role} chez Uclic. Expert growth marketing et stratégies data-driven pour accélérer la croissance des entreprises.`;
 }
@@ -125,7 +125,7 @@ export default async function TeamMemberDetailPage({ params }: PageProps) {
       url: SITE_URL,
     },
   };
-  if (sameAs.length > 0) personSchema.sameAs = sameAs;
+  if (sameAs.length > 0) {personSchema.sameAs = sameAs;}
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',

@@ -64,7 +64,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function CategoryPage({ params }: PageProps) {
   const { service: serviceSlug, category: categorySlug } = await params;
   const data = await getActivitiesByCategory(serviceSlug, categorySlug);
-  if (!data) notFound();
+  if (!data) {notFound();}
   const { service, category, activities } = data;
 
   const faqs = await getScrapingFaqs({

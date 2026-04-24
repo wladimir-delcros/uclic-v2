@@ -27,7 +27,7 @@ export function normalCdf(z: number): number {
 
 /** Inverse of the standard normal CDF (Beasley-Springer-Moro approximation). */
 export function normalInverseCdf(p: number): number {
-  if (p <= 0 || p >= 1) throw new Error('p must be in (0, 1)');
+  if (p <= 0 || p >= 1) {throw new Error('p must be in (0, 1)');}
   const a = [-39.6968302866538, 220.946098424521, -275.928510446969, 138.357751867269, -30.6647980661472, 2.50662827745924];
   const b = [-54.4760987982241, 161.585836858041, -155.698979859887, 66.8013118877197, -13.2806815528857];
   const c = [-0.00778489400243029, -0.322396458041136, -2.40075827716184, -2.54973253934373, 4.37466414146497, 2.93816398269878];

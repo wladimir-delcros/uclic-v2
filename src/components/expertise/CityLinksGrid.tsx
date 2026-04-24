@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function CityLinksGrid({ cities, label, subtitle }: Props) {
-  if (cities.length === 0) return null;
+  if (cities.length === 0) {return null;}
   return (
     <section className="relative py-16 lg:py-20 border-t border-[color:var(--border-subtle)]">
       <div className="relative z-10 max-w-[1200px] mx-auto px-5 lg:px-10">

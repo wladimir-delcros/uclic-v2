@@ -7,7 +7,7 @@ import { getAuthUrl, getAuthAnonKey } from './config';
  * This is used to refresh auth sessions - ALWAYS uses online Supabase
  */
 export async function updateSession(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
+  const supabaseResponse = NextResponse.next({
     request,
   });
 

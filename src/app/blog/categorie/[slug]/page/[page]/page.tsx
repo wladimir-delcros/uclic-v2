@@ -29,7 +29,7 @@ export async function generateStaticParams() {
   const params: Array<{ slug: string; page: string }> = [];
   for (const cat of cats) {
     const count = cat.count || 0;
-    if (count <= PER_PAGE) continue;
+    if (count <= PER_PAGE) {continue;}
     const totalPages = Math.ceil(count / PER_PAGE);
     const capped = Math.min(totalPages, MAX_PRERENDER_PAGES_PER_CAT);
     // Pages 2..capped ; page 1 est servie par /blog/categorie/[slug]/page.tsx
@@ -69,13 +69,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function BlogCategoryPaginatedPage({ params }: PageProps) {
   const { slug, page: pageStr } = await params;
   const page = parseInt(pageStr, 10);
-  if (!Number.isInteger(page) || page < 1) notFound();
-  if (page === 1) redirect(`/blog/categorie/${slug}`);
+  if (!Number.isInteger(page) || page < 1) {notFound();}
+  if (page === 1) {redirect(`/blog/categorie/${slug}`);}
 
   const cat = await getBlogCategoryBySlug(slug);
-  if (!cat) notFound();
+  if (!cat) {notFound();}
   const { posts, total, totalPages } = await getPostsByCategory(slug, page, PER_PAGE);
-  if (page > totalPages) notFound();
+  if (page > totalPages) {notFound();}
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',

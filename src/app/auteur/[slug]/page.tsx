@@ -101,7 +101,7 @@ function formatDate(iso: string): string {
 export default async function AuthorPage({ params }: PageProps) {
   const { slug } = await params;
   const author = await getAuthorBySlug(slug);
-  if (!author) notFound();
+  if (!author) {notFound();}
   const posts = await getPostsByAuthorId(author.id, 24);
 
   const personSchema = {

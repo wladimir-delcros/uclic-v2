@@ -83,13 +83,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function MeilleureAgenceSlugPage({ params }: PageProps) {
   const { slug } = await params;
   const parsed = await parseSlug(slug);
-  if (!parsed) notFound();
+  if (!parsed) {notFound();}
 
   const competitors = await getCompetitorsByExpertiseAndCity(
     parsed.expertise,
     parsed.ville
   );
-  if (competitors.length === 0) notFound();
+  if (competitors.length === 0) {notFound();}
 
   const serviceName = parsed.expertise.replace(/^Agence\s+/i, '').trim();
   const currentYear = new Date().getFullYear();

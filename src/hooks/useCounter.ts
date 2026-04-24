@@ -9,7 +9,7 @@ import { animate, useMotionValue, useReducedMotion } from 'framer-motion';
 function parseKpi(raw: string) {
   // Match optional prefix (non-digit / non-comma chars), the number (with comma decimal), then optional suffix.
   const match = raw.match(/^(.*?)([0-9]+(?:[.,][0-9]+)?)(.*)$/);
-  if (!match) return { prefix: '', number: 0, decimals: 0, suffix: raw, raw };
+  if (!match) {return { prefix: '', number: 0, decimals: 0, suffix: raw, raw };}
   const [, prefix, numStr, suffix] = match;
   const normalized = numStr.replace(',', '.');
   const number = parseFloat(normalized);
@@ -41,7 +41,7 @@ export function useCounter(raw: string, inView: boolean, duration = 1.8) {
   useEffect(() => {
     const { prefix, suffix, decimals, number } = parsed.current;
 
-    if (!inView) return;
+    if (!inView) {return;}
 
     if (reduce) {
       setDisplay(`${prefix}${formatFr(number, decimals)}${suffix}`);

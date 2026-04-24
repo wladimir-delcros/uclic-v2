@@ -27,7 +27,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const { author } = await getPostsByAuthor(slug, 1, 1);
-  if (!author) return { title: 'Auteur introuvable', robots: { index: false, follow: false } };
+  if (!author) {return { title: 'Auteur introuvable', robots: { index: false, follow: false } };}
   const title = `${author.name} — Articles sur le blog`;
   const description =
     author.bio ||
@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function BlogAuthorPage({ params }: PageProps) {
   const { slug } = await params;
   const { author, posts, total, totalPages } = await getPostsByAuthor(slug, 1, PER_PAGE);
-  if (!author) notFound();
+  if (!author) {notFound();}
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',

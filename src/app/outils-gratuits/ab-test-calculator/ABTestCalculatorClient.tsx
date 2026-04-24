@@ -12,7 +12,7 @@ function fmtPct(n: number, digits = 2): string {
 }
 
 function fmtNum(n: number, digits = 3): string {
-  if (!Number.isFinite(n)) return '—';
+  if (!Number.isFinite(n)) {return '—';}
   return n.toFixed(digits);
 }
 

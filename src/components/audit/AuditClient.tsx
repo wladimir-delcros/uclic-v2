@@ -43,7 +43,7 @@ export default function AuditClient() {
   const bookingTracked = useRef(false);
 
   const preconnectHubSpot = useCallback(() => {
-    if (preconnected.current) return;
+    if (preconnected.current) {return;}
     preconnected.current = true;
     const link = document.createElement('link');
     link.rel = 'preconnect';

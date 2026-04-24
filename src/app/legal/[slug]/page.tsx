@@ -36,7 +36,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const page = await getLegalPageBySlug(slug);
-  if (!page) return { title: 'Document introuvable', robots: { index: false, follow: false } };
+  if (!page) {return { title: 'Document introuvable', robots: { index: false, follow: false } };}
   const title = page.title;
   const description = `${page.title} — Uclic.`;
   return {
@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function LegalDynamicPage({ params }: PageProps) {
   const { slug } = await params;
   const page = await getLegalPageBySlug(slug);
-  if (!page) notFound();
+  if (!page) {notFound();}
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',

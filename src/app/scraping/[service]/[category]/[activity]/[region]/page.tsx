@@ -98,7 +98,7 @@ export default async function RegionPage({ params }: PageProps) {
     activitySlug,
     regionSlug
   );
-  if (!data) notFound();
+  if (!data) {notFound();}
   const { service, category, activity, region, departments } = data;
 
   const faqs = await getScrapingFaqs({

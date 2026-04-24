@@ -129,7 +129,7 @@ export async function getCategoryByServiceAndSlug(
   categorySlug: string
 ): Promise<{ service: ScrapingService; category: ActivityCategory } | null> {
   const service = await getScrapingServiceBySlug(serviceSlug);
-  if (!service) return null;
+  if (!service) {return null;}
 
   const supa = createAdminClient();
   const { data: category } = await supa
@@ -138,7 +138,7 @@ export async function getCategoryByServiceAndSlug(
     .eq('slug', categorySlug)
     .maybeSingle();
 
-  if (!category) return null;
+  if (!category) {return null;}
   return { service, category: category as ActivityCategory };
 }
 
@@ -156,7 +156,7 @@ export async function getActivitiesByCategory(
   activities: Activity[];
 } | null> {
   const base = await getCategoryByServiceAndSlug(serviceSlug, categorySlug);
-  if (!base) return null;
+  if (!base) {return null;}
 
   const supa = createAdminClient();
   const { data: catActs } = await supa
@@ -207,7 +207,7 @@ export async function getActivityByPath(
   activity: Activity;
 } | null> {
   const base = await getCategoryByServiceAndSlug(serviceSlug, categorySlug);
-  if (!base) return null;
+  if (!base) {return null;}
 
   const supa = createAdminClient();
   const { data: activity } = await supa
@@ -217,7 +217,7 @@ export async function getActivityByPath(
     .eq('category_id', base.category.id)
     .maybeSingle();
 
-  if (!activity) return null;
+  if (!activity) {return null;}
   return { ...base, activity: activity as Activity };
 }
 
@@ -236,7 +236,7 @@ export async function getRegionsForActivity(
   regions: Region[];
 } | null> {
   const base = await getActivityByPath(serviceSlug, categorySlug, activitySlug);
-  if (!base) return null;
+  if (!base) {return null;}
 
   const supa = createAdminClient();
   const { data: publishedRegionRows } = await supa
@@ -286,7 +286,7 @@ export async function getRegionByPath(
   region: Region;
 } | null> {
   const base = await getActivityByPath(serviceSlug, categorySlug, activitySlug);
-  if (!base) return null;
+  if (!base) {return null;}
 
   const supa = createAdminClient();
   const { data: region } = await supa
@@ -295,7 +295,7 @@ export async function getRegionByPath(
     .eq('slug', regionSlug)
     .maybeSingle();
 
-  if (!region) return null;
+  if (!region) {return null;}
   return { ...base, region: region as Region };
 }
 
@@ -316,7 +316,7 @@ export async function getDepartmentsForRegion(
   departments: Department[];
 } | null> {
   const base = await getRegionByPath(serviceSlug, categorySlug, activitySlug, regionSlug);
-  if (!base) return null;
+  if (!base) {return null;}
 
   const supa = createAdminClient();
   const { data: publishedDeptRows } = await supa
@@ -371,7 +371,7 @@ export async function getDepartmentByPath(
   seoContent: SeoPageContent | null;
 } | null> {
   const base = await getRegionByPath(serviceSlug, categorySlug, activitySlug, regionSlug);
-  if (!base) return null;
+  if (!base) {return null;}
 
   const supa = createAdminClient();
   const { data: department } = await supa
@@ -381,7 +381,7 @@ export async function getDepartmentByPath(
     .eq('region_id', base.region.id)
     .maybeSingle();
 
-  if (!department) return null;
+  if (!department) {return null;}
 
   const { data: seoRow } = await supa
     .from('seo_pages_queue')
@@ -447,7 +447,7 @@ export async function getScrapingFaqs(scope: {
       .not('faqs', 'is', null)
       .limit(1);
     for (const [k, v] of Object.entries(f)) {
-      if (!v) continue;
+      if (!v) {continue;}
       q = q.eq(k, v);
     }
     const { data } = await q;
@@ -537,7 +537,7 @@ export async function getAllScrapingLevelSlugs(level: ScrapingLevel): Promise<Si
     for (const s of serviceRows) {
       for (const a of activityRows) {
         const catSlug = catSlugById.get(a.category_id);
-        if (!catSlug) continue;
+        if (!catSlug) {continue;}
         out.push({ service: s.slug, category: catSlug, activity: a.slug });
       }
     }
@@ -552,7 +552,7 @@ export async function getAllScrapingLevelSlugs(level: ScrapingLevel): Promise<Si
     for (const s of serviceRows) {
       for (const a of activityRows) {
         const catSlug = catSlugById.get(a.category_id);
-        if (!catSlug) continue;
+        if (!catSlug) {continue;}
         for (const r of regionRows) {
           out.push({
             service: s.slug,
@@ -578,10 +578,10 @@ export async function getAllScrapingLevelSlugs(level: ScrapingLevel): Promise<Si
   for (const s of serviceRows) {
     for (const a of activityRows) {
       const catSlug = catSlugById.get(a.category_id);
-      if (!catSlug) continue;
+      if (!catSlug) {continue;}
       for (const d of deptRows) {
         const regionSlug = regionSlugById.get(d.region_id);
-        if (!regionSlug) continue;
+        if (!regionSlug) {continue;}
         out.push({
           service: s.slug,
           category: catSlug,
@@ -664,16 +664,16 @@ export async function getAllScrapingCategoriesForSitemap(): Promise<SitemapCateg
 
   const seen = new Map<string, string>();
   for (const row of publishedRows) {
-    if (!row.activity_id) continue;
+    if (!row.activity_id) {continue;}
     const catId = activityCategory.get(row.activity_id);
-    if (!catId) continue;
+    if (!catId) {continue;}
     const svc = serviceSlug.get(row.service_id);
     const cat = categoryInfo.get(catId);
-    if (!svc || !cat) continue;
+    if (!svc || !cat) {continue;}
     const key = `${svc}|${cat.slug}`;
     const lm = row.updated_at || cat.updated_at || new Date().toISOString();
     const existing = seen.get(key);
-    if (!existing || lm > existing) seen.set(key, lm);
+    if (!existing || lm > existing) {seen.set(key, lm);}
   }
 
   return [...seen.entries()].map(([key, lastmod]) => {
@@ -725,16 +725,16 @@ export async function getAllScrapingActivitiesForSitemap(): Promise<SitemapActiv
 
   const seen = new Map<string, string>();
   for (const row of publishedRows) {
-    if (!row.activity_id) continue;
+    if (!row.activity_id) {continue;}
     const act = activityInfo.get(row.activity_id);
     const svc = serviceSlug.get(row.service_id);
-    if (!act || !svc) continue;
+    if (!act || !svc) {continue;}
     const cat = categorySlug.get(act.category_id);
-    if (!cat) continue;
+    if (!cat) {continue;}
     const key = `${svc}|${cat}|${act.slug}`;
     const lm = row.updated_at || act.updated_at || new Date().toISOString();
     const existing = seen.get(key);
-    if (!existing || lm > existing) seen.set(key, lm);
+    if (!existing || lm > existing) {seen.set(key, lm);}
   }
 
   return [...seen.entries()].map(([key, lastmod]) => {
@@ -787,17 +787,17 @@ export async function getAllScrapingRegionsForSitemap(): Promise<SitemapRegionEn
 
   const seen = new Map<string, string>();
   for (const row of publishedRows) {
-    if (!row.activity_id || !row.region_id) continue;
+    if (!row.activity_id || !row.region_id) {continue;}
     const act = activityInfo.get(row.activity_id);
     const svc = serviceSlug.get(row.service_id);
     const reg = regionSlug.get(row.region_id);
-    if (!act || !svc || !reg) continue;
+    if (!act || !svc || !reg) {continue;}
     const cat = categorySlug.get(act.category_id);
-    if (!cat) continue;
+    if (!cat) {continue;}
     const key = `${svc}|${cat}|${act.slug}|${reg}`;
     const lm = row.updated_at || new Date().toISOString();
     const existing = seen.get(key);
-    if (!existing || lm > existing) seen.set(key, lm);
+    if (!existing || lm > existing) {seen.set(key, lm);}
   }
 
   return [...seen.entries()].map(([key, lastmod]) => {
@@ -858,15 +858,15 @@ export async function getAllScrapingDepartmentsForSitemap(): Promise<SitemapDepa
 
   const out: SitemapDepartmentEntry[] = [];
   for (const row of publishedRows) {
-    if (!row.activity_id || !row.region_id || !row.department_id) continue;
+    if (!row.activity_id || !row.region_id || !row.department_id) {continue;}
     const act = activityInfo.get(row.activity_id);
     const dept = departmentInfo.get(row.department_id);
     const svc = serviceSlug.get(row.service_id);
     const reg = regionSlug.get(row.region_id);
-    if (!act || !dept || !svc || !reg) continue;
-    if (dept.region_id !== row.region_id) continue;
+    if (!act || !dept || !svc || !reg) {continue;}
+    if (dept.region_id !== row.region_id) {continue;}
     const cat = categorySlug.get(act.category_id);
-    if (!cat) continue;
+    if (!cat) {continue;}
     out.push({
       service: svc,
       category: cat,
@@ -904,7 +904,7 @@ export async function getRelatedActivitiesForDepartment(
         .filter((v): v is string => !!v && v !== excludeActivityId)
     )
   );
-  if (ids.length === 0) return [];
+  if (ids.length === 0) {return [];}
 
   const { data: acts } = await supa
     .from('activities')

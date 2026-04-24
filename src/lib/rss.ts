@@ -5,7 +5,7 @@ import type { BlogPost } from './blog';
  */
 export function formatDateToRFC822(date: string | Date): string {
   const d = typeof date === 'string' ? new Date(date) : date;
-  if (isNaN(d.getTime())) return formatDateToRFC822(new Date());
+  if (isNaN(d.getTime())) {return formatDateToRFC822(new Date());}
 
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -21,7 +21,7 @@ export function formatDateToRFC822(date: string | Date): string {
 
 /** Strip HTML tags, decode common entities, trim. */
 export function stripHtml(html: string): string {
-  if (!html) return '';
+  if (!html) {return '';}
   return html
     .replace(/<[^>]*>/g, '')
     .replace(/&nbsp;/g, ' ')
@@ -36,7 +36,7 @@ export function stripHtml(html: string): string {
 
 /** Escape XML entities. */
 export function escapeXml(text: string): string {
-  if (!text) return '';
+  if (!text) {return '';}
   return text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')

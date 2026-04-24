@@ -65,7 +65,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function CasClientDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const cas = await getCasClientBySlug(slug);
-  if (!cas) notFound();
+  if (!cas) {notFound();}
 
   const all = await getAllCasClients();
   const currentIdx = all.findIndex((c) => c.slug === cas.slug);

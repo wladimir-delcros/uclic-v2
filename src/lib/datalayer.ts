@@ -18,7 +18,7 @@ declare global {
 }
 
 function gtag(command: string, eventName: string, params?: object) {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined') {return;}
   window.dataLayer = window.dataLayer || [];
   if (command === 'event') {
     window.dataLayer.push({ event: eventName, ...params });
@@ -37,7 +37,7 @@ export function trackEvent(eventName: string, params?: GtagParams) {
  * Push page metadata into the dataLayer on every navigation.
  */
 export function trackPageData(pathname: string) {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined') {return;}
 
   const pageType = getPageType(pathname);
 
@@ -50,19 +50,19 @@ export function trackPageData(pathname: string) {
 }
 
 function getPageType(pathname: string): string {
-  if (pathname === '/') return 'homepage';
-  if (pathname.startsWith('/audit')) return 'audit';
-  if (pathname.startsWith('/contact')) return 'contact';
-  if (pathname.startsWith('/expertise')) return 'expertise';
-  if (pathname.startsWith('/cas-clients')) return 'case_study';
-  if (pathname.startsWith('/blog')) return 'blog';
-  if (pathname.startsWith('/toolbox')) return 'toolbox';
-  if (pathname.startsWith('/scraping')) return 'scraping';
-  if (pathname.startsWith('/levee-de-fonds')) return 'fundraising';
-  if (pathname.startsWith('/meilleure-agence')) return 'best_agency';
-  if (pathname === '/merci') return 'thank_you';
-  if (pathname.startsWith('/outils-gratuits')) return 'free_tools';
-  if (pathname.startsWith('/simulation')) return 'simulation';
+  if (pathname === '/') {return 'homepage';}
+  if (pathname.startsWith('/audit')) {return 'audit';}
+  if (pathname.startsWith('/contact')) {return 'contact';}
+  if (pathname.startsWith('/expertise')) {return 'expertise';}
+  if (pathname.startsWith('/cas-clients')) {return 'case_study';}
+  if (pathname.startsWith('/blog')) {return 'blog';}
+  if (pathname.startsWith('/toolbox')) {return 'toolbox';}
+  if (pathname.startsWith('/scraping')) {return 'scraping';}
+  if (pathname.startsWith('/levee-de-fonds')) {return 'fundraising';}
+  if (pathname.startsWith('/meilleure-agence')) {return 'best_agency';}
+  if (pathname === '/merci') {return 'thank_you';}
+  if (pathname.startsWith('/outils-gratuits')) {return 'free_tools';}
+  if (pathname.startsWith('/simulation')) {return 'simulation';}
   return 'other';
 }
 
@@ -70,7 +70,7 @@ function getPageType(pathname: string): string {
  * generate_lead – fires on /merci after a form submission or booking.
  */
 export function trackGenerateLead(params: { source: string; email?: string }) {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined') {return;}
 
   // GA4
   if (window.gtag) {
@@ -118,7 +118,7 @@ export function trackCtaClick(params: {
   cta_location: string;
   destination?: string;
 }) {
-  if (typeof window === 'undefined' || !window.gtag) return;
+  if (typeof window === 'undefined' || !window.gtag) {return;}
 
   window.gtag('event', 'cta_click', {
     cta_name: params.cta_name,
@@ -134,7 +134,7 @@ export function trackContactClick(params: {
   method: 'phone' | 'email' | 'whatsapp';
   location: string;
 }) {
-  if (typeof window === 'undefined' || !window.gtag) return;
+  if (typeof window === 'undefined' || !window.gtag) {return;}
 
   window.gtag('event', 'contact_click', {
     method: params.method,
@@ -143,7 +143,7 @@ export function trackContactClick(params: {
 }
 
 export function trackBookingAbandon(location: string, timeSpentSeconds: number) {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined') {return;}
 
   if (window.gtag) {
     window.gtag('event', 'booking_abandon', {
@@ -166,7 +166,7 @@ export function trackBookingAbandon(location: string, timeSpentSeconds: number) 
  * Sends to GA4, Google Ads, AND Meta Pixel for full attribution.
  */
 export function trackBookingClick(location: string) {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined') {return;}
 
   // GA4
   if (window.gtag) {
@@ -208,7 +208,7 @@ export function trackBookingClick(location: string) {
  * Fires once per threshold per page. Sends to GA4 + Meta Pixel + Google Ads proxy.
  */
 export function initScrollDepthTracking() {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined') {return;}
 
   const thresholds = [25, 50, 75, 100];
   const fired = new Set<number>();
@@ -216,7 +216,7 @@ export function initScrollDepthTracking() {
   const handleScroll = () => {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    if (docHeight <= 0) return;
+    if (docHeight <= 0) {return;}
 
     const percent = Math.round((scrollTop / docHeight) * 100);
 
@@ -271,11 +271,11 @@ export function initScrollDepthTracking() {
  *   data-ga-location="audit-hero"
  */
 export function initAutoTracking() {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined') {return;}
 
   document.addEventListener('click', (e) => {
     const el = (e.target as HTMLElement).closest<HTMLElement>('[data-ga-event]');
-    if (!el) return;
+    if (!el) {return;}
 
     const event = el.dataset.gaEvent;
 

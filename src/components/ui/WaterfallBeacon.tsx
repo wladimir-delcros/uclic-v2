@@ -41,7 +41,7 @@ export default function WaterfallBeacon({ className = '', drawDuration = 1.8 }: 
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el) {return;}
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {

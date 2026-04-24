@@ -8,7 +8,7 @@ const STORAGE_KEY = 'theme';
 const DEFAULT_THEME: Theme = 'dark';
 
 function readStoredTheme(): Theme {
-  if (typeof window === 'undefined') return DEFAULT_THEME;
+  if (typeof window === 'undefined') {return DEFAULT_THEME;}
   const stored = window.localStorage.getItem(STORAGE_KEY);
   return stored === 'light' ? 'light' : 'dark';
 }

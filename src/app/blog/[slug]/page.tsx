@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (isNumericSlug(slug)) {
     const page = parseInt(slug, 10);
-    if (page < 2) return { title: 'Blog' };
+    if (page < 2) {return { title: 'Blog' };}
     const title = `Blog Growth Marketing & IA — Page ${page}`;
     const description = `Page ${page} du blog Uclic : Growth Marketing, Sales Ops, IA, Product Marketing.`;
     return {
@@ -121,10 +121,10 @@ export default async function BlogDetailPage({ params }: PageProps) {
   // Numeric slug → pagination dispatch
   if (isNumericSlug(slug)) {
     const page = parseInt(slug, 10);
-    if (!Number.isInteger(page) || page < 1) notFound();
-    if (page === 1) redirect('/blog');
+    if (!Number.isInteger(page) || page < 1) {notFound();}
+    if (page === 1) {redirect('/blog');}
     const { posts, total, totalPages } = await getLatestPosts(BLOG_PER_PAGE, page);
-    if (page > totalPages) notFound();
+    if (page > totalPages) {notFound();}
     return (
       <BlogListingSection
         posts={posts}
@@ -145,7 +145,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
   }
 
   const post = await getPostBySlug(slug);
-  if (!post) notFound();
+  if (!post) {notFound();}
 
   const reading = post.reading_time || estimateReadingTime(post.content || '');
 

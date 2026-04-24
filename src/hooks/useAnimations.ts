@@ -97,7 +97,7 @@ export function useScrollAnimation<T extends HTMLElement = HTMLDivElement>(
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el) {return;}
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -112,7 +112,7 @@ export function useScrollAnimation<T extends HTMLElement = HTMLDivElement>(
               observer.unobserve(entry.target);
             }
           } else if (repeat) {
-            if (timerRef.current) clearTimeout(timerRef.current);
+            if (timerRef.current) {clearTimeout(timerRef.current);}
             setIsVisible(false);
           }
         });
@@ -124,7 +124,7 @@ export function useScrollAnimation<T extends HTMLElement = HTMLDivElement>(
 
     return () => {
       observer.disconnect();
-      if (timerRef.current) clearTimeout(timerRef.current);
+      if (timerRef.current) {clearTimeout(timerRef.current);}
     };
   }, [threshold, rootMargin, repeat, delay]);
 
@@ -172,11 +172,11 @@ export function useCountUp<T extends HTMLElement = HTMLSpanElement>(
   );
 
   const runAnimation = useCallback(() => {
-    if (hasStarted) return;
+    if (hasStarted) {return;}
     setHasStarted(true);
 
     const animate = (timestamp: number) => {
-      if (!startTimeRef.current) startTimeRef.current = timestamp;
+      if (!startTimeRef.current) {startTimeRef.current = timestamp;}
       const elapsed = timestamp - startTimeRef.current;
       const progress = Math.min(elapsed / duration, 1);
       const easedProgress = easing(progress);
@@ -196,7 +196,7 @@ export function useCountUp<T extends HTMLElement = HTMLSpanElement>(
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el) {return;}
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -215,7 +215,7 @@ export function useCountUp<T extends HTMLElement = HTMLSpanElement>(
 
     return () => {
       observer.disconnect();
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (rafRef.current) {cancelAnimationFrame(rafRef.current);}
     };
   }, [runAnimation, intersectionOptions.threshold, intersectionOptions.rootMargin]);
 
@@ -254,7 +254,7 @@ export function useStaggerChildren<T extends HTMLElement = HTMLDivElement>(
 
   useEffect(() => {
     const container = ref.current;
-    if (!container) return;
+    if (!container) {return;}
 
     // Applique les délais CSS sur les enfants directs
     const children = Array.from(container.children) as HTMLElement[];

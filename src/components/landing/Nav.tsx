@@ -35,9 +35,9 @@ export default function Nav() {
         lastY = y;
         return;
       }
-      if (Math.abs(y - lastY) < delta) return;
-      if (y > lastY) setHidden(true);
-      else setHidden(false);
+      if (Math.abs(y - lastY) < delta) {return;}
+      if (y > lastY) {setHidden(true);}
+      else {setHidden(false);}
       lastY = y;
     };
 
@@ -63,7 +63,7 @@ export default function Nav() {
 
   // Close on escape (desktop panels)
   useEffect(() => {
-    if (!openPanel) return;
+    if (!openPanel) {return;}
     const h = (e: KeyboardEvent) => e.key === 'Escape' && setOpenPanel(null);
     window.addEventListener('keydown', h);
     return () => window.removeEventListener('keydown', h);

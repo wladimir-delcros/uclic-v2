@@ -48,7 +48,7 @@ async function getServiceData(serviceSlug: string): Promise<{ service: ScrapingS
     .eq('slug', serviceSlug)
     .single();
 
-  if (!service) return null;
+  if (!service) {return null;}
 
   const { data: publishedActivityRows } = await supa
     .from('seo_pages_queue')
@@ -123,7 +123,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ScrapingServicePage({ params }: PageProps) {
   const { service: slug } = await params;
   const data = await getServiceData(slug);
-  if (!data) notFound();
+  if (!data) {notFound();}
   const { service, categories } = data;
 
   const breadcrumbSchema = {

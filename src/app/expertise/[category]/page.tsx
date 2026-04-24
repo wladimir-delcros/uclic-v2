@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ExpertiseCategoryPage({ params }: PageProps) {
   const { category } = await params;
   const data = await getExpertiseCategoryBySlug(category);
-  if (!data) notFound();
+  if (!data) {notFound();}
   const fields = data.expertiseFields;
   const [posts, cities] = await Promise.all([
     getExpertisesByCategory(data.slug),

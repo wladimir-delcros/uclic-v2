@@ -72,7 +72,7 @@ export async function getAllCasClientSlugs(): Promise<string[]> {
  * Cas-client complet avec content_html.
  */
 export async function getCasClientBySlug(slug: string): Promise<CasClientDetail | null> {
-  if (!slug) return null;
+  if (!slug) {return null;}
   const supa = createAdminClient();
   const { data, error } = await supa
     .from('cas_clients')
@@ -86,7 +86,7 @@ export async function getCasClientBySlug(slug: string): Promise<CasClientDetail 
     console.error('[cas_clients.bySlug]', slug, error);
     return null;
   }
-  if (!data) return null;
+  if (!data) {return null;}
   return {
     id: data.id as number,
     title: (data.title as string) || '',

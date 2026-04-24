@@ -7,7 +7,7 @@ import SectionAmbience from '@/components/ui/SectionAmbience';
 import { sampleSizeForMde } from '@/lib/stats';
 
 function fmtInt(n: number): string {
-  if (!Number.isFinite(n)) return '—';
+  if (!Number.isFinite(n)) {return '—';}
   return new Intl.NumberFormat('fr-FR').format(Math.ceil(n));
 }
 
@@ -41,7 +41,7 @@ export default function MDECalculatorClient() {
 
   const daysNeeded = useMemo(() => {
     const daily = parseInt(dailyVisitors, 10);
-    if (!result || !Number.isFinite(daily) || daily <= 0) return null;
+    if (!result || !Number.isFinite(daily) || daily <= 0) {return null;}
     return Math.ceil(result.totalSampleSize / daily);
   }, [result, dailyVisitors]);
 

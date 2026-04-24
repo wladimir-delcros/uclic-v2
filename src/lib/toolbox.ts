@@ -70,10 +70,10 @@ async function getToolboxStorageMap(supabase: SupabaseAdmin): Promise<Map<string
     for (const ext of exts) {
       if (lower.endsWith(`_logo.${ext}`)) {
         const slug = lower.replace(`_logo.${ext}`, '');
-        if (!map.has(slug)) map.set(slug, file);
+        if (!map.has(slug)) {map.set(slug, file);}
       } else if (lower.endsWith(`.${ext}`)) {
         const slug = lower.replace(`.${ext}`, '');
-        if (!map.has(slug)) map.set(slug, file);
+        if (!map.has(slug)) {map.set(slug, file);}
       }
     }
   }
@@ -168,7 +168,7 @@ export async function getToolboxItemBySlug(slug: string): Promise<ToolboxItem | 
     .eq('slug', slug)
     .single();
 
-  if (error || !data) return null;
+  if (error || !data) {return null;}
 
   const row = data as Record<string, unknown>;
   const storageMap = await getToolboxStorageMap(supabase);

@@ -104,7 +104,7 @@ export default async function DepartmentPage({ params }: PageProps) {
     regionSlug,
     departmentSlug
   );
-  if (!data) notFound();
+  if (!data) {notFound();}
   const { service, category, activity, region, department, seoContent } = data;
 
   const faqs = await getScrapingFaqs({

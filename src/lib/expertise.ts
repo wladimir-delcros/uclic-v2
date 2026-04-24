@@ -322,7 +322,7 @@ export async function getExpertiseBySlug(slug: string): Promise<Expertise | null
     return null;
   }
   
-  if (!data) return null;
+  if (!data) {return null;}
   
   return mapToExpertise(data);
 }
@@ -436,7 +436,7 @@ export async function getExpertiseCategoryBySlug(slug: string): Promise<Expertis
     return null;
   }
   
-  if (!data) return null;
+  if (!data) {return null;}
   
   return {
     id: data.id.toString(),

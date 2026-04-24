@@ -31,7 +31,7 @@ export async function generateStaticParams() {
     .map((p) => {
       // p = "/agence/xxx-yyy" -> slug = ["xxx-yyy"]
       const trimmed = p.startsWith('/agence/') ? p.slice('/agence/'.length) : p;
-      if (!trimmed) return null;
+      if (!trimmed) {return null;}
       return { slug: trimmed.split('/').filter(Boolean) };
     })
     .filter((x): x is { slug: string[] } => x !== null && x.slug.length > 0);
@@ -69,7 +69,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         ? `Agence ${serviceName} a ${cityName}. Pilotage senior, experts canaux, agents IA en production.`
         : `Agence ${serviceName}. Pilotage senior, experts canaux, agents IA en production.`);
   }
-  if (description.length > 160) description = description.substring(0, 157) + '...';
+  if (description.length > 160) {description = description.substring(0, 157) + '...';}
 
   return {
     title: finalTitle,
@@ -95,11 +95,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function AgenceProgrammaticPage({ params }: PageProps) {
   const { slug } = await params;
-  if (!slug || slug.length === 0) notFound();
+  if (!slug || slug.length === 0) {notFound();}
 
   const pathSlug = `/agence/${slug.join('/')}`;
   const result = await getAgencePageByPath(pathSlug);
-  if (!result) notFound();
+  if (!result) {notFound();}
 
   const { fields: f, cityName, citySlug, serviceName, pageType } = result;
 

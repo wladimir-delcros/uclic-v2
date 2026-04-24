@@ -25,7 +25,7 @@ export default function MobilePanel({ isOpen, onClose }: Props) {
 
   // Lock body scroll while open
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) {return;}
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
@@ -35,7 +35,7 @@ export default function MobilePanel({ isOpen, onClose }: Props) {
 
   // Close on escape + focus initial on close button (minimal focus trap)
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) {return;}
     const h = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
     window.addEventListener('keydown', h);
     const t = window.setTimeout(() => closeBtnRef.current?.focus(), 120);

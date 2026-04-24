@@ -50,13 +50,13 @@ export default function ExpertiseBookingSection({
 
   // Fire trackBookingClick once on mount (GA4 + Google Ads 2 conversions + Meta Schedule)
   useEffect(() => {
-    if (mountTracked.current) return;
+    if (mountTracked.current) {return;}
     mountTracked.current = true;
     trackBookingClick(trackLocation);
   }, [trackLocation]);
 
   const preconnectHubSpot = useCallback(() => {
-    if (preconnected.current) return;
+    if (preconnected.current) {return;}
     preconnected.current = true;
     const link = document.createElement('link');
     link.rel = 'preconnect';

@@ -14,7 +14,7 @@ interface Props {
  * - Un spacer vertical entre chaque card force le user à scroller pour « libérer » la suivante.
  */
 export default function PreuveTabs({ cases }: Props) {
-  if (!cases.length) return null;
+  if (!cases.length) {return null;}
 
   return (
     <div className="mt-14 relative">

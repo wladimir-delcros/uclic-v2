@@ -56,7 +56,7 @@ function stripTags(html: string): string {
 
 function looksLikeSpam(rawInner: string): boolean {
   const text = normalize(stripTags(rawInner));
-  if (!text) return false;
+  if (!text) {return false;}
 
   const hasInternalLink = /<a[^>]+href\s*=\s*["'](?:https?:\/\/(?:www\.)?uclic\.fr)?\/(?:expertise|services|meilleure-agence|scraping|agence)/i.test(
     rawInner,
@@ -65,13 +65,13 @@ function looksLikeSpam(rawInner: string): boolean {
   const mentionsCta = CTA_KEYWORDS.some((kw) => text.toLowerCase().includes(kw));
 
   // Strong signal: opening + internal link
-  if (matchesOpening && hasInternalLink) return true;
+  if (matchesOpening && hasInternalLink) {return true;}
   // Medium signal: opening + several CTA keywords
   if (matchesOpening && mentionsCta) {
     const ctaHits = CTA_KEYWORDS.filter((kw) =>
       text.toLowerCase().includes(kw),
     ).length;
-    if (ctaHits >= 2) return true;
+    if (ctaHits >= 2) {return true;}
   }
   return false;
 }
@@ -81,7 +81,7 @@ function looksLikeSpam(rawInner: string): boolean {
  * Also dedupes consecutive near-identical paragraphs.
  */
 export function sanitizeCmsContent(html: string | null | undefined): string {
-  if (!html) return '';
+  if (!html) {return '';}
 
   const seenSignatures = new Set<string>();
   let removedSpam = 0;

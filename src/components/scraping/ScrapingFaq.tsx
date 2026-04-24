@@ -6,7 +6,7 @@ interface Props {
 }
 
 export default function ScrapingFaq({ items, title = 'Questions fréquentes' }: Props) {
-  if (!items || items.length === 0) return null;
+  if (!items || items.length === 0) {return null;}
   return (
     <section className="relative py-16 lg:py-20">
       <div className="relative z-10 max-w-[900px] mx-auto px-5 lg:px-10">

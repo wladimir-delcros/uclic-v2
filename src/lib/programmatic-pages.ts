@@ -209,12 +209,12 @@ export async function getTopAgencePaths(limit = 500): Promise<string[]> {
   const paths: string[] = [];
   if (!expertiseRes.error && expertiseRes.data) {
     for (const r of expertiseRes.data as Array<{ path_slug: string }>) {
-      if (r.path_slug) paths.push(r.path_slug);
+      if (r.path_slug) {paths.push(r.path_slug);}
     }
   }
   if (!categoryRes.error && categoryRes.data) {
     for (const r of categoryRes.data as Array<{ path_slug: string }>) {
-      if (r.path_slug) paths.push(r.path_slug);
+      if (r.path_slug) {paths.push(r.path_slug);}
     }
   }
 
@@ -234,7 +234,7 @@ export async function getOtherCityServices(
   subtitle: string | null;
   type: 'expertise' | 'category';
 }>> {
-  if (!citySlug) return [];
+  if (!citySlug) {return [];}
   const supabase = createAdminClient();
 
   const [expRes, catRes] = await Promise.all([
@@ -317,7 +317,7 @@ export interface CityLink {
 export async function getCityPagesForExpertise(
   expertiseSlug: string,
 ): Promise<CityLink[]> {
-  if (!expertiseSlug) return [];
+  if (!expertiseSlug) {return [];}
   const supabase = createAdminClient();
   const { data } = await supabase
     .from('expertise_city_pages')
@@ -346,7 +346,7 @@ export async function getCityPagesForExpertise(
 export async function getCityPagesForCategory(
   categorySlug: string,
 ): Promise<CityLink[]> {
-  if (!categorySlug) return [];
+  if (!categorySlug) {return [];}
   const supabase = createAdminClient();
   const { data } = await supabase
     .from('expertise_category_city_pages')

@@ -39,7 +39,7 @@ type RawCompetitor = {
 };
 
 function extractDomain(url: string | null): string | null {
-  if (!url) return null;
+  if (!url) {return null;}
   try {
     const urlObj = new URL(url);
     return urlObj.hostname.replace(/^www\./, '').toLowerCase();
@@ -49,7 +49,7 @@ function extractDomain(url: string | null): string | null {
 }
 
 function extractAgencyName(comp: RawCompetitor): string {
-  if (comp.competitor_name.toLowerCase().includes('uclic')) return 'UCLIC';
+  if (comp.competitor_name.toLowerCase().includes('uclic')) {return 'UCLIC';}
   if (comp.competitor_address) {
     const addressMatch = comp.competitor_address.match(/^([^,]+),/);
     if (addressMatch?.[1]) {
@@ -58,7 +58,7 @@ function extractAgencyName(comp: RawCompetitor): string {
         .replace(/^(Agence|Agence\s+SEA|Agence\s+SEO)\s+/i, '')
         .replace(/\s+(Agence|SEA|SEO)$/i, '')
         .trim();
-      if (cleaned && cleaned.length < 50) return cleaned;
+      if (cleaned && cleaned.length < 50) {return cleaned;}
     }
   }
   if (comp.competitor_website) {
@@ -69,7 +69,7 @@ function extractAgencyName(comp: RawCompetitor): string {
         .split(/[-_]/)
         .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
         .join(' ');
-      if (formatted && formatted.length < 50) return formatted;
+      if (formatted && formatted.length < 50) {return formatted;}
     } catch {
       // ignore
     }
@@ -105,13 +105,13 @@ const MARKETING_TYPE_KEYWORDS = [
 ];
 
 function isMarketingRelatedType(competitorTypes: string | null): boolean {
-  if (!competitorTypes || !competitorTypes.trim()) return false;
+  if (!competitorTypes || !competitorTypes.trim()) {return false;}
   const lower = competitorTypes.toLowerCase();
   return MARKETING_TYPE_KEYWORDS.some((kw) => lower.includes(kw));
 }
 
 function calculateScore(comp: RawCompetitor, isUclic: boolean): number {
-  if (isUclic) return 98;
+  if (isUclic) {return 98;}
   let score = 0;
   if (comp.competitor_rating != null) {
     score += parseFloat(String(comp.competitor_rating)) * 8;
@@ -119,17 +119,17 @@ function calculateScore(comp: RawCompetitor, isUclic: boolean): number {
     score += parseFloat(String(comp.competitor_ai_rating)) * 8;
   }
   const rc = comp.competitor_review_count ?? 0;
-  if (rc >= 200) score += 30;
-  else if (rc >= 100) score += 25;
-  else if (rc >= 50) score += 20;
-  else if (rc >= 20) score += 15;
-  else if (rc >= 10) score += 10;
-  else if (rc >= 5) score += 5;
+  if (rc >= 200) {score += 30;}
+  else if (rc >= 100) {score += 25;}
+  else if (rc >= 50) {score += 20;}
+  else if (rc >= 20) {score += 15;}
+  else if (rc >= 10) {score += 10;}
+  else if (rc >= 5) {score += 5;}
   if (comp.competitor_ai_rating != null && comp.competitor_rating == null) {
     score += parseFloat(String(comp.competitor_ai_rating)) * 4;
   }
-  if (comp.competitor_verified) score += 5;
-  if (comp.competitor_address && comp.competitor_phone) score += 5;
+  if (comp.competitor_verified) {score += 5;}
+  if (comp.competitor_address && comp.competitor_phone) {score += 5;}
   return Math.min(Math.max(Math.round(score), 0), 97);
 }
 
@@ -190,8 +190,8 @@ function deduplicateAndScore(
   }
 
   list.sort((a, b) => {
-    if (a.isUclic && !b.isUclic) return -1;
-    if (!a.isUclic && b.isUclic) return 1;
+    if (a.isUclic && !b.isUclic) {return -1;}
+    if (!a.isUclic && b.isUclic) {return 1;}
     const ra = a.competitor_review_count ?? 0;
     const rb = b.competitor_review_count ?? 0;
     return rb - ra;
@@ -232,7 +232,7 @@ export async function getCompetitorsByExpertiseAndCity(
     .eq('ville', cityName)
     .eq('publish', true);
 
-  if (error || !data?.length) return [];
+  if (error || !data?.length) {return [];}
   return deduplicateAndScore(data as RawCompetitor[]);
 }
 
@@ -256,15 +256,15 @@ export async function getAllMeilleureAgenceSlugs(): Promise<MeilleureAgenceSlug[
     .select('expertise, ville')
     .eq('publish', true);
 
-  if (error || !data?.length) return [];
+  if (error || !data?.length) {return [];}
 
   const seen = new Set<string>();
   const results: MeilleureAgenceSlug[] = [];
 
   for (const row of data as Array<{ expertise: string | null; ville: string | null }>) {
-    if (!row.expertise || !row.ville) continue;
+    if (!row.expertise || !row.ville) {continue;}
     const key = `${row.expertise}|${row.ville}`;
-    if (seen.has(key)) continue;
+    if (seen.has(key)) {continue;}
     seen.add(key);
 
     const expertiseSlug = slugify(row.expertise.replace(/^Agence\s+/i, ''));

@@ -111,7 +111,7 @@ export default function SimulationClient() {
   const progress = Math.round(((stepIdx + (done ? 1 : 0)) / STEPS.length) * 100);
 
   const preconnectHubSpot = useCallback(() => {
-    if (preconnected.current) return;
+    if (preconnected.current) {return;}
     preconnected.current = true;
     const link = document.createElement('link');
     link.rel = 'preconnect';
@@ -132,7 +132,7 @@ export default function SimulationClient() {
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       const origin = typeof event.origin === 'string' ? event.origin : '';
-      if (origin && !origin.includes('hubspot.com')) return;
+      if (origin && !origin.includes('hubspot.com')) {return;}
       let data: unknown = event.data;
       if (typeof data === 'string') {
         try {
@@ -160,7 +160,7 @@ export default function SimulationClient() {
   }, []);
 
   const handleChoice = (value: string) => {
-    if (!step) return;
+    if (!step) {return;}
     const next: SimulationAnswers = { ...answers, [step.id]: value };
     setAnswers(next);
     if (stepIdx + 1 >= STEPS.length) {
@@ -175,7 +175,7 @@ export default function SimulationClient() {
       setDone(false);
       return;
     }
-    if (stepIdx > 0) setStepIdx(stepIdx - 1);
+    if (stepIdx > 0) {setStepIdx(stepIdx - 1);}
   };
 
   const reset = () => {

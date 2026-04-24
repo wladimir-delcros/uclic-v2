@@ -76,7 +76,7 @@ const ICON_MAP: Record<string, typeof Database> = {
 };
 
 function resolveIcon(icon: string | null | undefined) {
-  if (!icon) return Database;
+  if (!icon) {return Database;}
   const key = icon.toLowerCase().replace(/[-_\s]/g, '');
   return ICON_MAP[key] || Database;
 }

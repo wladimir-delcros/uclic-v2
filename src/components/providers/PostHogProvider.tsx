@@ -37,7 +37,7 @@ export function PHProvider({ children }: { children: React.ReactNode }) {
         loadingRef.current ||
         (posthogInstance && (posthogInstance as unknown as { __loaded?: boolean }).__loaded)
       )
-        return;
+        {return;}
       loadingRef.current = true;
 
       try {

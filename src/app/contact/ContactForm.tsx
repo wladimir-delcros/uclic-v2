@@ -16,9 +16,9 @@ emailjs.init(EMAILJS_PUBLIC_KEY);
 
 // Normalise un numero FR en format +33XXXXXXXXX
 function normalizeToE164FR(input: string): string {
-  if (!input) return '';
+  if (!input) {return '';}
   const only = input.replace(/\s+/g, '');
-  if (only.startsWith('+')) return only;
+  if (only.startsWith('+')) {return only;}
   const digits = input.replace(/\D/g, '');
   const withoutLeadingZero = digits.startsWith('0') ? digits.slice(1) : digits;
   return `+33${withoutLeadingZero}`;

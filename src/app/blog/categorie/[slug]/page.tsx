@@ -31,7 +31,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const cat = await getBlogCategoryBySlug(slug);
-  if (!cat) return { title: 'Catégorie introuvable', robots: { index: false, follow: false } };
+  if (!cat) {return { title: 'Catégorie introuvable', robots: { index: false, follow: false } };}
   const title = `${cat.name} — Blog Growth Marketing`;
   const description =
     cat.description ||
@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function BlogCategoryPage({ params }: PageProps) {
   const { slug } = await params;
   const cat = await getBlogCategoryBySlug(slug);
-  if (!cat) notFound();
+  if (!cat) {notFound();}
   const { posts, total, totalPages } = await getPostsByCategory(slug, 1, PER_PAGE);
 
   const breadcrumbSchema = {

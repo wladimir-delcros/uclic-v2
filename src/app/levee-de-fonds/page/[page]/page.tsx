@@ -63,11 +63,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function LeveeDeFondsPaginatedPage({ params }: PageProps) {
   const { page: pageStr } = await params;
   const page = parseInt(pageStr, 10);
-  if (!Number.isInteger(page) || page < 1) notFound();
-  if (page === 1) redirect('/levee-de-fonds');
+  if (!Number.isInteger(page) || page < 1) {notFound();}
+  if (page === 1) {redirect('/levee-de-fonds');}
 
   const { levees, total, totalPages } = await getLeveesPaginated(page, PER_PAGE);
-  if (page > totalPages || levees.length === 0) notFound();
+  if (page > totalPages || levees.length === 0) {notFound();}
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',

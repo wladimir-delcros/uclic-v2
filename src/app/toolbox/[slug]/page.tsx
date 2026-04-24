@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (isNumericSlug(slug)) {
     const page = parseInt(slug, 10);
-    if (page < 2) return { title: 'Toolbox' };
+    if (page < 2) {return { title: 'Toolbox' };}
     const title = `Toolbox Startups — Page ${page}`;
     const description = `Page ${page} de la toolbox Uclic : outils growth, marketing, sales, data et IA.`;
     return {
@@ -152,14 +152,14 @@ export default async function ToolboxDetailPage({ params }: PageProps) {
 
   if (isNumericSlug(slug)) {
     const page = parseInt(slug, 10);
-    if (!Number.isInteger(page) || page < 1) notFound();
-    if (page === 1) redirect('/toolbox');
+    if (!Number.isInteger(page) || page < 1) {notFound();}
+    if (page === 1) {redirect('/toolbox');}
     const { nodes: tools, totalCount } = await fetchToolboxPageFromSupabase(
       page,
       TOOLBOX_PER_PAGE,
     );
     const totalPages = Math.ceil(totalCount / TOOLBOX_PER_PAGE);
-    if (page > totalPages || tools.length === 0) notFound();
+    if (page > totalPages || tools.length === 0) {notFound();}
     return (
       <ToolboxListingSection
         tools={tools}

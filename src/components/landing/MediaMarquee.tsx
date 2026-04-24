@@ -36,7 +36,7 @@ function RotatingSlot({ slot, nextLogo }: { slot: Slot; nextLogo: { src: string;
   const [current, setCurrent] = useState(slot.logoIndex);
 
   useEffect(() => {
-    if (slot.logoIndex === current) return;
+    if (slot.logoIndex === current) {return;}
     setPhase('out');
     const t1 = setTimeout(() => {
       setCurrent(slot.logoIndex);
@@ -92,7 +92,7 @@ export default function MediaMarquee() {
   // Keep slots array sized to slotCount
   useEffect(() => {
     setSlots((prev) => {
-      if (prev.length === slotCount) return prev;
+      if (prev.length === slotCount) {return prev;}
       if (prev.length < slotCount) {
         const extra = Array.from({ length: slotCount - prev.length }, (_, i) => ({
           logoIndex: (prev.length + i) % clients.length,
@@ -109,7 +109,7 @@ export default function MediaMarquee() {
     const reduce =
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) return;
+    if (reduce) {return;}
 
     let i = 0;
     const interval = setInterval(() => {

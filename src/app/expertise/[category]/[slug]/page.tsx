@@ -63,7 +63,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ExpertiseDetailPage({ params }: PageProps) {
   const { category, slug } = await params;
   const expertise = await getExpertiseBySlug(slug);
-  if (!expertise) notFound();
+  if (!expertise) {notFound();}
 
   // Canonicalise URL: si la catégorie dans l'URL ne matche pas growth_terms[0],
   // rediriger vers la bonne. Empêche le duplicate content.

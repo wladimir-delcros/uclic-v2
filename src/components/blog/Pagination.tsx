@@ -17,24 +17,24 @@ interface Props {
 }
 
 function buildHref(basePath: string, page: number, pageSegment: string): string {
-  if (page <= 1) return basePath;
+  if (page <= 1) {return basePath;}
   return pageSegment ? `${basePath}/${pageSegment}/${page}` : `${basePath}/${page}`;
 }
 
 function pageList(current: number, total: number): Array<number | '…'> {
-  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  if (total <= 7) {return Array.from({ length: total }, (_, i) => i + 1);}
   const pages: Array<number | '…'> = [1];
-  if (current > 3) pages.push('…');
+  if (current > 3) {pages.push('…');}
   const start = Math.max(2, current - 1);
   const end = Math.min(total - 1, current + 1);
-  for (let i = start; i <= end; i++) pages.push(i);
-  if (current < total - 2) pages.push('…');
+  for (let i = start; i <= end; i++) {pages.push(i);}
+  if (current < total - 2) {pages.push('…');}
   pages.push(total);
   return pages;
 }
 
 export default function Pagination({ currentPage, totalPages, basePath, pageSegment = 'page' }: Props) {
-  if (totalPages <= 1) return null;
+  if (totalPages <= 1) {return null;}
   const prev = currentPage > 1 ? buildHref(basePath, currentPage - 1, pageSegment) : null;
   const next = currentPage < totalPages ? buildHref(basePath, currentPage + 1, pageSegment) : null;
 

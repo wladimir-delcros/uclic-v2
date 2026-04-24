@@ -48,7 +48,7 @@ export default function BeforeAfterSlider({
 
   const updateFromClientX = useCallback((clientX: number) => {
     const el = containerRef.current;
-    if (!el) return;
+    if (!el) {return;}
     const rect = el.getBoundingClientRect();
     const r = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
     setRatio(r);
@@ -62,7 +62,7 @@ export default function BeforeAfterSlider({
     updateFromClientX(e.clientX);
   };
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!draggingRef.current) return;
+    if (!draggingRef.current) {return;}
     updateFromClientX(e.clientX);
   };
   const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -87,9 +87,9 @@ export default function BeforeAfterSlider({
 
   /* Sweep-hint on first view (only once, disabled if reduced motion) */
   useEffect(() => {
-    if (reduceMotion) return;
+    if (reduceMotion) {return;}
     const el = containerRef.current;
-    if (!el) return;
+    if (!el) {return;}
     let done = false;
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -107,7 +107,7 @@ export default function BeforeAfterSlider({
             const val = from + (to - from) * Math.sin(eased * Math.PI);
             setRatio(val);
             onRatioChange?.(val);
-            if (p < 1) requestAnimationFrame(tick);
+            if (p < 1) {requestAnimationFrame(tick);}
             else { setRatio(from); onRatioChange?.(from); }
           };
           requestAnimationFrame(tick);

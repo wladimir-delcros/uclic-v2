@@ -30,8 +30,8 @@ export function generateStaticParams() {
 }
 
 function truncate(str: string, max: number): string {
-  if (!str) return '';
-  if (str.length <= max) return str;
+  if (!str) {return '';}
+  if (str.length <= max) {return str;}
   return str.slice(0, max - 3).trim() + '...';
 }
 
@@ -42,7 +42,7 @@ function stripTagsSuffix(text: string): string {
 /** Render a paragraph, or a bullet list if the text contains "Étape N :" markers or line breaks. */
 function TextBlock({ text }: { text: string }) {
   const trimmed = (text || '').trim();
-  if (!trimmed) return null;
+  if (!trimmed) {return null;}
 
   const stepRegex = /\s+Étape\s*\d+\s*:\s*/i;
   const parts = trimmed.split(stepRegex);

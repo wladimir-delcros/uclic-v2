@@ -54,8 +54,8 @@ export async function getWorkflows({
     const pattern = `%${q}%`;
     sel = sel.or(`title.ilike.${pattern},summary.ilike.${pattern}`);
   }
-  if (tag) sel = sel.contains('tags', [tag]);
-  if (category) sel = sel.eq('category', category);
+  if (tag) {sel = sel.contains('tags', [tag]);}
+  if (category) {sel = sel.eq('category', category);}
 
   if (sort === 'popular') {
     sel = sel.order('favorites_count', { ascending: false })
@@ -97,7 +97,7 @@ export async function getRelatedWorkflows(
   tags: string[] | null,
   limit: number = 5
 ): Promise<Workflow[]> {
-  if (!tags || tags.length === 0) return [];
+  if (!tags || tags.length === 0) {return [];}
 
   const supabase = createAdminClient();
 
@@ -141,7 +141,7 @@ export async function getAllWorkflowSlugsForSitemap(): Promise<{ slug: string; l
 export async function getFavoriteWorkflowIds(): Promise<number[]> {
   const authClient = await createServerAuthClient();
   const { data: { user } } = await authClient.auth.getUser();
-  if (!user) return [];
+  if (!user) {return [];}
   const admin = createAdminClient();
   const { data } = await admin
     .from('workflow_favorites')
@@ -174,7 +174,7 @@ export async function getWorkflowNodes(workflowId: number): Promise<WorkflowNode
 export async function isFavorite(workflowId: number): Promise<boolean> {
   const authClient = createBrowserAuthClient();
   const { data: { user } } = await authClient.auth.getUser();
-  if (!user) return false;
+  if (!user) {return false;}
   const supabase = createBrowserClient();
   const { data } = await supabase
     .from('workflow_favorites')
@@ -188,7 +188,7 @@ export async function isFavorite(workflowId: number): Promise<boolean> {
 export async function toggleFavorite(workflowId: number): Promise<'added' | 'removed' | 'unauthenticated'> {
   const authClient = createBrowserAuthClient();
   const { data: { user } } = await authClient.auth.getUser();
-  if (!user) return 'unauthenticated';
+  if (!user) {return 'unauthenticated';}
   const supabase = createBrowserClient();
   const { data } = await supabase
     .from('workflow_favorites')

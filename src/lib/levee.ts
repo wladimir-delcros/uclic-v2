@@ -7,7 +7,7 @@ import { normalizeImageUrl as normalizeStorageUrl } from '@/lib/supabase/config'
  * For Supabase URLs, clean trailing ? then delegate to centralised rewriter
  */
 function normalizeImageUrl(url?: string | null): string | null {
-  if (!url) return null;
+  if (!url) {return null;}
 
   // Block WordPress URLs - return placeholder instead
   if (url.includes('api.uclic.fr') || url.includes('wp-content')) {
@@ -85,7 +85,7 @@ function generateImageUrlFromSlug(slug: string): string {
   const cdnBase = process.env.NEXT_PUBLIC_STORAGE_CDN_BASE_URL;
   const baseUrl = cdnBase || supabaseBase;
 
-  if (!baseUrl) return '';
+  if (!baseUrl) {return '';}
 
   const cleanSlug = slug.toLowerCase().trim();
   return `${baseUrl}/storage/v1/object/public/media/levees/${cleanSlug}.jpg`;
@@ -179,7 +179,7 @@ export async function getAllLevees(): Promise<WordPressLevee[]> {
     return [];
   }
 
-  if (!data) return [];
+  if (!data) {return [];}
 
   return data.map((levee) => mapToWordPressLevee(levee as Levee));
 }
@@ -213,7 +213,7 @@ export async function getLeveeBySlug(slug: string): Promise<WordPressLevee | nul
     return null;
   }
 
-  if (!data) return null;
+  if (!data) {return null;}
 
   const row = data as Levee & {
     authors?: {
@@ -270,7 +270,7 @@ export async function getRelatedLevees(
     return [];
   }
 
-  if (!data) return [];
+  if (!data) {return [];}
 
   return data.map((levee) => mapToWordPressLevee(levee as Levee));
 }
@@ -306,7 +306,7 @@ export async function getLatestLevees(
     return [];
   }
 
-  if (!data) return [];
+  if (!data) {return [];}
 
   return data.map((levee) => mapToWordPressLevee(levee as Levee));
 }
@@ -358,7 +358,7 @@ export async function getTopLeveeSlugs(limit: number = 50): Promise<string[]> {
     return [];
   }
 
-  if (!data) return [];
+  if (!data) {return [];}
 
   return data.map((l: { slug: string }) => l.slug);
 }
@@ -381,7 +381,7 @@ export async function getAllLeveeSlugsForSitemap(): Promise<
     return [];
   }
 
-  if (!data) return [];
+  if (!data) {return [];}
 
   return data.map((levee: { slug: string; updated_at: string | null }) => ({
     slug: levee.slug,

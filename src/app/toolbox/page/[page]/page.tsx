@@ -64,12 +64,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ToolboxPaginatedPage({ params }: PageProps) {
   const { page: pageStr } = await params;
   const page = parseInt(pageStr, 10);
-  if (!Number.isInteger(page) || page < 1) notFound();
-  if (page === 1) redirect('/toolbox');
+  if (!Number.isInteger(page) || page < 1) {notFound();}
+  if (page === 1) {redirect('/toolbox');}
 
   const { nodes: tools, totalCount } = await fetchToolboxPageFromSupabase(page, PAGE_SIZE);
   const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
-  if (page > totalPages || tools.length === 0) notFound();
+  if (page > totalPages || tools.length === 0) {notFound();}
 
   const firstIndex = (page - 1) * PAGE_SIZE + 1;
   const lastIndex = Math.min(page * PAGE_SIZE, totalCount);
