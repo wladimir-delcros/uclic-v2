@@ -33,7 +33,9 @@
   --accent-text: #6BFF95;
   --accent-ink: #052010;
   --ink: #EDEAE4;
-  --ink-muted: rgba(237, 234, 228, 0.82);
+  /* Neutral gray for body paragraphs in dark mode — readability request
+     from user. Replaces the warm-tinted rgba(237,234,228,0.82). */
+  --ink-muted: rgb(161, 161, 161);
   --ink-dim: rgba(237, 234, 228, 0.56);
   --ink-inverse: #060403;
   --teal: #056162;

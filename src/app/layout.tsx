@@ -180,10 +180,16 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         />
         {/* Alternate RSS feed — discoverable by readers and indexers */}
         <link rel="alternate" type="application/rss+xml" title="Blog Uclic — RSS" href="/rss" />
-        {/* External theme init — anti-FOUC, loaded via next/script to avoid the
-            React "script tag inside component" dev warning while still being
-            emitted into the initial HTML <head>. */}
-        <Script id="theme-init" src="/theme-init.js" strategy="beforeInteractive" />
+        {/* Inline theme init — MUST run synchronously during HTML parse,
+            BEFORE first paint, to eliminate the dark/light FOUC flash that
+            users see when their stored preference is light but :root defaults
+            to dark. We inline it instead of using <Script src> because
+            next/script fetches an external file, introducing paint latency. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');var m=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches;var c=t==='light'||(t==null&&m)?'light':'dark';var r=document.documentElement;r.classList.add(c);r.style.colorScheme=c;}catch(e){document.documentElement.classList.add('dark');}})();`,
+          }}
+        />
         {/* No-JS fallback : force-reveal any element hidden by framer-motion initial props */}
         <noscript>
           <style>{`

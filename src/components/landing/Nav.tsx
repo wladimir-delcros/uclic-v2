@@ -14,7 +14,6 @@ type OpenPanel = 'expertises' | 'ressources' | null;
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [isLight, setIsLight] = useState(false);
   const [openPanel, setOpenPanel] = useState<OpenPanel>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -44,14 +43,8 @@ export default function Nav() {
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    const syncTheme = () => setIsLight(document.documentElement.classList.contains('light'));
-    syncTheme();
-    const obs = new MutationObserver(syncTheme);
-    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
     return () => {
       window.removeEventListener('scroll', onScroll);
-      obs.disconnect();
     };
   }, []);
 
@@ -89,13 +82,15 @@ export default function Nav() {
     [clearCloseTimer]
   );
 
+  // Use CSS vars (--bg, --border-subtle) so the header adopts the right
+  // theme BEFORE React hydrates — theme-init.js applies .light/.dark on
+  // <html> synchronously during HTML parse, and CSS resolves vars before
+  // first paint. No FOUC, no `isLight` observer needed.
   const headerStyle: React.CSSProperties = {
-    background: isLight ? '#FAFAF5' : '#060403',
+    background: 'var(--bg)',
     backdropFilter: 'none',
     WebkitBackdropFilter: 'none',
-    borderBottom: isLight
-      ? '1px solid rgba(10, 8, 7, 0.08)'
-      : '1px solid rgba(255, 255, 255, 0.08)',
+    borderBottom: '1px solid var(--border-subtle)',
     transform: hidden ? 'translateY(-100%)' : 'translateY(0)',
     transition: 'transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
     willChange: 'transform',
