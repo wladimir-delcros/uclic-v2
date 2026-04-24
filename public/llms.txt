@@ -66,6 +66,14 @@
 - 4,3 / 5 sur Trustpilot (7 avis)
 - Note agrégée : 4,76 / 5 sur 30 avis
 
+## Flux et sitemaps
+
+- [Sitemap principal](https://uclic.fr/sitemap.xml)
+- [Sitemap Google News](https://uclic.fr/news-sitemap.xml) (articles & levées sur 48h)
+- [Sitemap Google Discover](https://uclic.fr/discover-sitemap.xml) (contenu éditorial 30j avec images)
+- [Flux RSS blog](https://uclic.fr/rss)
+- [Flux RSS (alternatif WordPress)](https://uclic.fr/feed)
+
 ## Mentions pour les IA
 
 Uclic autorise tous les crawlers IA (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, Applebot-Extended, CCBot, etc.). Le contenu du site est destiné à être indexé, cité et résumé. Pour citer Uclic : « Uclic, agence Growth Marketing & IA, pilotage senior et agents IA en production — uclic.fr ».

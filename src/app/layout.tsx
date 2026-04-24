@@ -5,7 +5,13 @@ import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import { LenisProvider } from '@/components/shared/LenisProvider';
 import { PHProvider } from '@/components/providers/PostHogProvider';
-import { jsonLdString, organizationSchema, websiteSchema } from '@/lib/schema';
+import {
+  jsonLdString,
+  localBusinessSchema,
+  organizationSchema,
+  siteNavigationSchema,
+  websiteSchema,
+} from '@/lib/schema';
 import './globals.css';
 
 // Lazy client tracker — pushes page_data, attaches auto-tracking + scroll depth
@@ -162,6 +168,18 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLdString(websiteSchema()) }}
         />
+        {/* Site-wide JSON-LD: LocalBusiness (Paris + Google aggregateRating 4.9/17) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLdString(localBusinessSchema()) }}
+        />
+        {/* Site-wide JSON-LD: SiteNavigationElement (main nav entries) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLdString(siteNavigationSchema()) }}
+        />
+        {/* Alternate RSS feed — discoverable by readers and indexers */}
+        <link rel="alternate" type="application/rss+xml" title="Blog Uclic — RSS" href="/rss" />
         {/* External theme init — anti-FOUC, loaded via next/script to avoid the
             React "script tag inside component" dev warning while still being
             emitted into the initial HTML <head>. */}

@@ -119,6 +119,101 @@ export function organizationSchema() {
   } as const;
 }
 
+/**
+ * LocalBusiness node — hyperlocal SEO signal (Paris).
+ * Uses a real `aggregateRating` with the Google reviews count so stars are
+ * eligible for rich results on brand queries ("uclic avis", "uclic paris").
+ *
+ * Note: we keep the Service-level aggregateRating (pondérée 3 plateformes)
+ * on `serviceSchema()`. The LocalBusiness one is *only* the Google subset,
+ * per Google's Rich Results Guidelines (LocalBusiness rating must come
+ * from a single aggregator and be verifiable on-page).
+ */
+export function localBusinessSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': `${SITE_URL}/#localbusiness`,
+    name: 'Uclic — Agence Growth Marketing & IA',
+    url: SITE_URL,
+    image: `${SITE_URL}/logo.svg`,
+    logo: `${SITE_URL}/logo.svg`,
+    description:
+      'Agence Growth Marketing & IA à Paris. Inbound, Outbound, IA & Développement pilotés par des experts seniors.',
+    telephone: '+33-6-17-12-54-28',
+    email: 'hello@uclic.fr',
+    priceRange: '€€€',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Paris',
+      addressRegion: 'Île-de-France',
+      addressCountry: 'FR',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 48.8566,
+      longitude: 2.3522,
+    },
+    areaServed: [
+      { '@type': 'Country', name: 'France' },
+      { '@type': 'Place', name: 'Europe' },
+    ],
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        opens: '09:00',
+        closes: '19:00',
+      },
+    ],
+    // Real Google Business Profile rating (only Google, not pondérée)
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      bestRating: '5',
+      worstRating: '1',
+      ratingCount: '17',
+      reviewCount: '17',
+    },
+    sameAs: [
+      'https://www.linkedin.com/company/uclic/',
+      'https://fr.sortlist.com/agency/uclic',
+      'https://fr.trustpilot.com/review/uclic.fr',
+    ],
+  } as const;
+}
+
+/**
+ * SiteNavigationElement — helps Google understand site structure and
+ * sitelinks for brand SERPs (rarely triggers rich results directly but
+ * strong signal for "Sitelinks Searchbox" + main nav display).
+ */
+export function siteNavigationSchema() {
+  const items = [
+    { name: 'Expertises', url: `${SITE_URL}/expertise` },
+    { name: 'Cas clients', url: `${SITE_URL}/cas-clients` },
+    { name: 'Blog', url: `${SITE_URL}/blog` },
+    { name: 'Toolbox', url: `${SITE_URL}/toolbox` },
+    { name: 'Outils gratuits', url: `${SITE_URL}/outils-gratuits` },
+    { name: 'Levées de fonds', url: `${SITE_URL}/levee-de-fonds` },
+    { name: 'Équipe', url: `${SITE_URL}/equipe` },
+    { name: 'À propos', url: `${SITE_URL}/a-propos` },
+    { name: 'Contact', url: `${SITE_URL}/contact` },
+    { name: 'Audit offert', url: `${SITE_URL}/audit` },
+  ];
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Navigation principale Uclic',
+    itemListElement: items.map((item, idx) => ({
+      '@type': 'SiteNavigationElement',
+      position: idx + 1,
+      name: item.name,
+      url: item.url,
+    })),
+  } as const;
+}
+
 /** Site-wide WebSite node with SearchAction. */
 export function websiteSchema() {
   return {
