@@ -90,7 +90,7 @@ export default async function BlogIndexPage() {
                 <span className="w-6 h-px bg-[color:var(--accent)]" />
                 Blog
               </span>
-              <h1 className="text-[44px] md:text-[56px] lg:text-[64px] leading-[1.05] font-medium text-[color:var(--ink)] tracking-tight">
+              <h1 className="mt-5 text-[clamp(32px,4.2vw,52px)] font-display font-medium tracking-[-0.02em] text-[color:var(--ink)]">
                 Growth, IA &amp;{' '}
                 <span className="relative inline-block isolate font-[family-name:var(--font-hand)] italic text-[color:var(--accent)] tracking-[0.005em]">
                   insights

@@ -17,10 +17,10 @@ export default function BlogGrid({ posts }: { posts: BlogPost[] }) {
           <a
             key={p.slug}
             href={`/blog/${p.slug}`}
-            className="group flex flex-col bg-[color:var(--bg)] border border-[color:var(--border-subtle)] rounded-xl overflow-hidden hover:border-[color:var(--accent)]/40 transition-colors"
+            className="group flex flex-col !rounded-none bg-[color:var(--card)] border border-[color:var(--border-subtle)] overflow-hidden hover:bg-[color:var(--card-elev-1)] hover:border-[color:var(--accent)]/30 transition-colors"
           >
             {p.featured_image_url ? (
-              <div className="aspect-[16/9] overflow-hidden bg-[color:var(--border-subtle)]">
+              <div className="aspect-[16/9] overflow-hidden bg-[color:var(--border-subtle)] border-b border-[color:var(--border-subtle)]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={p.featured_image_url}
@@ -31,15 +31,16 @@ export default function BlogGrid({ posts }: { posts: BlogPost[] }) {
                 />
               </div>
             ) : (
-              <div className="aspect-[16/9] bg-gradient-to-br from-[color:var(--accent)]/10 to-[color:var(--border-subtle)]/30" />
+              <div className="aspect-[16/9] bg-gradient-to-br from-[color:var(--accent)]/10 to-[color:var(--border-subtle)]/30 border-b border-[color:var(--border-subtle)]" />
             )}
             <div className="flex flex-col flex-1 p-6 gap-3">
               {p.category ? (
-                <span className="inline-flex self-start text-[11px] tracking-[0.2em] uppercase text-[color:var(--accent)]">
+                <span className="inline-flex items-center gap-2 self-start text-[10.5px] tracking-[0.22em] uppercase text-[color:var(--accent)]">
+                  <span className="w-4 h-px bg-[color:var(--accent)]" />
                   {p.category}
                 </span>
               ) : null}
-              <h2 className="text-[20px] leading-tight font-semibold text-[color:var(--ink)] group-hover:text-[color:var(--accent)] transition-colors">
+              <h2 className="text-[20px] leading-tight font-display font-medium text-[color:var(--ink)] group-hover:text-[color:var(--accent)] transition-colors">
                 {p.title}
               </h2>
               {p.excerpt ? (
