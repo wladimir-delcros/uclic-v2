@@ -1,0 +1,30 @@
+/* Panneau de contrôles React Flow : fond sombre pour ne pas afficher un carré blanc sous les nœuds */
+.workflow-graph-wrap .react-flow__controls {
+  background: rgba(0, 0, 0, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px;
+}
+.workflow-graph-wrap .react-flow__controls-button {
+  background: transparent !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #fff !important;
+}
+.workflow-graph-wrap .react-flow__controls-button:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+.workflow-graph-wrap .react-flow__controls-button svg {
+  fill: currentColor;
+}
+
+/* Pas de bordure noire au focus/sélection des nœuds */
+.workflow-graph-wrap .react-flow__node.selectable.selected,
+.workflow-graph-wrap .react-flow__node.selectable:focus,
+.workflow-graph-wrap .react-flow__node.selectable:focus-visible {
+  box-shadow: none !important;
+}
+
+/* Supprimer le padding du wrapper .react-flow__node / .react-flow__node-default qui créait un carré visible */
+.workflow-graph-wrap .react-flow__node,
+.workflow-graph-wrap .react-flow__node-default {
+  padding: 0 !important;
+}

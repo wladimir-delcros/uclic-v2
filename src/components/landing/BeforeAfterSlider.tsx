@@ -18,7 +18,7 @@ const DoubleChevron = ({ size = 16 }: { size?: number }) => (
 type BeforeAfterSliderProps = {
   before: ReactNode;
   after: ReactNode;
-  /** Initial reveal ratio (0 → 1). Default 0.45 */
+  /** Initial reveal ratio (0 → 1). Default 0.5 (centré). */
   initialRatio?: number;
   /** Extra classes for the outer container */
   className?: string;
@@ -34,7 +34,7 @@ type BeforeAfterSliderProps = {
 export default function BeforeAfterSlider({
   before,
   after,
-  initialRatio = 0.45,
+  initialRatio = 0.5,
   className = '',
   beforeLabel = 'Avant',
   afterLabel = 'Après',
@@ -127,52 +127,65 @@ export default function BeforeAfterSlider({
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
-        className="relative w-full overflow-hidden bg-[color:var(--bg)] select-none cursor-ew-resize touch-none grid [grid-template-areas:'stack']"
+        className="relative w-full overflow-hidden select-none cursor-ew-resize touch-none grid [grid-template-areas:'stack']"
         role="slider"
         aria-label="Glisser pour comparer avant et après Uclic"
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={Math.round(ratio * 100)}
       >
-        {/* Avant (base layer) — grid stack cell 'stack', opaque bg to mask each other cleanly */}
-        <div className="[grid-area:stack] relative w-full bg-[color:var(--bg)] isolate">
+        {/* Styles scopés : bg opaque par thème, évite le bleed-through du clipPath */}
+        <style>{`
+          .ba-panel-bg { background-color: #141211; }
+          .light .ba-panel-bg { background-color: #FFFFFF; }
+        `}</style>
+
+        {/* Avant (base layer) — bg opaque solide + h-full pour matcher le after. */}
+        <div className="[grid-area:stack] relative w-full h-full isolate ba-panel-bg">
           {before}
         </div>
 
-        {/* Après (revealed layer) — same grid cell, opaque bg + clip-path révélation droite */}
+        {/* Après (revealed layer) — même bg + clipPath pour révéler progressivement. */}
         <div
-          className="[grid-area:stack] relative w-full bg-[color:var(--bg)] isolate will-change-[clip-path]"
-          style={{ clipPath: `inset(0 ${(1 - ratio) * 100}% 0 0)` }}
-        >
-          <div className="absolute inset-0 bg-[color:var(--accent)]/[0.03] pointer-events-none" aria-hidden="true" />
+          className="[grid-area:stack] relative w-full h-full isolate will-change-[clip-path] ba-panel-bg"
+          style={{ clipPath: `inset(0 ${(1 - ratio) * 100}% 0 0)` }}>
           {after}
         </div>
 
         {/* Top corner labels */}
-        <div className="absolute top-3 left-3 z-[3] inline-flex items-center gap-1.5 text-[9px] font-mono uppercase tracking-[0.22em] text-red-500/90 bg-[color:var(--bg)]/85 backdrop-blur-sm px-2 py-1 border border-red-500/25 pointer-events-none">
-          <span className="w-1 h-1 bg-red-500" /> {beforeLabel}
+        <div className="absolute top-3 left-3 z-[3] inline-flex items-center gap-1.5 text-[9px] font-mono uppercase tracking-[0.22em] text-red-300 bg-[color:var(--bg)]/85 backdrop-blur-sm px-2 py-1 border border-red-300/25 pointer-events-none">
+          <span className="w-1 h-1 bg-red-300" /> {beforeLabel}
         </div>
         <div className="absolute top-3 right-3 z-[3] inline-flex items-center gap-1.5 text-[9px] font-mono uppercase tracking-[0.22em] text-[color:var(--accent)] bg-[color:var(--bg)]/85 backdrop-blur-sm px-2 py-1 border border-[color:var(--accent)]/30 pointer-events-none">
           <span className="w-1 h-1 bg-[color:var(--accent)]" /> {afterLabel}
         </div>
 
-        {/* Separator line + handle */}
+        {/* Séparateur — barre accent vert, ombre noire en dark / accent en light */}
         <div
-          className="absolute top-0 bottom-0 w-px bg-[color:var(--accent)] z-[4] pointer-events-none"
-          style={{ left: `${ratio * 100}%` }}
           aria-hidden="true"
-        >
-          <div className="absolute inset-y-0 -left-px w-[3px] bg-[color:var(--accent)]/30 blur-[2px]" />
-        </div>
+          className="absolute top-0 bottom-0 z-[4] pointer-events-none ba-sep-bar"
+          style={{
+            left: `${ratio * 100}%`,
+            width: '6px',
+            marginLeft: '-3px',
+            backgroundColor: 'var(--accent)',
+            opacity: 0.9,
+          }}
+        />
         <motion.button
           type="button"
           onKeyDown={onKeyDown}
           tabIndex={0}
           aria-label="Poignée du comparateur avant/après"
-          className="absolute top-1/2 z-[5] -translate-x-1/2 -translate-y-1/2 w-11 h-11 bg-[color:var(--accent)] text-[color:var(--accent-ink)] grid place-items-center border-2 border-[color:var(--bg)] shadow-[0_4px_18px_-4px_rgba(107,255,149,0.6)] cursor-ew-resize focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]"
-          style={{ left: `${ratio * 100}%` }}
-          whileTap={{ scale: 0.92 }}
-          whileHover={reduceMotion ? undefined : { scale: 1.06 }}
+          className="absolute top-1/2 z-[5] -translate-x-1/2 -translate-y-1/2 w-11 h-11 grid place-items-center cursor-ew-resize text-[color:var(--ink)] shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]"
+          style={{
+            left: `${ratio * 100}%`,
+            borderRadius: '6px',
+            background:
+              'radial-gradient(ellipse 140% 120% at 50% -20%, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.08) 35%, rgba(255,255,255,0.02) 65%, transparent 100%), var(--bg)',
+          }}
+          whileTap={{ scale: 0.94 }}
+          whileHover={reduceMotion ? undefined : { scale: 1.04 }}
         >
           <DoubleChevron size={16} />
         </motion.button>

@@ -20,6 +20,8 @@ export const ORG_ID = `${SITE_URL}/#organization`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;
 export const SERVICE_ID = `${SITE_URL}/#service`;
 export const HOMEPAGE_ID = `${SITE_URL}/#webpage`;
+export const PERSON_WLADIMIR_ID = `${SITE_URL}/#person-wladimir`;
+export const PERSON_ALEXIS_ID = `${SITE_URL}/#person-alexis`;
 
 /** Site-wide Organization / ProfessionalService node. */
 export function organizationSchema() {
@@ -40,6 +42,12 @@ export function organizationSchema() {
       'Agence Growth Marketing & IA. Pilotage senior, experts canaux, agents IA en production.',
     slogan: 'Trois piliers. Une seule équipe. Zéro silo.',
     priceRange: '€€€',
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: 'FR',
+      addressLocality: 'Paris',
+      addressRegion: 'Île-de-France',
+    },
     areaServed: [
       { '@type': 'Country', name: 'France' },
       { '@type': 'Place', name: 'Europe' },
@@ -62,16 +70,20 @@ export function organizationSchema() {
     founder: [
       {
         '@type': 'Person',
+        '@id': PERSON_WLADIMIR_ID,
         name: 'Wladimir Delcros',
         jobTitle: 'CEO & Growth Strategist',
+        worksFor: { '@id': ORG_ID },
         description:
           'Expert Growth Marketing, 16 ans d\'expérience. Ex-Head of Growth Codingame & Muzzo.',
         sameAs: ['https://www.linkedin.com/in/wladimirdelcros/'],
       },
       {
         '@type': 'Person',
+        '@id': PERSON_ALEXIS_ID,
         name: 'Alexis Christine-Amara',
         jobTitle: 'Cofondateur · Business Development',
+        worksFor: { '@id': ORG_ID },
         description:
           'Expert Business Development. Ex-Head of Sales CodinGame.',
       },
@@ -100,36 +112,10 @@ export function organizationSchema() {
       'https://fr.sortlist.com/agency/uclic',
       'https://fr.trustpilot.com/review/uclic.fr',
     ],
-    // Aggregate rating: weighted mean across Google (17), Sortlist (6), Trustpilot (7)
-    // (4.9 × 17 + 4.96 × 6 + 4.3 × 7) / 30 = 4.76
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.76',
-      bestRating: '5',
-      worstRating: '1',
-      ratingCount: '30',
-      reviewCount: '30',
-    },
-    review: [
-      {
-        '@type': 'Review',
-        reviewRating: { '@type': 'Rating', ratingValue: '4.9', bestRating: '5' },
-        author: { '@type': 'Organization', name: 'Google Business Profile' },
-        reviewBody: 'Note moyenne 4,9/5 sur 17 avis Google.',
-      },
-      {
-        '@type': 'Review',
-        reviewRating: { '@type': 'Rating', ratingValue: '4.96', bestRating: '5' },
-        author: { '@type': 'Organization', name: 'Sortlist' },
-        reviewBody: 'Note moyenne 4,96/5 sur 6 avis Sortlist.',
-      },
-      {
-        '@type': 'Review',
-        reviewRating: { '@type': 'Rating', ratingValue: '4.3', bestRating: '5' },
-        author: { '@type': 'Organization', name: 'Trustpilot' },
-        reviewBody: 'Note moyenne 4,3/5 sur 7 avis Trustpilot.',
-      },
-    ],
+    // aggregateRating est volontairement déplacé sur le node Service (eligible rich result).
+    // Les review[] individuels ont été retirés : leurs author étaient des plateformes
+    // (Google/Sortlist/Trustpilot) au lieu de Person — signal spam review aggregation.
+    // Les plateformes restent sourcées via `sameAs` ci-dessus.
   } as const;
 }
 
@@ -156,7 +142,7 @@ export function websiteSchema() {
   } as const;
 }
 
-/** Homepage WebPage node. */
+/** Homepage WebPage node. `dateModified` est remis à jour à chaque build. */
 export function webPageSchema() {
   return {
     '@context': 'https://schema.org',
@@ -173,24 +159,13 @@ export function webPageSchema() {
       '@type': 'ImageObject',
       url: `${SITE_URL}/logo.svg`,
     },
+    datePublished: '2026-04-01T00:00:00+02:00',
+    dateModified: new Date().toISOString(),
   } as const;
 }
 
-/** Breadcrumb for the homepage. */
-export function breadcrumbSchema() {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Accueil',
-        item: SITE_URL,
-      },
-    ],
-  } as const;
-}
+// breadcrumbSchema retiré : une homepage n'a pas de breadcrumb valide (≥2 items
+// requis par Google). Un seul ListItem = bloc ignoré sans bénéfice.
 
 /** Main Service node with an OfferCatalog of the 3 pillars + pricing tiers. */
 export function serviceSchema() {
@@ -218,6 +193,16 @@ export function serviceSchema() {
       highPrice: '3570',
       offerCount: '4',
       availability: 'https://schema.org/InStock',
+    },
+    // aggregateRating rattaché au Service (éligible rich result étoiles).
+    // Calcul pondéré : Google 4,9/17 + Sortlist 4,96/6 + Trustpilot 4,3/7 = 4,76/30
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.76',
+      bestRating: '5',
+      worstRating: '1',
+      ratingCount: '30',
+      reviewCount: '30',
     },
     hasOfferCatalog: {
       '@type': 'OfferCatalog',

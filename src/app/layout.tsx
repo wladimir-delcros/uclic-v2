@@ -1,13 +1,12 @@
 import { Metadata, Viewport } from 'next';
 import { ReactNode } from 'react';
-import { Inter, Instrument_Sans, Instrument_Serif } from 'next/font/google';
-import { ThemeProvider } from '@/components/shared/ThemeProvider';
+import { Inter, Instrument_Serif } from 'next/font/google';
+import Script from 'next/script';
 import { LenisProvider } from '@/components/shared/LenisProvider';
 import { jsonLdString, organizationSchema, websiteSchema } from '@/lib/schema';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
-const instrumentSans = Instrument_Sans({ subsets: ['latin'], variable: '--font-instrument', display: 'swap' });
 const instrumentSerif = Instrument_Serif({
   subsets: ['latin'],
   variable: '--font-instrument-serif',
@@ -115,15 +114,12 @@ export const metadata: Metadata = {
     email: false,
     address: false,
   },
-  other: {
-    'format-detection': 'telephone=no',
-  },
 };
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 5,
+  // maximumScale retiré pour laisser le pinch-zoom (WCAG 1.4.4)
   viewportFit: 'cover',
   colorScheme: 'dark light',
   themeColor: [
@@ -134,13 +130,17 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="fr" suppressHydrationWarning className={`${inter.variable} ${instrumentSans.variable} ${instrumentSerif.variable}`}>
+    <html lang="fr-FR" suppressHydrationWarning className={`${inter.variable} ${instrumentSerif.variable}`}>
       <head>
-        {/* Preconnect to external image hosts used in the hero/proof sections */}
-        <link rel="preconnect" href="https://randomuser.me" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://randomuser.me" />
+        {/* Preload LCP-critical hero texture (self-hosted, WebP) */}
+        <link rel="preload" href="/hero/textures/mercury.webp" as="image" type="image/webp" fetchPriority="high" />
+        {/* Preconnect to Google Fonts CDN (used by next/font) */}
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Preconnect only to hosts still used externally (Supabase CMS, uclic static) */}
         <link rel="preconnect" href="https://mfpaumktscdkyqkbtgwc.supabase.co" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://mfpaumktscdkyqkbtgwc.supabase.co" />
+        <link rel="preconnect" href="https://static.uclic.fr" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://static.uclic.fr" />
         {/* Site-wide JSON-LD: Organization (with aggregateRating + founders + contactPoint) */}
         <script
           type="application/ld+json"
@@ -151,11 +151,25 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLdString(websiteSchema()) }}
         />
+        {/* External theme init — anti-FOUC, loaded via next/script to avoid the
+            React "script tag inside component" dev warning while still being
+            emitted into the initial HTML <head>. */}
+        <Script id="theme-init" src="/theme-init.js" strategy="beforeInteractive" />
+        {/* No-JS fallback : force-reveal any element hidden by framer-motion initial props */}
+        <noscript>
+          <style>{`
+            [style*="opacity:0"], [style*="opacity: 0"],
+            [style*="transform:translateY"], [style*="transform: translateY"],
+            [style*="filter:blur"], [style*="filter: blur"] {
+              opacity: 1 !important;
+              transform: none !important;
+              filter: none !important;
+            }
+          `}</style>
+        </noscript>
       </head>
       <body className="antialiased">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
-          <LenisProvider>{children}</LenisProvider>
-        </ThemeProvider>
+        <LenisProvider>{children}</LenisProvider>
       </body>
     </html>
   );

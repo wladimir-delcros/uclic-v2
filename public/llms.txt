@@ -40,24 +40,24 @@
 ## Liens clés
 
 - [Accueil](https://uclic.fr/)
-- [Services](https://uclic.fr/services)
-- [Tarifs](https://uclic.fr/pricing)
-- [Méthode / Process](https://uclic.fr/process)
-- [Cas clients](https://uclic.fr/case-study)
-- [Success Stories](https://uclic.fr/success-stories)
-- [Équipe](https://uclic.fr/team)
+- [Offre & tarifs](https://uclic.fr/#tarifs)
+- [Méthode](https://uclic.fr/#methode)
+- [Cas clients](https://uclic.fr/cas-clients)
+- [Expertises](https://uclic.fr/expertise)
+- [Équipe](https://uclic.fr/equipe)
+- [À propos](https://uclic.fr/a-propos)
 - [Blog](https://uclic.fr/blog)
-- [Contact](https://uclic.fr/contact-us)
-- [FAQ](https://uclic.fr/faq)
-- [Glossaire Growth](https://uclic.fr/glossary)
+- [Contact](https://uclic.fr/contact)
+- [Audit offert](https://uclic.fr/audit)
 
 ## Ressources
 
-- [Documentation](https://uclic.fr/documentation)
-- [Whitepapers](https://uclic.fr/whitepaper)
-- [Tutoriels](https://uclic.fr/tutorial)
-- [Changelog](https://uclic.fr/changelog)
-- [Presse](https://uclic.fr/press)
+- [Toolbox startups](https://uclic.fr/toolbox)
+- [Outils gratuits](https://uclic.fr/outils-gratuits)
+- [Levées de fonds — veille](https://uclic.fr/levee-de-fonds)
+- [Annuaire agences](https://uclic.fr/meilleure-agence)
+- [Scraping B2B sur-mesure](https://uclic.fr/scraping)
+- [Charte du freelance](https://uclic.fr/charte-freelance)
 
 ## Preuve sociale
 

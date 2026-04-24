@@ -1,6 +1,5 @@
 'use client';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { Bot, Check, Code2 } from 'lucide-react';
 
 /* N1 — Growth Experts (data réelle depuis uclic.fr/equipe) */
@@ -8,14 +7,14 @@ const growthLeads = [
   {
     name: 'Wladimir Delcros',
     role: 'Expert Growth Marketing',
-    photo: 'https://mediauclic.b-cdn.net/storage/v1/object/public/media/equipe/wladimir-1763498384656.jpg',
+    photo: '/team/wladimir.webp',
     seniority: '16 ans en startup',
     past: 'Ex-Head of Growth · Codingame & Muzzo',
   },
   {
     name: 'Alexis Christine-Amara',
     role: 'Expert Business Development',
-    photo: 'https://mediauclic.b-cdn.net/storage/v1/object/public/media/equipe/alexis-christine-amara-1771534506751.jpg',
+    photo: '/team/alexis.webp',
     seniority: '16 ans en startup',
     past: 'Ex-Head of Sales · CodinGame · Cofounder',
   },
@@ -48,11 +47,11 @@ type Member =
     };
 
 const channels: Member[] = [
-  { kind: 'channel', name: 'Théo Lambert',   role: 'SEO Lead',        photo: 'https://randomuser.me/api/portraits/men/76.jpg',  color: '#8E44AD', certs: ['Google', 'Semrush', 'Ahrefs'],   agent: 'SEO Writer IA' },
-  { kind: 'channel', name: 'Anaïs Roux',     role: 'Paid Ads Lead',   photo: 'https://randomuser.me/api/portraits/women/44.jpg', color: '#0D7377', certs: ['Google', 'Meta', 'TikTok'],       agent: 'Bid Optimizer' },
-  { kind: 'channel', name: 'Marc Fontaine',  role: 'Outbound · SDR',  photo: 'https://randomuser.me/api/portraits/men/51.jpg',  color: '#B57215', certs: ['LinkedIn', 'Lemlist', 'HubSpot'], agent: 'ICP Enricher' },
-  { kind: 'channel', name: 'Sofia Perez',    role: 'Content & Brand', photo: 'https://randomuser.me/api/portraits/women/68.jpg', color: '#7B3FC4', certs: ['HubSpot', 'Notion', 'Webflow'],   agent: 'Content Assist' },
-  { kind: 'dev',     name: 'Mathieu Lopez',  role: 'Dev Fullstack',   photo: 'https://randomuser.me/api/portraits/men/32.jpg',  color: '#6BFF95', stack: ['Next.js', 'Supabase', 'Python'] },
+  { kind: 'channel', name: 'Théo Lambert',   role: 'SEO Lead',        photo: '/avatars/men-76.webp',  color: '#8E44AD', certs: ['Google', 'Semrush', 'Ahrefs'],   agent: 'SEO Writer IA' },
+  { kind: 'channel', name: 'Anaïs Roux',     role: 'Paid Ads Lead',   photo: '/avatars/women-44.webp', color: '#0D7377', certs: ['Google', 'Meta', 'TikTok'],       agent: 'Bid Optimizer' },
+  { kind: 'channel', name: 'Marc Fontaine',  role: 'Outbound · SDR',  photo: '/avatars/men-51.webp',  color: '#B57215', certs: ['LinkedIn', 'Lemlist', 'HubSpot'], agent: 'ICP Enricher' },
+  { kind: 'channel', name: 'Sofia Perez',    role: 'Content & Brand', photo: '/avatars/women-68.webp', color: '#7B3FC4', certs: ['HubSpot', 'Notion', 'Webflow'],   agent: 'Content Assist' },
+  { kind: 'dev',     name: 'Mathieu Lopez',  role: 'Dev Fullstack',   photo: '/avatars/men-32.webp',  color: '#6BFF95', stack: ['Next.js', 'Supabase', 'Python'] },
   { kind: 'agent',   name: 'Scoring IA',     role: 'Qualif leads auto',     stack: ['Claude', 'API'] },
   { kind: 'agent',   name: 'Outreach IA',    role: 'Séquences dynamiques',  stack: ['Claude', 'n8n'] },
   { kind: 'agent',   name: 'Insights IA',    role: 'Dashboard auto',        stack: ['Claude', 'GA4'] },
@@ -67,10 +66,10 @@ export default function Organigramme() {
           <motion.div key={g.name}
             initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             transition={{ delay: i * 0.08 }}
-            className="card-surface !rounded-none p-3 relative !bg-[color:var(--card-elev-1)] light:!bg-white !shadow-none border border-[color:var(--border-subtle)]">
+            className="card-surface !rounded-none p-3 relative !bg-[color:var(--bg)] !shadow-none border border-[color:var(--border-subtle)]">
             <div className={`flex items-center gap-2.5 ${i === 1 ? 'flex-row-reverse' : ''}`}>
-              <Image src={g.photo} alt={g.name} width={44} height={44}
-                     className="w-11 h-11 object-cover border border-[color:var(--border-subtle)] shrink-0" unoptimized />
+              <img src={g.photo} alt={g.name} width={44} height={44} loading="lazy" decoding="async"
+                   className="w-11 h-11 object-cover border border-[color:var(--border-subtle)] shrink-0" />
               <div className={`min-w-0 flex-1 ${i === 1 ? 'text-right' : ''}`}>
                 <div className="text-[15px] font-display font-medium truncate leading-tight">{g.name}</div>
                 <div className="text-[12.5px] text-[color:var(--ink-muted)] truncate mt-0.5">{g.role}</div>
@@ -81,12 +80,6 @@ export default function Organigramme() {
             </div>
           </motion.div>
         ))}
-        {/* "+" connector between the 2 Growth Experts */}
-        <div
-          aria-hidden="true"
-          className="hidden md:grid absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-7 h-7 bg-[color:var(--accent)] text-black light:text-white place-items-center font-bold text-[14px] leading-none z-[2] border-2 border-white dark:border-[color:var(--bg)]">
-          +
-        </div>
       </div>
 
       {/* ── Ligne de pilotage (N1 pilote N2) ── */}
@@ -117,7 +110,7 @@ export default function Organigramme() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.4 }}
-            className="card-surface !rounded-none p-2.5 flex flex-col items-center text-center !bg-[color:var(--card-elev-1)] light:!bg-white !shadow-none border border-[color:var(--border-subtle)] relative">
+            className="card-surface !rounded-none p-2.5 flex flex-col items-center text-center !bg-[color:var(--bg)] !shadow-none border border-[color:var(--border-subtle)] relative">
             {c.kind === 'agent' ? (
               <>
                 {/* Agent IA — pas de photo, icône Bot large */}
@@ -157,8 +150,8 @@ export default function Organigramme() {
               <>
                 {/* Expert / Dev — photo + role + certs|stack + footer spécifique */}
                 <div className="relative shrink-0">
-                  <Image src={c.photo} alt={c.name} width={40} height={40}
-                         className="w-10 h-10 object-cover border border-[color:var(--border-subtle)]" unoptimized />
+                  <img src={c.photo} alt={c.name} width={40} height={40} loading="lazy" decoding="async"
+                       className="w-10 h-10 object-cover border border-[color:var(--border-subtle)]" />
                 </div>
                 <div className="mt-1.5 text-[13.5px] font-medium truncate w-full leading-tight">{c.name}</div>
                 <div className="text-[12px] text-[color:var(--ink-muted)] truncate w-full">{c.role}</div>

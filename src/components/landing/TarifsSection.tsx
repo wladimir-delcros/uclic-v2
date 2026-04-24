@@ -1,74 +1,133 @@
 'use client';
-import { useState } from 'react';
+import { Fragment } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle2, ArrowRight, Sparkles } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Sparkles, Info, Bot } from 'lucide-react';
 import SectionAmbience from '../ui/SectionAmbience';
+import CornerCross from '../ui/CornerCross';
 
-type Tier = 'pro' | 'growth' | 'scale';
-const tierLabels: Record<Tier, { name: string; desc: string }> = {
-  pro:    { name: 'Pro',    desc: "L'essentiel" },
-  growth: { name: 'Growth', desc: 'Accélérez' },
-  scale:  { name: 'Scale',  desc: 'Performance max' },
-};
+/** A feature is either a single included line, or a group of mutually-exclusive options.
+ *  Strings render plain; objects with `{ label, hint }` render with a tooltip trigger. */
+type Hintable = string | { label: string; hint: string };
+type OrOption = Hintable;
+type IncludedFeature = Hintable;
+type FeatureItem = IncludedFeature | { or: OrOption[]; label?: string };
 
-type PilierTier = { price: string; desc: string; features: string[] };
+/** Reusable CSS-only hover tooltip. Zero JS, zero lib, a11y-friendly. */
+function HintIcon({ hint }: { hint: string }) {
+  return (
+    <span
+      tabIndex={0}
+      role="button"
+      aria-label={hint}
+      className="group/tip relative inline-flex cursor-help text-[color:var(--ink-dim)] hover:text-[color:var(--accent)] focus:text-[color:var(--accent)] focus:outline-none focus-visible:ring-1 focus-visible:ring-[color:var(--accent)]/40 transition-colors">
+      <Info size={13} strokeWidth={1.75} />
+      <span
+        role="tooltip"
+        className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 w-[240px] -translate-x-1/2 translate-y-1 scale-[0.98] rounded-md border border-[color:var(--border-strong)] bg-[color:var(--surface-raised)] px-3 py-2 text-left text-[12px] leading-snug text-[color:var(--ink)] opacity-0 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)] transition-all duration-150 ease-out group-hover/tip:translate-y-0 group-hover/tip:scale-100 group-hover/tip:opacity-100 group-focus-visible/tip:translate-y-0 group-focus-visible/tip:scale-100 group-focus-visible/tip:opacity-100">
+        {hint}
+        <span
+          aria-hidden="true"
+          className="absolute left-1/2 top-full -mt-[5px] h-2 w-2 -translate-x-1/2 rotate-45 border-b border-r border-[color:var(--border-strong)] bg-[color:var(--surface-raised)]"
+        />
+      </span>
+    </span>
+  );
+}
 
 type Pilier = {
   name: string;
   badge: string;
   featured?: boolean;
-  tiers: Record<Tier, PilierTier>;
+  price: string;
+  priceTop?: string;       // override default "à partir de"
+  priceSuffix?: string | null; // set null to hide "/ mois"
+  desc: string;
+  features: FeatureItem[];
+  /** Optional eye-catcher foot-in-the-door offer rendered between features and CTA. */
+  starter?: { title: string; price: string };
 };
 
 const free = {
   name: 'Audit',
   badge: 'Diagnostic',
-  desc: 'On audite vos canaux et on identifie vos meilleurs leviers. Vision 360°, reco chiffrées.',
+  desc: 'On audite vos 3 piliers — Inbound, Outbound, IA & Dev. Vision 360°, reco chiffrées.',
   features: [
-    "Audit de vos canaux d'acquisition",
-    'Score sur les 3 piliers',
+    { label: 'Audit Inbound, Outbound, IA & Dev', hint: "Analyse de vos canaux d'acquisition (SEO, Ads, Content), de votre prospection outbound et de votre stack IA/automatisations en place." },
+    { label: 'Score sur les 3 piliers', hint: 'Note /100 par pilier : Inbound (captation), Outbound (prospection) et IA & Dev (industrialisation).' },
     'Quick wins à fort impact',
     'Roadmap priorisée chiffrée',
-  ],
+  ] satisfies FeatureItem[],
 };
 
 const piliers: Pilier[] = [
   {
     name: 'Inbound',
     badge: 'Captez la demande',
-    tiers: {
-      pro:    { price: '1 490€', desc: 'SEO/GEO ou Google Ads — 1 canal au choix.',
-               features: ['Audit + stratégie SEO/GEO', 'OU Google Ads (budget ≤ 2 500€)', 'Dashboard + reporting mensuel', 'Optimisations continues'] },
-      growth: { price: '2 990€', desc: 'SEO/GEO + Google Ads combinés.',
-               features: ['SEO/GEO + Google Ads (≤ 5 000€)', 'Landing pages + A/B testing', 'Contenu à forte intention', 'Attribution multicanal'] },
-      scale:  { price: '4 990€', desc: 'Acquisition inbound complète, stratégiste dédié.',
-               features: ['Budget Ads illimité', '8+ articles SEO / mois', 'Landing pages illimitées + CRO', 'Stratégiste + point hebdo'] },
-    },
+    price: '1 490€',
+    desc: "1 canal d'acquisition au choix, opéré de bout en bout.",
+    features: [
+      {
+        label: 'Un canal au choix',
+        or: [
+          { label: 'SEO / GEO',          hint: 'Audit technique + stratégie SEO et GEO (Generative Engine Optimization)' },
+          { label: 'Content marketing',  hint: 'Blog piliers, lead magnets, newsletter et posts organiques LinkedIn / Facebook / Instagram / TikTok' },
+          { label: 'Google Ads',         hint: 'Budget média ≤ 2 500 € / mois inclus' },
+          { label: 'Meta Ads',           hint: 'Budget média ≤ 2 500 € / mois inclus' },
+          { label: 'TikTok Ads',         hint: 'Budget média ≤ 2 500 € / mois inclus' },
+          { label: 'LinkedIn Ads',       hint: 'Budget média ≤ 2 500 € / mois inclus' },
+        ],
+      },
+      'Dashboard + reporting mensuel',
+      { label: 'Optimisations continues', hint: 'A/B tests sur les landing pages, créas et audiences. Itérations hebdomadaires en fonction des données.' },
+    ],
   },
   {
     name: 'Outbound',
     badge: 'Créez la demande',
-    tiers: {
-      pro:    { price: '1 490€', desc: 'Prospection multicanale automatisée.',
-               features: ['ICP + scraping + enrichissement', '3 séquences email auto', '1 500 contacts / mois', 'Infra deliverability dédiée'] },
-      growth: { price: '2 990€', desc: 'Email + LinkedIn avec scoring IA.',
-               features: ['5 séquences email + LinkedIn', '3 000 contacts / mois', 'A/B test + scoring IA', 'CRM + reporting avancé'] },
-      scale:  { price: '4 990€', desc: 'Machine outbound complète, AM dédié.',
-               features: ['Email + LinkedIn + tel illimités', '5 000+ contacts / mois', "Intent data + signaux d'achat", 'Account manager dédié'] },
-    },
+    price: '1 490€',
+    desc: 'Prospection multicanale automatisée.',
+    features: [
+      {
+        label: 'Un service au choix',
+        or: [
+          {
+            label: 'ICP + scraping custom',
+            hint: 'Data scraping sur-mesure avec intent marketing — jusqu\'à plusieurs centaines de points de données par prospect pour détecter les signaux d\'achat et trouver les insights qui déclenchent la conversation',
+          },
+          'ICP + scraping LinkedIn',
+          'ICP + scraping Google Maps',
+        ],
+      },
+      { label: 'Enrichissement', hint: "Ajout de données complémentaires sur chaque prospect : email pro, poste exact, stack tech, levées de fonds, signaux d'actualité — pour personnaliser les séquences." },
+      { label: '3 séquences email automatisées', hint: 'Séquences relance multi-touch avec A/B testing copywriting, arrêt auto sur réponse, synchronisation CRM.' },
+      '1 500 contacts / mois',
+      { label: 'Infra deliverability dédiée', hint: 'IPs warmup-ées, SPF/DKIM/DMARC configurés, monitoring bounce/spam pour garantir >95% d\'inbox rate.' },
+    ],
   },
   {
     name: 'IA & Dev',
     badge: 'Industrialisez',
     featured: true,
-    tiers: {
-      pro:    { price: '1 490€', desc: '1 agent IA sur-mesure + intégration métier.',
-               features: ['1 agent IA custom', 'Développement + déploiement', 'API + intégration CRM/outils', 'Maintenance + évolutions'] },
-      growth: { price: '2 990€', desc: 'Plusieurs agents + app métier dédiée.',
-               features: ['3 agents IA en production', 'App métier sur-mesure (Next.js)', 'Intégrations CRM + Analytics', 'Dashboard + itérations mensuelles'] },
-      scale:  { price: '4 990€', desc: 'Architecture IA + produit complet, SLA prioritaire.',
-               features: ['Agents IA illimités', 'Apps & APIs sur-mesure', 'Architecture cloud intégrée', 'Support SLA < 4h + formation équipe'] },
-    },
+    price: 'Sur devis',
+    priceTop: 'Projet sur-mesure',
+    priceSuffix: null,
+    desc: 'Site web, application, agents IA ou automatisations — chiffré au projet.',
+    features: [
+      {
+        label: 'Un livrable au choix',
+        or: [
+          { label: 'Site ou app web', hint: 'Site WordPress optimisé SEO, site custom Next.js / Astro, ou application web full-stack (Next.js + Supabase / Postgres). On choisit la stack selon votre besoin et votre équipe.' },
+          { label: 'Agents IA custom', hint: 'Agents propriétaires via Claude Code, ou agents 100 % sur-mesure (Python/TypeScript). Option LLM souverain hébergé sur votre machine ou serveur (Mistral, Llama, Qwen) pour traitement de données sensibles sans fuite externe.' },
+          { label: 'Workflows & automations', hint: 'n8n (self-hosted, illimité), Make, Zapier ou intégration 100 % custom en code selon la complexité et le volume. Connecteurs sur-mesure quand l\'outil no-code ne suffit plus.' },
+          { label: 'Intégration CRM & outils', hint: 'API custom, webhooks et synchros bi-directionnelles avec HubSpot, Pipedrive, Salesforce, Notion, Airtable, Slack, etc.' },
+          { label: 'Tracking & analytics', hint: 'Mise en place GA4, Google Tag Manager, server-side tracking (sGTM), Meta CAPI, tracking de conversions Google/Meta/LinkedIn Ads et events custom Mixpanel / PostHog / Amplitude.' },
+          { label: 'Data & dashboards', hint: 'Centralisation data (BigQuery, Snowflake, Supabase), connecteurs d\'ingestion (Fivetran, n8n, custom), dashboards BI sur-mesure (Looker Studio, Metabase, Preset) pour piloter vos KPIs.' },
+        ],
+      },
+      { label: 'Spec + design + dev + déploiement', hint: 'Cadrage produit, wireframes & maquettes UX/UI (Figma), développement (Next.js, Python, Postgres, Supabase, WordPress selon stack), mise en prod sur votre infra ou la nôtre.' },
+      { label: 'Maintenance + évolutions', hint: 'Monitoring, corrections de bugs et ajouts de features mensuels sur retainer — pas d\'abandon post-livraison.' },
+    ],
+    starter: { title: 'Site, app ou agent IA clé-en-main', price: '990€' },
   },
 ];
 
@@ -87,17 +146,14 @@ const bentoDots = [
 ];
 
 export default function TarifsSection() {
-  const [tier, setTier] = useState<Tier>('growth');
-
-  // Cells : [Growth Scan, Inbound, Outbound, IA & Automation]
+  // Cells : [Diagnostic, Inbound, Outbound, IA & Dev]
   const cells = [
     { kind: 'free' as const, data: free },
     ...piliers.map((p) => ({ kind: 'pilier' as const, data: p })),
   ];
 
   return (
-    <section id="tarifs" className="relative py-24 lg:py-32 overflow-hidden">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--border-subtle)] to-transparent" />
+    <section id="tarifs" className="relative pt-24 lg:pt-32 pb-10 lg:pb-12 overflow-hidden">
       <SectionAmbience variant="medium" />
       <div className="max-w-[1200px] mx-auto px-5 lg:px-10 relative">
         <div className="text-center">
@@ -117,33 +173,14 @@ export default function TarifsSection() {
           </p>
         </div>
 
-        {/* Tier switcher (segmented control Pro/Growth/Scale) AU-DESSUS du bento */}
-        <div className="mt-10 flex justify-center">
-          <div className="pill !rounded-none !p-1.5">
-            {(Object.keys(tierLabels) as Tier[]).map((k) => (
-              <button
-                key={k}
-                onClick={() => setTier(k)}
-                className={`px-5 py-2 text-[13px] font-medium transition-all border outline-none focus:outline-none focus-visible:ring-1 focus-visible:ring-[color:var(--accent)]/30 ${
-                  tier === k
-                    ? 'bg-[color:var(--surface-raised)] text-[color:var(--ink)] border-[color:var(--border-subtle)]'
-                    : 'border-transparent text-[color:var(--ink-muted)] hover:text-[color:var(--ink)]'
-                }`}>
-                <span className="block leading-tight">{tierLabels[k].name}</span>
-                <span className="block text-[10px] opacity-70 font-normal">{tierLabels[k].desc}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
         {/* Bento grid 4 colonnes — tight, no gaps, no rounding */}
         <div className="mt-14 grid md:grid-cols-4 items-stretch border border-[color:var(--border-subtle)] !rounded-none relative">
-          {/* Decorative dots at card intersections (and outer corners) */}
+          {/* Decorative crosses at card intersections (and outer corners) */}
           {bentoDots.map((pos, idx) => (
-            <span
+            <CornerCross
               key={idx}
-              aria-hidden="true"
-              className="hidden md:block pointer-events-none absolute w-[14px] h-[14px] rounded-full bg-[#201E1D] light:bg-[#E7E6E3] z-[2]"
+              size={14}
+              className="hidden md:block absolute z-[2]"
               style={{ left: pos.left, top: pos.top, transform: 'translate(-50%, -50%)' }}
             />
           ))}
@@ -154,13 +191,19 @@ export default function TarifsSection() {
             const featured = cell.kind === 'pilier' && cell.data.featured;
 
             // Contenu par cell
-            const badge = cell.kind === 'free' ? cell.data.badge : cell.data.badge;
-            const name  = cell.kind === 'free' ? cell.data.name  : cell.data.name;
-            const priceTop = cell.kind === 'free' ? 'Sans engagement' : 'à partir de';
-            const price = cell.kind === 'free' ? '0€' : cell.data.tiers[tier].price;
-            const priceSuffix = cell.kind === 'free' ? null : '/ mois';
-            const desc  = cell.kind === 'free' ? cell.data.desc : cell.data.tiers[tier].desc;
-            const features = cell.kind === 'free' ? cell.data.features : cell.data.tiers[tier].features;
+            const badge = cell.data.badge;
+            const name  = cell.data.name;
+            const priceTop =
+              cell.kind === 'free' ? 'Sans engagement' : cell.data.priceTop ?? 'à partir de';
+            const price = cell.kind === 'free' ? '0€' : cell.data.price;
+            const priceSuffix =
+              cell.kind === 'free'
+                ? null
+                : cell.data.priceSuffix === null
+                ? null
+                : cell.data.priceSuffix ?? '/ mois';
+            const desc  = cell.data.desc;
+            const features: FeatureItem[] = cell.data.features;
             const ctaLabel = cell.kind === 'free' ? 'Obtenir mon diagnostic' : `Activer ${name}`;
 
             return (
@@ -185,17 +228,18 @@ export default function TarifsSection() {
                       <Sparkles size={11} strokeWidth={2.5} />
                       Plus choisi
                     </span>
-                    {/* Dots accent aux 4 coins (signature featured) */}
+                    {/* Crosses accent aux 4 coins (signature featured) */}
                     {[
                       { left: '0%',   top: '0%'   },
                       { left: '100%', top: '0%'   },
                       { left: '0%',   top: '100%' },
                       { left: '100%', top: '100%' },
                     ].map((pos, idx) => (
-                      <span
-                        key={`feat-dot-${idx}`}
-                        aria-hidden="true"
-                        className="pointer-events-none absolute w-[14px] h-[14px] rounded-full bg-[color:var(--accent)] pulse-soft z-[4]"
+                      <CornerCross
+                        key={`feat-cross-${idx}`}
+                        size={14}
+                        accent
+                        className="absolute pulse-soft z-[4]"
                         style={{ left: pos.left, top: pos.top, transform: 'translate(-50%, -50%)' }}
                       />
                     ))}
@@ -231,28 +275,84 @@ export default function TarifsSection() {
                   {desc}
                 </p>
 
-                {/* Checks list */}
+                {/* Checks list — support plain strings, hintable strings, and OR groups */}
                 <ul className="relative mt-5 space-y-2.5 flex-1">
-                  {features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-[14px] text-[color:var(--ink-muted)] leading-relaxed">
-                      <CheckCircle2
-                        size={14}
-                        strokeWidth={2}
-                        className={`mt-0.5 shrink-0 ${
-                          featured ? 'text-[color:var(--accent)]' : 'text-[color:var(--ink-dim)]'
-                        }`}
-                      />
-                      <span>{f}</span>
-                    </li>
-                  ))}
+                  {features.map((f, fi) => {
+                    // Plain included feature (string or {label, hint})
+                    if (typeof f === 'string' || 'label' in f && !('or' in f)) {
+                      const label = typeof f === 'string' ? f : f.label;
+                      const hint  = typeof f === 'string' ? null : f.hint;
+                      return (
+                        <li key={fi} className="flex items-start gap-2 text-[14px] text-[color:var(--ink-muted)] leading-relaxed">
+                          <CheckCircle2
+                            size={14}
+                            strokeWidth={2}
+                            className={`mt-0.5 shrink-0 ${featured ? 'text-[color:var(--accent)]' : 'text-[color:var(--ink-dim)]'}`}
+                          />
+                          <span className="inline-flex items-center gap-1.5">
+                            <span>{label}</span>
+                            {hint && <HintIcon hint={hint} />}
+                          </span>
+                        </li>
+                      );
+                    }
+                    // OR-group: visually grouped, explicit "OU" separators
+                    return (
+                      <li key={fi}>
+                        <div className="relative border-l-2 border-[color:var(--accent)]/40 pl-3 py-1.5">
+                          {f.label && (
+                            <div className="text-[10.5px] font-mono uppercase tracking-[0.18em] text-[color:var(--accent)] mb-2">
+                              {f.label}
+                            </div>
+                          )}
+                          {f.or.map((opt, oi) => {
+                            const label = typeof opt === 'string' ? opt : opt.label;
+                            const hint  = typeof opt === 'string' ? null : opt.hint;
+                            return (
+                              <Fragment key={label}>
+                                {oi > 0 && (
+                                  <div
+                                    aria-hidden="true"
+                                    className="flex items-center gap-2 my-1 text-[10px] font-mono uppercase tracking-[0.18em] text-[color:var(--ink-dim)]">
+                                    <span className="h-px w-4 bg-[color:var(--border-subtle)]" />
+                                    ou
+                                  </div>
+                                )}
+                                <div className="flex items-center gap-1.5 text-[14px] text-[color:var(--ink)] leading-relaxed">
+                                  <span>{label}</span>
+                                  {hint && <HintIcon hint={hint} />}
+                                </div>
+                              </Fragment>
+                            );
+                          })}
+                        </div>
+                      </li>
+                    );
+                  })}
                 </ul>
+
+                {/* Optional foot-in-the-door offer — no "offre d'appel" framing,
+                    just a price anchor for prospects worried about cost. */}
+                {cell.kind === 'pilier' && cell.data.starter && (
+                  <div className="relative mt-5 flex items-start gap-2.5 border border-[color:var(--accent)]/40 bg-[color:var(--accent)]/[0.07] px-4 py-3">
+                    <Bot size={20} strokeWidth={2} className="text-[color:var(--accent)] shrink-0 mt-0.5" />
+                    <div className="text-[15px] leading-snug text-[color:var(--ink)]">
+                      {cell.data.starter.title}{' '}
+                      <span className="text-[color:var(--ink-muted)]">dès</span>{' '}
+                      <span className="font-semibold text-[color:var(--accent)]">
+                        {cell.data.starter.price}
+                      </span>
+                    </div>
+                  </div>
+                )}
 
                 {/* CTA bottom — primary (featured only) = accent, secondary = neutral */}
                 {featured ? (
                   <a
-                    href="#contact"
+                    href="/audit"
                     className="glass-pill group/cta relative mt-7 inline-flex items-center justify-center gap-2 h-[46px] px-5 text-[13.5px] font-semibold text-black light:text-white whitespace-nowrap hover:scale-[1.02] transition-transform"
                     style={{
+                      borderRadius: '6px',
                       background:
                         'radial-gradient(ellipse 140% 120% at 50% -20%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 35%, rgba(255,255,255,0.08) 65%, transparent 100%), var(--accent)',
                     }}>
@@ -261,9 +361,10 @@ export default function TarifsSection() {
                   </a>
                 ) : (
                   <a
-                    href="#contact"
+                    href="/audit"
                     className="glass-pill group/cta relative mt-7 inline-flex items-center justify-center gap-2 h-[46px] px-5 text-[13.5px] font-medium text-[color:var(--ink)] whitespace-nowrap hover:scale-[1.02] transition-transform"
                     style={{
+                      borderRadius: '6px',
                       background:
                         'radial-gradient(ellipse 140% 120% at 50% -20%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.08) 35%, rgba(255,255,255,0.02) 65%, transparent 100%), var(--surface-raised)',
                     }}>
@@ -279,7 +380,7 @@ export default function TarifsSection() {
         {/* Upsell combos en ligne */}
         <p className="mt-10 text-center text-[14px] text-[color:var(--ink-muted)]">
           Besoin de combiner plusieurs piliers ?{' '}
-          <a href="#contact" className="text-[color:var(--accent)] hover:underline">
+          <a href="/audit" className="text-[color:var(--accent)] hover:underline">
             Duo : −10% · Growth Machine (les 3) : −20%
           </a>
         </p>

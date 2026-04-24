@@ -1,9 +1,9 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { motion, useMotionValue, useMotionValueEvent, animate } from 'framer-motion';
-import Image from 'next/image';
+import { useMotionValue, useMotionValueEvent, animate } from 'framer-motion';
 import { PlayCircle } from 'lucide-react';
 import AnimatedChars from '../ui/AnimatedChars';
+import CornerCross from '../ui/CornerCross';
 
 /* Animated decimal counter — e.g. "4,9" animates from 0 → 4.9 */
 function AnimatedRating({ value, delay = 0 }: { value: string; delay?: number }) {
@@ -216,16 +216,13 @@ export default function Hero() {
         {/* Light mode : base beige fill */}
         <circle cx="600" cy="700" r="600" fill="#FCF7ED" className="hidden light:block" />
 
-        {/* Texture image TOURNANTE — 2 copies motion.g, opacity faible pour rendre la jonction imperceptible */}
+        {/* Texture image TOURNANTE — 2 copies côte à côte, animées en CSS (GPU compositor, pas de JS runtime) */}
         <g clipPath="url(#planetClip)">
-          <motion.g
-            initial={{ x: 0 }}
-            animate={{ x: -1200 }}
-            transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}>
+          <g className="planet-texture-loop">
             {/* Dark mode */}
             <image
               className="light:hidden"
-              href="https://www.solarsystemscope.com/textures/download/2k_mercury.jpg"
+              href="/hero/textures/mercury.webp"
               x="0" y="100" width="1200" height="1200"
               preserveAspectRatio="xMidYMid slice"
               opacity="0.12"
@@ -233,7 +230,7 @@ export default function Hero() {
             />
             <image
               className="light:hidden"
-              href="https://www.solarsystemscope.com/textures/download/2k_mercury.jpg"
+              href="/hero/textures/mercury.webp"
               x="1200" y="100" width="1200" height="1200"
               preserveAspectRatio="xMidYMid slice"
               opacity="0.12"
@@ -242,7 +239,7 @@ export default function Hero() {
             {/* Light mode */}
             <image
               className="hidden light:block"
-              href="https://www.solarsystemscope.com/textures/download/2k_mercury.jpg"
+              href="/hero/textures/mercury.webp"
               x="0" y="100" width="1200" height="1200"
               preserveAspectRatio="xMidYMid slice"
               opacity="0.15"
@@ -250,13 +247,13 @@ export default function Hero() {
             />
             <image
               className="hidden light:block"
-              href="https://www.solarsystemscope.com/textures/download/2k_mercury.jpg"
+              href="/hero/textures/mercury.webp"
               x="1200" y="100" width="1200" height="1200"
               preserveAspectRatio="xMidYMid slice"
               opacity="0.15"
               style={{ mixBlendMode: 'multiply' }}
             />
-          </motion.g>
+          </g>
         </g>
 
         {/* Curved top halo — brume animée (drift subtil + respiration d'opacité) */}
@@ -292,12 +289,8 @@ export default function Hero() {
 
         {/* Planet surface texture — grain + cloud bands, clipped inside the planet */}
         <g clipPath="url(#planetClip)">
-          {/* Cloud bands animées (rotation planétaire) — dark mode */}
-          <motion.g
-            className="light:hidden"
-            initial={{ x: 0 }}
-            animate={{ x: -1200 }}
-            transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}>
+          {/* Cloud bands animées (rotation planétaire) — dark mode — CSS loop */}
+          <g className="planet-clouds-loop light:hidden">
             <rect
               x="0" y="100" width="1200" height="700"
               filter="url(#planetClouds)"
@@ -310,13 +303,9 @@ export default function Hero() {
               opacity="0.14"
               style={{ mixBlendMode: 'overlay' }}
             />
-          </motion.g>
-          {/* Cloud bands animées — light mode */}
-          <motion.g
-            className="hidden light:block"
-            initial={{ x: 0 }}
-            animate={{ x: -1200 }}
-            transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}>
+          </g>
+          {/* Cloud bands animées — light mode — CSS loop */}
+          <g className="planet-clouds-loop hidden light:block">
             <rect
               x="0" y="100" width="1200" height="700"
               filter="url(#planetClouds)"
@@ -329,7 +318,7 @@ export default function Hero() {
               opacity="0.18"
               style={{ mixBlendMode: 'multiply' }}
             />
-          </motion.g>
+          </g>
           {/* Fine grain — dark mode */}
           <rect
             x="0" y="100" width="1200" height="700"
@@ -431,86 +420,81 @@ export default function Hero() {
       </svg>
 
 
+      {/* Fade from bg top — adoucit l'arrivée du grid sous le header */}
+      <div className="absolute inset-x-0 top-0 h-28 lg:h-36 bg-gradient-to-b from-[color:var(--bg)] to-transparent pointer-events-none z-[2]" />
+
       {/* Fade to bg bottom */}
       <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-[color:var(--bg)] pointer-events-none z-10" />
 
       <div className="max-w-[1200px] mx-auto px-5 lg:px-10 relative">
         <div className="flex flex-col items-center text-center min-h-[72vh] justify-center py-20 lg:py-28 max-w-[900px] mx-auto">
           {/* Eyebrow — label brutaliste avec fond solide pour lisibilité sur la planète */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="relative inline-flex items-center px-3.5 py-2 text-[11px] font-mono tracking-[0.22em] uppercase text-[color:var(--ink)] bg-[color:var(--bg)] light:bg-white border border-[color:var(--border-subtle)]">
+          <div
+            className="relative inline-flex items-center px-3.5 py-2 text-[10px] font-mono tracking-[0.2em] uppercase text-[color:var(--ink)] bg-[color:var(--bg)] light:bg-white border border-[color:var(--border-subtle)]">
             {/* Overlay card-elev-1 (subtil voile en dark) — identique aux cards offres */}
             <span aria-hidden="true" className="absolute inset-0 bg-[color:var(--card-elev-1)] light:hidden pointer-events-none" />
-            {/* Dots gris aux 4 coins (signature DA bento) */}
+            {/* Crosses aux 4 coins (signature DA bento) */}
             {[
               { left: '0%',   top: '0%'   },
               { left: '100%', top: '0%'   },
               { left: '0%',   top: '100%' },
               { left: '100%', top: '100%' },
             ].map((pos, i) => (
-              <span
+              <CornerCross
                 key={i}
-                aria-hidden="true"
-                className="pointer-events-none absolute w-[7px] h-[7px] rounded-full bg-[#201E1D] light:bg-[#E7E6E3] z-[4]"
+                size={14}
+                className="absolute z-[4]"
                 style={{ left: pos.left, top: pos.top, transform: 'translate(-50%, -50%)' }}
               />
             ))}
             <span className="relative">Growth · Agents IA · Développement</span>
-          </motion.div>
+          </div>
 
-          {/* Headline */}
+          {/* Headline — AnimatedChars (framer-motion reveal). Aggressive timing so
+              the anim fully completes within PageSpeed's mobile screenshot window
+              (~3s throttled). SSR HTML contains the full text via sr-only fallback. */}
           <h1 className="mt-5 text-[clamp(32px,5vw,64px)] leading-[1.05] font-medium tracking-[-0.025em]">
             <AnimatedChars
               text="Les planètes s'alignent,"
-              delayStart={0.1}
-              stagger={0.025}
-              duration={0.7}
+              delayStart={0}
+              stagger={0.012}
+              duration={0.4}
               className="block whitespace-nowrap"
             />
             <span className="relative inline-block whitespace-nowrap font-[family-name:var(--font-hand)] italic text-[color:var(--accent)] tracking-[0.005em] mt-1 text-[0.88em]">
               <AnimatedChars
                 text="votre marketing aussi."
-                delayStart={0.75}
-                stagger={0.022}
-                duration={0.7}
+                delayStart={0.25}
+                stagger={0.012}
+                duration={0.4}
               />
-              <span className="absolute -inset-x-10 -top-4 -bottom-10 -z-10 bg-[color:var(--accent)]/12 light:bg-[color:var(--accent)]/50 blur-3xl rounded-full" />
+              <span aria-hidden="true" className="absolute -inset-x-10 -top-4 -bottom-10 -z-10 bg-[color:var(--accent)]/12 light:bg-[color:var(--accent)]/50 blur-3xl rounded-full" />
             </span>
           </h1>
 
           {/* Subcopy */}
-          <motion.p
-            initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.25 }}
-            className="mt-6 text-[16px] lg:text-[17px] leading-[1.55] text-[color:var(--ink-muted)] max-w-[640px]">
+          <p className="mt-6 text-[16px] lg:text-[17px] leading-[1.55] text-[color:var(--ink-muted)] max-w-[640px]">
             Inbound, outbound, agents IA et développement sur-mesure — tous sous la même orbite.
             Un Growth Lead senior pilote, les experts canaux et les devs IA livrent.
-          </motion.p>
+          </p>
 
           {/* CTA — single, glass style */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-8 flex items-center justify-center">
+          <div className="mt-8 flex items-center justify-center">
             <a
-              href="#tarifs"
+              href="/audit"
               className="glass-pill inline-flex items-center gap-2 px-7 py-3 text-[14px] font-semibold text-black light:text-white hover:scale-[1.02] transition-transform"
               style={{
+                borderRadius: '6px',
                 background:
                   'radial-gradient(ellipse 140% 120% at 50% -20%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 35%, rgba(255,255,255,0.08) 65%, transparent 100%), var(--accent)',
               }}>
               <PlayCircle size={16} className="text-black light:text-white" />
               <span>Mon audit gratuit — 48h</span>
             </a>
-          </motion.div>
+          </div>
 
           {/* Review badges — sober one-line */}
-          <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.55 }}
-            className="mt-8 inline-flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[12px] text-[color:var(--ink-muted)]">
+          <div className="mt-8 inline-flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[12px] text-[color:var(--ink-muted)]">
             {reviews.map((r, i) => (
               <a
                 key={r.href}
@@ -527,7 +511,7 @@ export default function Hero() {
                 {i < reviews.length - 1 && <span className="text-[color:var(--ink-dim)] ml-4">·</span>}
               </a>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

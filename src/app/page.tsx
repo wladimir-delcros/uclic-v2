@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import Nav from '@/components/landing/Nav';
 import Hero from '@/components/landing/Hero';
+import ConvergingLinesBridge from '@/components/ui/ConvergingLinesBridge';
 import MediaMarquee from '@/components/landing/MediaMarquee';
 import OffreSection from '@/components/landing/OffreSection';
 import DifferentSection from '@/components/landing/DifferentSection';
+import SectionDivider from '@/components/ui/SectionDivider';
 import PreuveSection from '@/components/landing/PreuveSection';
 import LinkedInProofSection from '@/components/landing/LinkedInProofSection';
 import MethodeSection from '@/components/landing/MethodeSection';
@@ -12,7 +14,6 @@ import FaqSection from '@/components/landing/FaqSection';
 import CtaFinal from '@/components/landing/CtaFinal';
 import Footer from '@/components/landing/Footer';
 import {
-  breadcrumbSchema,
   jsonLdString,
   pillarsItemListSchema,
   serviceSchema,
@@ -53,26 +54,31 @@ export default function Home() {
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: jsonLdString(breadcrumbSchema()) }}
-      />
-      <script
-        type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(serviceSchema()) }}
       />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(pillarsItemListSchema()) }}
       />
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[1000] focus:rounded-full focus:bg-[color:var(--accent)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[color:var(--accent-ink)] focus:shadow-lg"
+      >
+        Aller au contenu
+      </a>
       <Nav />
-      <main className="relative">
+      <main id="main" className="relative">
         <Hero />
         <MediaMarquee />
         <OffreSection />
+        <SectionDivider />
         <DifferentSection />
         <MethodeSection />
+        <SectionDivider />
         <TarifsSection />
-        <PreuveSection />
+        <ConvergingLinesBridge className="mt-4 mb-12 lg:mt-6 lg:mb-16" />
         <LinkedInProofSection />
+        <ConvergingLinesBridge variant="center-only" className="my-4 lg:my-6" height={140} />
         <FaqSection />
         <CtaFinal />
       </main>

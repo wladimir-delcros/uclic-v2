@@ -1,6 +1,5 @@
 'use client';
 import { ArrowRight } from 'lucide-react';
-import Image from 'next/image';
 import type { CasClient } from '@/lib/portfolio';
 
 interface Props {
@@ -20,7 +19,7 @@ export default function PreuveTabs({ cases }: Props) {
   return (
     <div className="mt-14 relative">
       {cases.map((c, i) => {
-        const href = `https://uclic.fr/cas-clients/${c.slug}`;
+        const href = `/cas-clients/${c.slug}`;
         const topOffset = 90 + i * 28; // chaque card pin 28px plus bas que la précédente
 
         return (
@@ -48,8 +47,6 @@ export default function PreuveTabs({ cases }: Props) {
                   )}
                   <a
                     href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="mt-2 inline-flex items-center gap-2 text-[13.5px] font-medium text-[color:var(--ink)] hover:text-[color:var(--accent)] hover:gap-3 transition-all self-start">
                     Lire le cas complet
                     <ArrowRight size={15} className="transition-transform" />
@@ -59,13 +56,12 @@ export default function PreuveTabs({ cases }: Props) {
                 {/* Right : image */}
                 <div className="relative aspect-[5/4] lg:aspect-auto lg:min-h-[380px] bg-[color:var(--bg)] overflow-hidden border-t lg:border-t-0 lg:border-l border-[color:var(--border-subtle)]">
                   {c.featured_image_url ? (
-                    <Image
+                    <img
                       src={c.featured_image_url}
                       alt={c.title}
-                      fill
-                      sizes="(min-width: 1024px) 60vw, 100vw"
-                      className="object-cover"
-                      priority={i === 0}
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover"
                     />
                   ) : (
                     <div className="absolute inset-0 bg-gradient-to-br from-[color:var(--accent)]/10 via-transparent to-[color:var(--card-elev-1)]" />

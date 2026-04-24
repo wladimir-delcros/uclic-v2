@@ -1,8 +1,9 @@
 'use client';
 import { useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowDown } from 'lucide-react';
 import SectionAmbience from '../ui/SectionAmbience';
+import CornerCross from '../ui/CornerCross';
+import WaterfallBeacon from '../ui/WaterfallBeacon';
 import Organigramme from './Organigramme';
 import OrganigrammeAvant from './OrganigrammeAvant';
 import BeforeAfterSlider from './BeforeAfterSlider';
@@ -14,7 +15,7 @@ export default function DifferentSection() {
   // minoritaire se floute dynamiquement (celui qui est recouvert par le slider).
   // À la sortie du composant, retour au blur par défaut sur "Avant".
   const [isActive, setIsActive] = useState(false);
-  const [sliderRatio, setSliderRatio] = useState(0.45);
+  const [sliderRatio, setSliderRatio] = useState(0.5);
 
   const maxBlur = 8; // px
   // Si ratio > 0.5 → on voit majoritairement "Avec Uclic" → blur progressif sur "Avant"
@@ -23,13 +24,12 @@ export default function DifferentSection() {
   const afterDynamicBlur  = Math.max(0, (0.5 - sliderRatio) * 2) * maxBlur;
 
   return (
-    <section ref={sectionRef} id="different" className="relative py-24 lg:py-32 overflow-hidden">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--border-subtle)] to-transparent" />
+    <section ref={sectionRef} id="different" className="relative pt-20 lg:pt-24 pb-0 overflow-hidden">
       <SectionAmbience variant="medium" />
 
       <div className="max-w-[1200px] mx-auto px-5 lg:px-10">
         {/* ── Header ─────────────────────────────────────────────────── */}
-        <div className="flex justify-center">
+        <div className="flex justify-center relative z-[1]">
           <div className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)]">
             <span className="w-6 h-px bg-[color:var(--accent)]" />
             Ce qu&apos;on fait différemment
@@ -47,8 +47,15 @@ export default function DifferentSection() {
           On le voit depuis des années sur le terrain — en tant qu&apos;anciens responsables Growth, pas en tant que commerciaux.
         </p>
 
+        {/* Discrete drag hint — placé au-dessus du comparateur pour préparer le geste */}
+        <p className="mt-8 flex items-center justify-center gap-2 text-[10.5px] font-mono uppercase tracking-[0.22em] text-[color:var(--accent)]/75">
+          <span aria-hidden="true">←</span>
+          Glissez pour voir la différence
+          <span aria-hidden="true">→</span>
+        </p>
+
         {/* ── Encart : simple border + bg card-elev-1, sans passepartout ni border accent ── */}
-        <div className="mt-14 relative">
+        <div className="mt-6 relative">
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 24 }}
             whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
@@ -56,10 +63,16 @@ export default function DifferentSection() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             onMouseLeave={() => setIsActive(false)}
             onBlur={() => setIsActive(false)}
-            className="relative !rounded-none border border-[color:var(--border-subtle)] bg-[color:var(--card-elev-1)] light:bg-white overflow-visible"
+            className="relative !rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white overflow-visible"
           >
+            {/* CornerCross aux 4 coins — matche la DA des cards de OffreSection */}
+            <CornerCross size={14} className="hidden md:block absolute z-[3] left-0 top-0" style={{ transform: 'translate(-50%, -50%)' }} />
+            <CornerCross size={14} className="hidden md:block absolute z-[3] right-0 top-0" style={{ transform: 'translate(50%, -50%)' }} />
+            <CornerCross size={14} className="hidden md:block absolute z-[3] left-0 bottom-0" style={{ transform: 'translate(-50%, 50%)' }} />
+            <CornerCross size={14} className="hidden md:block absolute z-[3] right-0 bottom-0" style={{ transform: 'translate(50%, 50%)' }} />
             <div className="relative">
               <BeforeAfterSlider
+                initialRatio={0.5}
                 onInteract={() => setIsActive(true)}
                 onRatioChange={(r) => setSliderRatio(r)}
                 before={
@@ -84,7 +97,6 @@ export default function DifferentSection() {
                     <Organigramme />
                   </div>
                 }
-                initialRatio={0.45}
                 beforeLabel="Sans Uclic"
                 afterLabel="Avec Uclic"
               />
@@ -92,27 +104,10 @@ export default function DifferentSection() {
           </motion.div>
         </div>
 
-        {/* Discrete drag hint */}
-        <p className="mt-4 flex items-center justify-center gap-2 text-[10.5px] font-mono uppercase tracking-[0.22em] text-[color:var(--accent)]/75">
-          <span aria-hidden="true">←</span>
-          Glissez pour voir la différence
-          <span aria-hidden="true">→</span>
-        </p>
-
-        {/* ── Closure ────────────────────────────────────────────────── */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mt-14 flex items-center justify-center gap-2 text-[14px] text-[color:var(--ink-muted)] text-center max-w-[680px] mx-auto">
-          Le plus gros levier n&apos;est pas d&apos;ajouter un prestataire. C&apos;est d&apos;avoir quelqu&apos;un qui pilote l&apos;ensemble.
-          <motion.span
-            animate={{ y: [0, 4, 0] }}
-            transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-[color:var(--accent)]">
-            <ArrowDown size={14} />
-          </motion.span>
-        </motion.p>
+        {/* ── Waterfall beacon : collé au comparateur, transition vers la section suivante. */}
+        <div className="relative">
+          <WaterfallBeacon />
+        </div>
       </div>
     </section>
   );

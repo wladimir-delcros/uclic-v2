@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { cn } from '../../../utils/cn';
+import { cn } from '@/utils/cn';
 
 export interface StackCardItemProps {
   children: React.ReactElement<{ className?: string; style?: React.CSSProperties }>;

@@ -49,6 +49,8 @@ export default function AnimatedChars({
       variants={container}
       transition={{ delayChildren: delayStart, staggerChildren: stagger }}
       aria-label={text}>
+      {/* SSR-only copy for non-JS crawlers (Perplexity, ClaudeBot, SearchGPT) */}
+      <span className="sr-only">{text}</span>
       {words.map((word, wi) => (
         <span key={wi} className="inline-block whitespace-nowrap" aria-hidden="true">
           {word.split('').map((ch, ci) => (

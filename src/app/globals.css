@@ -243,7 +243,8 @@ h1, h2, h3, h4, h5 {
 /* Glassmorphism pill with diagonal gradient border (reproduces the reference UI) */
 .glass-pill {
   position: relative;
-  border-radius: 9999px;
+  /* border-radius volontairement absent : piloté par la className Tailwind
+     (rounded-md) de chaque consumer pour garantir une source unique.  */
   background: rgba(20, 18, 16, 0.55);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
@@ -936,4 +937,241 @@ body { overflow-x: clip; }
 }
 @media (prefers-reduced-motion: reduce) {
   .halo-mist { animation: none; }
+}
+
+/* --- A11y: focus ring global cohérent (WCAG 2.4.7) --- */
+a:focus-visible,
+button:focus-visible,
+[role='button']:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+/* Respect reduced-motion globalement pour les animations décoratives */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Hero planet decorative loops — CSS-driven to offload from JS main thread.
+   SVG <g> needs transform-box:fill-box + transform-origin so translateX(-1200)
+   is interpreted in user units of the local SVG coordinate system. */
+@keyframes planet-scroll-x {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-1200px, 0, 0); }
+}
+.planet-texture-loop,
+.planet-clouds-loop {
+  transform-box: fill-box;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.planet-texture-loop {
+  animation: planet-scroll-x 60s linear infinite;
+}
+.planet-clouds-loop {
+  animation: planet-scroll-x 45s linear infinite;
+}
+
+/* Before/after separator — ombre noire en dark, accent en light. */
+.ba-sep-glow {
+  background: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 50%, transparent 100%);
+}
+.light .ba-sep-glow {
+  background: linear-gradient(to right, transparent 0%, color-mix(in srgb, var(--accent) 18%, transparent) 50%, transparent 100%);
+}
+.ba-sep-bar {
+  box-shadow: 0 0 28px 6px rgba(0,0,0,0.35);
+}
+.light .ba-sep-bar {
+  box-shadow: 0 0 28px 6px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+/* -----------------------------------------------------------
+ * Rich-text content (levee-de-fonds, blog) — HTML from CMS.
+ * Tailwind typography plugin is not installed; these rules
+ * provide a consistent editorial layout.
+ * ---------------------------------------------------------*/
+.levee-content,
+.blog-content {
+  color: color-mix(in srgb, var(--ink) 92%, transparent);
+  font-size: 16px;
+  line-height: 1.75;
+}
+.levee-content > *:first-child,
+.blog-content > *:first-child {
+  margin-top: 0;
+}
+.levee-content h2,
+.blog-content h2 {
+  margin-top: 1.4em;
+  margin-bottom: 0.5em;
+  font-family: var(--font-instrument-serif), serif;
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  color: var(--ink);
+}
+.levee-content h3,
+.blog-content h3 {
+  margin-top: 1.75em;
+  margin-bottom: 0.5em;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.levee-content h4,
+.blog-content h4 {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.levee-content p,
+.blog-content p {
+  margin: 0 0 1.15em 0;
+}
+.levee-content a,
+.blog-content a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  transition: border-color .15s ease, color .15s ease;
+}
+.levee-content a:hover,
+.blog-content a:hover {
+  border-bottom-color: var(--accent);
+}
+.levee-content strong,
+.blog-content strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.levee-content em,
+.blog-content em {
+  font-style: italic;
+}
+.levee-content ul,
+.levee-content ol,
+.blog-content ul,
+.blog-content ol {
+  margin: 0 0 1.25em 0;
+  padding-left: 1.25em;
+}
+.levee-content ul,
+.blog-content ul {
+  list-style: none;
+  padding-left: 0;
+}
+.levee-content ul > li,
+.blog-content ul > li {
+  position: relative;
+  padding-left: 1.4em;
+  margin-bottom: 0.55em;
+}
+.levee-content ul > li::before,
+.blog-content ul > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.78em;
+  width: 0.55em;
+  height: 1px;
+  background: var(--accent);
+}
+.levee-content ol,
+.blog-content ol {
+  list-style: decimal;
+}
+.levee-content ol > li,
+.blog-content ol > li {
+  margin-bottom: 0.55em;
+  padding-left: 0.3em;
+}
+.levee-content ol > li::marker,
+.blog-content ol > li::marker {
+  color: var(--accent);
+  font-weight: 600;
+}
+.levee-content blockquote,
+.blog-content blockquote {
+  margin: 1.75em 0;
+  padding: 0.2em 0 0.2em 1.25em;
+  border-left: 2px solid var(--accent);
+  color: color-mix(in srgb, var(--ink) 80%, transparent);
+  font-style: italic;
+}
+.levee-content code,
+.blog-content code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92em;
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--ink);
+  padding: 0.12em 0.42em;
+  border-radius: 3px;
+}
+.levee-content pre,
+.blog-content pre {
+  margin: 1.5em 0;
+  padding: 1em 1.1em;
+  background: var(--card-elev-1, #141211);
+  border: 1px solid var(--border-subtle);
+  overflow-x: auto;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+.levee-content pre code,
+.blog-content pre code {
+  background: transparent;
+  padding: 0;
+}
+.levee-content img,
+.blog-content img {
+  margin: 1.75em 0;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border-subtle);
+}
+.levee-content hr,
+.blog-content hr {
+  margin: 2.5em 0;
+  border: 0;
+  border-top: 1px solid var(--border-subtle);
+}
+.levee-content table,
+.blog-content table {
+  width: 100%;
+  margin: 1.5em 0;
+  border-collapse: collapse;
+  font-size: 14.5px;
+}
+.levee-content th,
+.levee-content td,
+.blog-content th,
+.blog-content td {
+  padding: 0.65em 0.9em;
+  border-bottom: 1px solid var(--border-subtle);
+  text-align: left;
+  vertical-align: top;
+}
+.levee-content th,
+.blog-content th {
+  color: var(--ink);
+  font-weight: 600;
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
 }

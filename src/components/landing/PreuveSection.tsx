@@ -35,9 +35,7 @@ export default async function PreuveSection() {
               40+ clients B2B ont déjà fait le choix. Retrouve l'intégralité des cas publiés sur la page dédiée.
             </p>
             <a
-              href="https://uclic.fr/cas-clients"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/cas-clients"
               className="inline-flex items-center gap-1.5 text-[13px] text-[color:var(--accent)] hover:gap-2.5 transition-all">
               Voir tous les cas clients →
             </a>

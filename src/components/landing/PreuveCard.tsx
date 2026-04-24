@@ -1,7 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
 import { ArrowRight, ArrowDown } from 'lucide-react';
-import Image from 'next/image';
 import type { CasClient } from '@/lib/portfolio';
 
 interface PreuveCardProps {
@@ -11,7 +10,7 @@ interface PreuveCardProps {
 }
 
 export function PreuveCard({ cas, index, total }: PreuveCardProps) {
-  const href = `https://uclic.fr/cas-clients/${cas.slug}`;
+  const href = `/cas-clients/${cas.slug}`;
   const isLastCol = index === total - 1;
   const isLastRow = index === total - 1;
 
@@ -26,12 +25,12 @@ export function PreuveCard({ cas, index, total }: PreuveCardProps) {
       } ${!isLastRow ? 'border-b md:border-b-0' : ''}`}>
       {cas.featured_image_url && (
         <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl border border-[color:var(--border-subtle)] bg-[color:var(--card-elev-1)]">
-          <Image
+          <img
             src={cas.featured_image_url}
             alt={cas.title}
-            fill
-            sizes="(min-width: 768px) 33vw, 100vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         </div>
       )}
@@ -48,8 +47,6 @@ export function PreuveCard({ cas, index, total }: PreuveCardProps) {
 
       <a
         href={href}
-        target="_blank"
-        rel="noopener noreferrer"
         className="mt-auto pt-7 inline-flex items-center gap-1.5 text-[13px] text-[color:var(--ink-muted)] hover:gap-2.5 hover:text-[color:var(--accent)] transition-all self-start">
         Lire le cas complet
         <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useInView, useReducedMotion } from 'framer-motion';
 import { Search, Send, Cpu, ArrowRight, ArrowDown, Check } from 'lucide-react';
 import SectionAmbience from '../ui/SectionAmbience';
+import CornerCross from '../ui/CornerCross';
 import { useCounter } from '@/hooks/useCounter';
 
 /* ─── uclic pictogram (the shape in front of the wordmark) — used as LED mask ─── */
@@ -276,7 +277,7 @@ export default function OffreSection() {
   const stagger = reduce ? 0 : 0.12;
 
   return (
-    <section id="offre" className="relative py-24 lg:py-32 overflow-hidden">
+    <section id="offre" className="relative pt-24 lg:pt-32 pb-12 lg:pb-16 overflow-hidden">
       {/* Pulse keyframes — scoped via styled-jsx */}
       <style jsx>{`
         @keyframes offrePulse {
@@ -288,7 +289,6 @@ export default function OffreSection() {
           50%      { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
         }
         .offre-dot-outbound {
-          background-color: var(--accent) !important;
           animation: offrePulseSoft 2.4s ease-in-out infinite;
         }
         @media (prefers-reduced-motion: reduce) {
@@ -336,17 +336,16 @@ export default function OffreSection() {
             show: { transition: { staggerChildren: stagger, delayChildren: 0.05 } },
           }}
           className="mt-14 grid md:grid-cols-3 items-stretch border border-[color:var(--border-subtle)] !rounded-none relative">
-          {/* Decorative dots at card intersections (and outer corners) */}
+          {/* Decorative crosses at card intersections (and outer corners) */}
           {DOTS.map((pos, idx) => {
-            // Dots 1, 2, 5, 6 entourent la card Outbound (index 1) → pulse soft permanent
+            // Indexes 1, 2, 5, 6 entourent la card Outbound → pulse soft permanent accent
             const isOutboundDot = [1, 2, 5, 6].includes(idx);
             return (
-              <span
+              <CornerCross
                 key={idx}
-                aria-hidden="true"
-                className={`hidden md:block pointer-events-none absolute w-[14px] h-[14px] rounded-full bg-[#201E1D] light:bg-[#E7E6E3] z-[2] ${
-                  isOutboundDot ? 'offre-dot-outbound' : ''
-                }`}
+                size={14}
+                accent={isOutboundDot}
+                className={`hidden md:block absolute z-[2] ${isOutboundDot ? 'offre-dot-outbound' : ''}`}
                 style={{ left: pos.left, top: pos.top, transform: 'translate(-50%, -50%)' }}
               />
             );
@@ -406,27 +405,13 @@ export default function OffreSection() {
           ))}
         </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mt-14 flex items-center justify-center gap-2 text-[14px] text-[color:var(--ink-muted)]">
-          Derrière ces 3 piliers, une équipe senior que vous rencontrez dès le premier call
-          <motion.span
-            animate={{ y: [0, 4, 0] }}
-            transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-[color:var(--accent)]">
-            <ArrowDown size={14} />
-          </motion.span>
-        </motion.p>
-
         {/* ─── Recommandés par — avatars qui se chevauchent ─── */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-40px' }}
           transition={{ duration: 0.6 }}
-          className="mt-16 flex items-center justify-center gap-4">
+          className="mt-14 flex items-center justify-center gap-4">
           <div className="inline-flex items-center gap-2 text-[11px] font-mono tracking-[0.22em] uppercase text-[color:var(--accent)]">
             <Check size={12} strokeWidth={2.8} />
             Recommandé par
@@ -451,6 +436,20 @@ export default function OffreSection() {
             ))}
           </ul>
         </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mt-16 flex items-center justify-center gap-2 text-[14px] text-[color:var(--ink-muted)]">
+          Derrière ces 3 piliers, une équipe senior que vous rencontrez dès le premier call
+          <motion.span
+            animate={{ y: [0, 4, 0] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+            className="text-[color:var(--accent)]">
+            <ArrowDown size={14} />
+          </motion.span>
+        </motion.p>
       </div>
     </section>
   );

@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { useStackCards, type UseStackCardsOptions } from '../../../hooks/useStackCards';
-import { cn } from '../../../utils/cn';
+import { useStackCards, type UseStackCardsOptions } from '@/hooks/useStackCards';
+import { cn } from '@/utils/cn';
 
 export interface StackCardsProps extends UseStackCardsOptions {
   children: React.ReactNode;

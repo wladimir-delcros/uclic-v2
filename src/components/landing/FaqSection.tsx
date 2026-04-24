@@ -33,7 +33,6 @@ export default function FaqSection() {
   const filtered = faq.filter((f) => f.cat === active);
   return (
     <section id="faq" className="relative py-24 lg:py-32 overflow-hidden">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--border-subtle)] to-transparent" />
       <SectionAmbience variant="medium" />
       <div className="max-w-[980px] mx-auto px-5 lg:px-10 relative">
         <Reveal as="div" className="text-center">
@@ -70,7 +69,7 @@ export default function FaqSection() {
           })}
         </Reveal>
 
-        <Reveal as="div" className="mt-14 card-surface !rounded-none !p-0 overflow-hidden" delay={0.25}>
+        <Reveal as="div" className="mt-14 !rounded-none !p-0 overflow-hidden border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white" delay={0.25}>
           {filtered.map((f, i) => (
             <details key={f.q} className="group">
               <summary className={`px-8 lg:px-10 py-6 flex items-center justify-between gap-6 cursor-pointer list-none ${

@@ -1,5 +1,4 @@
 'use client';
-import Image from 'next/image';
 import { useEffect, useState, useMemo } from 'react';
 
 const clients = [
@@ -53,27 +52,25 @@ function RotatingSlot({ slot, nextLogo }: { slot: Slot; nextLogo: { src: string;
   const translateY = phase === 'out' ? -6 : phase === 'in' ? 0 : 0;
 
   return (
-    <div className="relative h-12 flex items-center justify-center shrink-0 min-w-0">
+    <div className="relative h-12 flex items-center justify-center shrink-0 min-w-0 w-full px-2">
       <div
         style={{
           opacity,
           transform: `translateY(${translateY}px)`,
           transition: `opacity ${FADE_MS}ms cubic-bezier(0.4, 0, 0.2, 1), transform ${FADE_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`,
         }}
-        className="w-full h-full flex items-center justify-center">
-        <Image
+        className="relative flex h-10 w-full items-center justify-center">
+        <img
           src={logo.src}
           alt={logo.alt}
-          width={160}
-          height={40}
-          className="max-h-10 max-w-[80%] object-contain logo-white"
-          unoptimized
+          loading="lazy"
+          decoding="async"
+          /* max-h fixe = tous les logos à la MÊME hauteur visuelle, largeur auto.
+             max-w-full garde l'image dans le slot mobile étroit. */
+          className="h-6 sm:h-7 w-auto max-w-full object-contain logo-white"
         />
       </div>
-      {/* Preload next */}
-      {nextLogo && (
-        <link rel="preload" as="image" href={nextLogo.src} />
-      )}
+      {nextLogo && <link rel="preload" as="image" href={nextLogo.src} />}
     </div>
   );
 }

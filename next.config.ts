@@ -7,14 +7,11 @@ const isProd = process.env.NODE_ENV === 'production';
 /**
  * Security headers (loose-but-defended baseline — aucun impact UI).
  * CSP est volontairement permissif pour les tiers légitimes :
- * - randomuser.me (avatars demo MethodeSection)
- * - *.supabase.co (images stockées)
+ * - *.supabase.co (images stockées / CMS)
  * - media.licdn.com / *.linkedin.com (embeds LinkedIn)
  * - calendly.com (si CTA booking)
  * - fonts.googleapis.com / fonts.gstatic.com (next/font Google)
  * - static.uclic.fr (avatars LinkedIn reviews)
- * - solarsystemscope.com (texture planète Hero)
- * - mediauclic.b-cdn.net (CDN Bunny — photos équipe Organigramme)
  */
 const ContentSecurityPolicy = [
   "default-src 'self'",
@@ -23,7 +20,7 @@ const ContentSecurityPolicy = [
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://assets.calendly.com https://platform.linkedin.com",
   // Tailwind + next/font injectent des styles inline
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.calendly.com",
-  "img-src 'self' data: blob: https://randomuser.me https://*.supabase.co https://media.licdn.com https://*.linkedin.com https://uclic.fr https://*.uclic.fr https://mediauclic.b-cdn.net https://www.solarsystemscope.com",
+  "img-src 'self' data: blob: https://*.supabase.co https://media.licdn.com https://*.linkedin.com https://uclic.fr https://*.uclic.fr",
   "font-src 'self' data: https://fonts.gstatic.com",
   "connect-src 'self' https://*.supabase.co https://vitals.vercel-insights.com https://*.uclic.fr",
   "media-src 'self' blob: https://*.supabase.co",
@@ -111,25 +108,11 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'randomuser.me',
-        pathname: '/api/portraits/**',
-      },
-      {
-        protocol: 'https',
         hostname: 'media.licdn.com',
       },
       {
         protocol: 'https',
         hostname: 'static.uclic.fr',
-      },
-      {
-        protocol: 'https',
-        hostname: 'mediauclic.b-cdn.net',
-        pathname: '/storage/v1/object/public/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'www.solarsystemscope.com',
       },
     ],
   },
@@ -160,6 +143,18 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/hero/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        source: '/avatars/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        source: '/team/:path*',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
@@ -210,6 +205,65 @@ const nextConfig: NextConfig = {
       {
         source: '/index.html',
         destination: '/',
+        permanent: true,
+      },
+      // Legacy /services/* — les pages V1 etaient des placeholders vides.
+      // On redirige vers les vraies pages categorie expertise V2.
+      {
+        source: '/services/seo',
+        destination: '/expertise/agence-seo',
+        permanent: true,
+      },
+      {
+        source: '/services/sea',
+        destination: '/expertise/agence-sma',
+        permanent: true,
+      },
+      {
+        source: '/services/crm',
+        destination: '/expertise/crm-gestion-de-la-relation-client',
+        permanent: true,
+      },
+      {
+        source: '/services/data',
+        destination: '/expertise/agence-data-analytics',
+        permanent: true,
+      },
+      {
+        source: '/services/automation',
+        destination: '/expertise/agence-intelligence-artificielle',
+        permanent: true,
+      },
+      // Legacy routes V1 renommées en FR en V2
+      {
+        source: '/about',
+        destination: '/a-propos',
+        permanent: true,
+      },
+      {
+        source: '/reset-password',
+        destination: '/auth/reset-password',
+        permanent: true,
+      },
+      // Blog — variantes EN V1 vers routes FR V2
+      {
+        source: '/blog/author/:slug*',
+        destination: '/blog/auteur/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/blog/authors',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/blog/category/:slug/page/:page*',
+        destination: '/blog/categorie/:slug/page/:page*',
+        permanent: true,
+      },
+      {
+        source: '/blog/category/:slug*',
+        destination: '/blog/categorie/:slug*',
         permanent: true,
       },
     ];

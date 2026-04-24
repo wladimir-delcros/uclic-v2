@@ -1,4 +1,4 @@
-import { StaticImageData } from 'next/image';
+export type StaticImageData = { src: string; height: number; width: number; blurDataURL?: string };
 
 export interface IBlogPost {
   tag: string;

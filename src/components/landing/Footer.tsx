@@ -1,5 +1,5 @@
 'use client';
-import Image from 'next/image';
+import { useState } from 'react';
 import SectionAmbience from '../ui/SectionAmbience';
 
 const IconLinkedIn = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg>);
@@ -30,32 +30,32 @@ const LogoSortlist = () => (
 );
 
 const serviceLinks = [
-  { label: 'Branding', href: 'https://uclic.fr/expertise/agence-branding' },
-  { label: 'CRM', href: 'https://uclic.fr/expertise/crm-gestion-de-la-relation-client' },
-  { label: 'Data Analytics', href: 'https://uclic.fr/expertise/agence-data-analytics' },
-  { label: 'Growth Marketing', href: 'https://uclic.fr/expertise/growth-marketing' },
-  { label: 'Intelligence Artificielle', href: 'https://uclic.fr/expertise/agence-intelligence-artificielle' },
-  { label: 'Paid Media', href: 'https://uclic.fr/expertise/agence-paid-media' },
-  { label: 'SEO', href: 'https://uclic.fr/expertise/agence-seo' },
-  { label: 'Social Ads', href: 'https://uclic.fr/expertise/agence-sma' },
-  { label: 'Workflows n8n', href: 'https://uclic.fr/membres/workflows' },
+  { label: 'Branding', href: '/expertise/agence-branding' },
+  { label: 'CRM', href: '/expertise/crm-gestion-de-la-relation-client' },
+  { label: 'Data Analytics', href: '/expertise/agence-data-analytics' },
+  { label: 'Growth Marketing', href: '/expertise/growth-marketing' },
+  { label: 'Intelligence Artificielle', href: '/expertise/agence-intelligence-artificielle' },
+  { label: 'Paid Media', href: '/expertise/agence-paid-media' },
+  { label: 'SEO', href: '/expertise/agence-seo' },
+  { label: 'Social Ads', href: '/expertise/agence-sma' },
+  { label: 'Workflows n8n', href: '/membres/workflows' },
 ];
 
 const siteLinks = [
-  { label: 'À propos', href: 'https://uclic.fr/a-propos' },
-  { label: 'Notre équipe', href: 'https://uclic.fr/equipe' },
-  { label: 'Levées de fonds', href: 'https://uclic.fr/levee-de-fonds' },
-  { label: 'La charte du Freelance', href: 'https://uclic.fr/charte-freelance' },
-  { label: 'Meilleures Agences', href: 'https://uclic.fr/meilleure-agence' },
-  { label: 'Meilleure Agence Growth', href: 'https://uclic.fr/meilleure-agence-growth' },
-  { label: 'Nous rejoindre', href: 'https://uclic.fr/contact' },
-  { label: 'Toolbox', href: 'https://uclic.fr/toolbox' },
-  { label: 'Services de Scraping', href: 'https://uclic.fr/scraping' },
+  { label: 'À propos', href: '/a-propos' },
+  { label: 'Notre équipe', href: '/equipe' },
+  { label: 'Levées de fonds', href: '/levee-de-fonds' },
+  { label: 'La charte du Freelance', href: '/charte-freelance' },
+  { label: 'Meilleures Agences', href: '/meilleure-agence' },
+  { label: 'Meilleure Agence Growth', href: '/meilleure-agence-growth' },
+  { label: 'Nous rejoindre', href: '/contact' },
+  { label: 'Toolbox', href: '/toolbox' },
+  { label: 'Services de Scraping', href: '/scraping' },
 ];
 
 const memberLinks = [
-  { label: 'Se connecter', href: 'https://uclic.fr/login' },
-  { label: "S'inscrire", href: 'https://uclic.fr/signup' },
+  { label: 'Se connecter', href: '/login' },
+  { label: "S'inscrire", href: '/signup' },
 ];
 
 const ratings = [
@@ -65,9 +65,9 @@ const ratings = [
 ];
 
 const legalLinks = [
-  { label: 'Mentions légales', href: 'https://uclic.fr/legal/mentions-legales' },
-  { label: 'Conditions Générales de Vente', href: 'https://uclic.fr/legal/conditions-generales-de-vente' },
-  { label: 'RGPD', href: 'https://uclic.fr/legal/rgpd' },
+  { label: 'Mentions légales', href: '/legal/mentions-legales' },
+  { label: 'Conditions Générales de Vente', href: '/legal/conditions-generales-de-vente' },
+  { label: 'RGPD', href: '/legal/rgpd' },
 ];
 
 const eyebrowClass =
@@ -76,6 +76,18 @@ const linkClass =
   'text-[color:var(--ink-muted)] hover:text-[color:var(--accent)] transition-colors';
 
 export default function Footer() {
+  const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const onNewsletterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const input = (e.currentTarget.elements.namedItem('email') as HTMLInputElement) ?? null;
+    if (!input || !input.value || !/.+@.+\..+/.test(input.value)) {
+      setNewsletterStatus('error');
+      return;
+    }
+    // TODO: wire to real endpoint — stub success for now so the UX is accessible
+    setNewsletterStatus('success');
+    input.value = '';
+  };
   return (
     <footer className="relative overflow-hidden border-t border-[color:var(--border-subtle)] bg-[color:var(--bg)] pt-20 pb-10">
       {/* Filet top cohérent avec les sections standard */}
@@ -89,7 +101,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 pb-10 border-b border-[color:var(--border-subtle)]">
           <div>
             <a href="/" className="flex items-center shrink-0" aria-label="uclic.fr">
-              <Image src="/logo.svg" alt="uclic" width={132} height={38} className="h-9 w-auto logo-themed" />
+              <img src="/logo.svg" alt="uclic" width={132} height={38} loading="lazy" decoding="async" className="h-9 w-auto logo-themed" />
             </a>
             <p className="mt-4 text-[14px] text-[color:var(--ink-muted)] max-w-[320px] leading-relaxed">
               Agence Growth Marketing & IA. Pilotage senior, experts canaux, agents IA en production.
@@ -100,9 +112,7 @@ export default function Footer() {
               </a>
               <span className="w-1 h-1 rounded-full bg-[color:var(--border-subtle)]" />
               <a
-                href="https://uclic.fr/audit"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/audit"
                 className="inline-flex items-center gap-1 rounded-full border border-[color:var(--accent)]/30 bg-[color:var(--accent)]/10 px-3 py-1 text-[12px] font-medium text-[color:var(--accent)] hover:bg-[color:var(--accent)]/15 transition-colors">
                 Audit Gratuit
               </a>
@@ -146,7 +156,7 @@ export default function Footer() {
             <ul className="space-y-2 text-[14px]">
               {serviceLinks.map((l) => (
                 <li key={l.href}>
-                  <a href={l.href} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                  <a href={l.href} className={linkClass}>
                     {l.label}
                   </a>
                 </li>
@@ -161,7 +171,7 @@ export default function Footer() {
             <ul className="space-y-2 text-[14px]">
               {siteLinks.map((l) => (
                 <li key={l.href}>
-                  <a href={l.href} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                  <a href={l.href} className={linkClass}>
                     {l.label}
                   </a>
                 </li>
@@ -176,7 +186,7 @@ export default function Footer() {
             <ul className="space-y-2 text-[14px]">
               {memberLinks.map((l) => (
                 <li key={l.href}>
-                  <a href={l.href} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                  <a href={l.href} className={linkClass}>
                     {l.label}
                   </a>
                 </li>
@@ -198,25 +208,50 @@ export default function Footer() {
               En vous inscrivant, vous acceptez de recevoir des emails marketing de notre part.
             </p>
             <form
-              action="#"
-              onSubmit={(e) => e.preventDefault()}
-              className="mt-4 flex flex-col sm:flex-row gap-2">
+              onSubmit={onNewsletterSubmit}
+              className="mt-4 flex flex-col sm:flex-row gap-2"
+              noValidate
+              suppressHydrationWarning>
               <label htmlFor="footer-newsletter-email" className="sr-only">
                 Adresse email
               </label>
               <input
                 id="footer-newsletter-email"
+                name="email"
                 type="email"
                 required
+                autoComplete="email"
+                inputMode="email"
                 placeholder="vous@exemple.com"
-                className="flex-1 min-w-0 rounded-full border border-[color:var(--border-subtle)] bg-[color:var(--bg)] px-4 py-2 text-[13px] text-[color:var(--ink)] placeholder:text-[color:var(--ink-muted)] focus:outline-none focus:border-[color:var(--accent)]/50 focus:ring-1 focus:ring-[color:var(--accent)]/30 transition-colors"
+                aria-describedby="footer-newsletter-status"
+                aria-invalid={newsletterStatus === 'error' || undefined}
+                suppressHydrationWarning
+                className="flex-1 min-w-0 rounded-md border border-[color:var(--border-subtle)] bg-[color:var(--bg)] px-4 py-2.5 text-[13px] text-[color:var(--ink)] placeholder:text-[color:var(--ink-muted)] focus:outline-none focus:border-[color:var(--accent)]/50 focus:ring-1 focus:ring-[color:var(--accent)]/30 transition-colors"
               />
               <button
                 type="submit"
-                className="rounded-full bg-[color:var(--accent)] px-4 py-2 text-[13px] font-medium text-[color:var(--accent-ink,#0b0b0c)] hover:opacity-90 transition-opacity">
+                suppressHydrationWarning
+                className="rounded-md bg-[color:var(--accent)] px-4 py-2.5 min-h-[44px] text-[13px] font-medium text-[color:var(--accent-ink,#0b0b0c)] hover:opacity-90 transition-opacity">
                 S&apos;abonner
               </button>
             </form>
+            <p
+              id="footer-newsletter-status"
+              role="status"
+              aria-live="polite"
+              className={`mt-2 text-[12px] min-h-[1em] ${
+                newsletterStatus === 'success'
+                  ? 'text-[color:var(--accent)]'
+                  : newsletterStatus === 'error'
+                  ? 'text-red-400'
+                  : 'sr-only'
+              }`}>
+              {newsletterStatus === 'success'
+                ? 'Merci, votre inscription est prise en compte.'
+                : newsletterStatus === 'error'
+                ? 'Merci de saisir une adresse email valide.'
+                : ''}
+            </p>
           </div>
         </div>
 
@@ -249,10 +284,8 @@ export default function Footer() {
           <span>
             © 2026 Uclic. Tous droits réservés. · Fait par{' '}
             <a
-              href="https://uclic.fr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[color:var(--ink)] hover:text-[color:var(--accent)] transition-colors underline-offset-2 hover:underline">
+              href="/"
+              className="text-[color:var(--ink)] underline underline-offset-2 decoration-[color:var(--border-subtle)] hover:text-[color:var(--accent)] hover:decoration-[color:var(--accent)] transition-colors">
               uclic.fr
             </a>
           </span>
@@ -261,8 +294,6 @@ export default function Footer() {
               <a
                 key={l.href}
                 href={l.href}
-                target="_blank"
-                rel="noopener noreferrer"
                 className={linkClass}>
                 {l.label}
               </a>

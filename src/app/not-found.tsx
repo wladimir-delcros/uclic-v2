@@ -3,7 +3,6 @@ import LinkButton from '@/components/ui/button/LinkButton';
 import { defaultMetadata } from '@/utils/generateMetaData';
 import gradientBg from '@public/images/ns-img-498.png';
 import { Metadata } from 'next';
-import Image from 'next/image';
 
 export const metadata: Metadata = {
   ...defaultMetadata,
@@ -19,7 +18,7 @@ const page = () => {
             <div className="bg-background-3 dark:bg-background-5 dark:border-background-9 relative flex flex-col items-center justify-center overflow-hidden rounded-4xl border-[10px] border-white py-10 pr-2.5 text-center md:py-20 lg:py-[100px]">
               <RevealAnimation delay={0.2} direction="right" offset={200}>
                 <figure className="hero-gradient-2 pointer-events-none absolute -top-[45%] -right-[68%] -z-0 h-full w-full -rotate-[68deg] opacity-70 select-none sm:-top-[65%] sm:-right-[48%]">
-                  <Image src={gradientBg} alt="gradient" className="rotate-180" />
+                  <img src={gradientBg.src} alt="gradient" className="rotate-180" loading="lazy" decoding="async" />
                 </figure>
               </RevealAnimation>
               <RevealAnimation delay={0.3}>

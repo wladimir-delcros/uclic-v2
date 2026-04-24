@@ -2,7 +2,7 @@
 
 import { cn } from '@/utils/cn';
 import { useEffect, useRef } from 'react';
-import { useTab } from '../../../context/TabContext';
+import { useTab } from '@/context/TabContext';
 
 interface TabListProps {
   children: React.ReactNode;

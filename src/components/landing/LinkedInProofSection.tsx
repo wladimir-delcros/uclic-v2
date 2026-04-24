@@ -31,12 +31,15 @@ const ReviewCard = ({ r }: { r: Review }) => (
     rel="noopener noreferrer"
     className="group border border-[color:var(--border-subtle)] bg-[color:var(--card-elev-1)] light:bg-white p-5 shrink-0 w-[340px] md:w-[380px] transition-[border-color,background-color,box-shadow] duration-300 hover:border-[color:var(--accent)]/40 hover:bg-[color:var(--card-elev-2,var(--card-elev-1))]">
     <p className="text-[14.5px] leading-relaxed text-[color:var(--ink-muted)] mb-4 line-clamp-5">{r.text}</p>
-    <footer className="flex items-center gap-3 pt-3 border-t border-[color:var(--border-subtle)]">
+    <div className="flex items-center gap-3 pt-3 border-t border-[color:var(--border-subtle)]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={r.avatar}
+        src={r.avatar || undefined}
         alt=""
+        width={36}
+        height={36}
         loading="lazy"
+        decoding="async"
         className="w-9 h-9 rounded-full object-cover border border-[color:var(--border-subtle)] shrink-0"
       />
       <div className="min-w-0 flex-1">
@@ -45,9 +48,10 @@ const ReviewCard = ({ r }: { r: Review }) => (
       </div>
       <LinkedinIcon
         size={14}
-        className="text-[color:var(--ink-dim)] group-hover:text-[color:var(--accent)] transition-colors shrink-0"
+        aria-hidden="true"
+        className="text-[color:var(--ink-muted)] group-hover:text-[color:var(--accent)] transition-colors shrink-0"
       />
-    </footer>
+    </div>
   </a>
 );
 
@@ -60,28 +64,27 @@ export default function LinkedInProofSection() {
   const loop2 = [...row2, ...row2];
 
   return (
-    <section id="linkedin-proof" className="relative py-24 lg:py-32 overflow-hidden">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--border-subtle)] to-transparent" />
+    <section id="linkedin-proof" className="relative pt-24 lg:pt-32 pb-10 lg:pb-12 overflow-hidden">
       <SectionAmbience variant="medium" />
       <div className="max-w-[1200px] mx-auto px-5 lg:px-10 relative">
         <Reveal>
           <div className="flex justify-center">
             <div className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)]">
               <span className="w-6 h-px bg-[color:var(--accent)]" />
-              Reconnaissance pair à pair
+              Vos pairs valident
               <span className="w-6 h-px bg-[color:var(--accent)]" />
             </div>
           </div>
 
           <h2 className="mt-4 text-center text-[clamp(32px,4.2vw,52px)] font-display font-medium tracking-[-0.02em] max-w-[900px] mx-auto">
-            L'écosystème growth français lit, commente et partage nos analyses.{' '}
+            Dirigeants, CMOs et Heads of Growth.{' '}
             <span className="relative inline-block isolate font-[family-name:var(--font-hand)] italic text-[color:var(--accent)] tracking-[0.005em]">
               À visage découvert.
               <span className="absolute -inset-x-4 -inset-y-2 -z-10 bg-[color:var(--accent)]/10 blur-2xl" />
             </span>
           </h2>
           <p className="mt-5 text-center text-[16px] text-[color:var(--ink-muted)] max-w-[640px] mx-auto leading-relaxed">
-            Commentaires LinkedIn publics de CEO, founders et experts growth en réaction aux publications de Wladimir. Chaque card ouvre le fil d'origine.
+            Ils dirigent des PME, ETI et grands comptes. Ils commentent publiquement nos analyses sur LinkedIn. Chaque card ouvre le fil d'origine.
           </p>
         </Reveal>
 

@@ -1,5 +1,5 @@
 import { cn } from '@/utils/cn';
-import Image, { StaticImageData } from 'next/image';
+import type { StaticImageData } from '@/interface';
 import { FC } from 'react';
 
 interface AvatarProps {
@@ -10,15 +10,17 @@ interface AvatarProps {
 
 const Avatar: FC<AvatarProps> = ({ src, alt, className }) => {
   return (
-    <Image
+    <img
       className={cn(
         'inline-block size-12 rounded-full ring-2 ring-white dark:ring-stroke-7 bg-background-2 dark:bg-background-5',
         className,
       )}
-      src={src}
+      src={typeof src === 'string' ? src : src.src}
       alt={alt}
       width={48}
       height={48}
+      loading="lazy"
+      decoding="async"
     />
   );
 };

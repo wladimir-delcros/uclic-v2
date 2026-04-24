@@ -4,7 +4,7 @@ import { cn } from '@/utils/cn';
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useEffect, useRef } from 'react';
-import { useTab } from '../../../context/TabContext';
+import { useTab } from '@/context/TabContext';
 
 interface TabContentProps {
   children: React.ReactNode;

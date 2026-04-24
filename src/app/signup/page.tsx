@@ -1,27 +1,13 @@
-import SignupHero from '@/components/authentication/SignupHero';
-import CTA from '@/components/shared/cta/CTA';
-import { defaultMetadata } from '@/utils/generateMetaData';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
+import SignupClient from './SignupClient';
 
 export const metadata: Metadata = {
-  ...defaultMetadata,
-  title: 'Signup - App Builder || NextSaaS',
+  title: 'Créer un compte',
+  description: 'Création d\'un compte membre Uclic pour accéder aux workflows et ressources.',
+  alternates: { canonical: '/signup' },
+  robots: { index: false, follow: false },
 };
 
-const page = () => {
-  return (
-    <main className="bg-background-3 dark:bg-background-7">
-      <SignupHero />
-      <CTA
-        className="dark:bg-background-6 bg-white"
-        badgeClass="badge-yellow-v2"
-        badgeText="Get Started"
-        ctaHeading="Build a complete website using the assistance"
-        description="Start your free trial today and see your ideas come to life easily and creatively."
-        btnClass="hover:btn-secondary dark:hover:btn-accent"
-        ctaBtnText="Get started"
-      />
-    </main>
-  );
-};
-export default page;
+export default function SignupPage() {
+  return <SignupClient />;
+}
