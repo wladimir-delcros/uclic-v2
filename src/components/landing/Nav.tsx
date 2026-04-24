@@ -201,8 +201,9 @@ export default function Nav() {
               onClick={() => setMobileOpen(true)}
               aria-label="Ouvrir le menu"
               aria-expanded={mobileOpen}
-              className="lg:hidden w-10 h-10 grid place-items-center rounded-md border border-[color:var(--border-subtle)] text-[color:var(--ink)] hover:text-[color:var(--accent)] hover:border-[color:var(--accent)]/30 transition-colors">
-              <Menu size={18} />
+              aria-controls="mobile-nav-drawer"
+              className="lg:hidden shrink-0 w-11 h-11 grid place-items-center rounded-md border border-[color:var(--border-strong)] bg-[color:var(--surface)]/40 text-[color:var(--ink)] hover:text-[color:var(--accent)] hover:border-[color:var(--accent)]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/50 transition-colors">
+              <Menu size={22} strokeWidth={1.75} aria-hidden="true" />
             </button>
           </div>
 

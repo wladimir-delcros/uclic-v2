@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight, ChevronDown, PlayCircle, X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   accountLinks,
   contactPhone,
@@ -21,6 +21,7 @@ const easing = [0.22, 1, 0.36, 1] as const;
 
 export default function MobilePanel({ isOpen, onClose }: Props) {
   const [openSection, setOpenSection] = useState<'expertises' | 'ressources' | null>(null);
+  const closeBtnRef = useRef<HTMLButtonElement | null>(null);
 
   // Lock body scroll while open
   useEffect(() => {
@@ -32,12 +33,16 @@ export default function MobilePanel({ isOpen, onClose }: Props) {
     };
   }, [isOpen]);
 
-  // Close on escape
+  // Close on escape + focus initial on close button (minimal focus trap)
   useEffect(() => {
     if (!isOpen) return;
     const h = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
     window.addEventListener('keydown', h);
-    return () => window.removeEventListener('keydown', h);
+    const t = window.setTimeout(() => closeBtnRef.current?.focus(), 120);
+    return () => {
+      window.removeEventListener('keydown', h);
+      window.clearTimeout(t);
+    };
   }, [isOpen, onClose]);
 
   return (
@@ -51,7 +56,7 @@ export default function MobilePanel({ isOpen, onClose }: Props) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[95] bg-black/60 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-[110] bg-black/60 backdrop-blur-sm lg:hidden"
             onClick={onClose}
             aria-hidden="true"
           />
@@ -59,11 +64,12 @@ export default function MobilePanel({ isOpen, onClose }: Props) {
           {/* Drawer */}
           <motion.aside
             key="mobile-drawer"
+            id="mobile-nav-drawer"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ duration: 0.4, ease: easing }}
-            className="fixed inset-y-0 right-0 z-[100] w-full sm:max-w-[420px] lg:hidden bg-[color:var(--surface)] border-l border-[color:var(--border-subtle)] flex flex-col"
+            className="fixed inset-y-0 right-0 z-[120] w-full sm:max-w-[420px] lg:hidden bg-[color:var(--surface)] border-l border-[color:var(--border-subtle)] flex flex-col"
             role="dialog"
             aria-modal="true"
             aria-label="Menu principal">
@@ -79,11 +85,12 @@ export default function MobilePanel({ isOpen, onClose }: Props) {
                 />
               </a>
               <button
+                ref={closeBtnRef}
                 type="button"
                 onClick={onClose}
                 aria-label="Fermer le menu"
-                className="w-10 h-10 grid place-items-center rounded-md text-[color:var(--ink)] hover:text-[color:var(--accent)] border border-[color:var(--border-subtle)] hover:border-[color:var(--accent)]/30 transition-colors">
-                <X size={18} />
+                className="w-11 h-11 grid place-items-center rounded-md text-[color:var(--ink)] hover:text-[color:var(--accent)] border border-[color:var(--border-strong)] hover:border-[color:var(--accent)]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/50 transition-colors">
+                <X size={20} strokeWidth={1.75} aria-hidden="true" />
               </button>
             </div>
 

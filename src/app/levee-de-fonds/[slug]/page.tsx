@@ -336,7 +336,7 @@ export default async function LeveeDetailPage({ params }: PageProps) {
             </div>
 
             {/* Aside */}
-            <aside className="lg:col-span-1 lg:sticky lg:top-28 lg:self-start flex flex-col gap-6">
+            <aside className="lg:col-span-1 article-sidebar-sticky flex flex-col gap-6">
                 {/* Company card */}
                 <div className="!rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white p-6">
                   <div className="text-[11px] font-mono uppercase tracking-[0.22em] text-[color:var(--accent)]">

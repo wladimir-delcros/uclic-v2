@@ -2,6 +2,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Nav from '@/components/landing/Nav';
 import Footer from '@/components/landing/Footer';
 import SectionAmbience from '@/components/ui/SectionAmbience';
+import CTAButton from '@/components/ui/CTAButton';
 
 export default function TeamMemberNotFound() {
   return (
@@ -25,20 +26,12 @@ export default function TeamMemberNotFound() {
             </p>
 
             <div className="mt-10 flex flex-wrap gap-3 justify-center">
-              <a
-                href="/equipe"
-                className="inline-flex items-center gap-2 px-5 py-3 text-[13px] font-mono uppercase tracking-[0.16em] bg-[color:var(--accent)] text-[color:var(--accent-ink)] !rounded-none hover:gap-3 transition-all"
-              >
-                <ArrowLeft size={14} />
+              <CTAButton href="/equipe" icon={ArrowLeft} iconPosition="left" size="md">
                 Voir l&apos;équipe
-              </a>
-              <a
-                href="/"
-                className="inline-flex items-center gap-2 px-5 py-3 text-[13px] font-mono uppercase tracking-[0.16em] border border-[color:var(--border-subtle)] text-[color:var(--ink)] !rounded-none hover:border-[color:var(--accent)]/60 hover:text-[color:var(--accent)] transition-colors"
-              >
+              </CTAButton>
+              <CTAButton href="/" variant="secondary" icon={ArrowRight} size="md">
                 Accueil
-                <ArrowRight size={14} />
-              </a>
+              </CTAButton>
             </div>
           </div>
         </section>

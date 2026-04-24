@@ -5,6 +5,7 @@ import Nav from '@/components/landing/Nav';
 import Footer from '@/components/landing/Footer';
 import CtaFinal from '@/components/landing/CtaFinal';
 import SectionAmbience from '@/components/ui/SectionAmbience';
+import CTAButton from '@/components/ui/CTAButton';
 import ToolboxListingSection from '@/components/toolbox/ToolboxListingSection';
 import { jsonLdString } from '@/lib/schema';
 import {
@@ -301,23 +302,18 @@ export default async function ToolboxDetailPage({ params }: PageProps) {
             {/* CTAs */}
             <div className="mt-8 flex flex-wrap gap-3">
               {externalUrl && (
-                <a
+                <CTAButton
                   href={externalUrl}
                   target="_blank"
                   rel="noopener noreferrer nofollow"
-                  className="inline-flex items-center gap-2 px-5 py-3 bg-[color:var(--accent)] text-[color:var(--accent-ink)] text-[14px] font-medium !rounded-none hover:opacity-90 transition-opacity"
-                >
+                  icon={ExternalLink}
+                  size="md">
                   Visiter {tool.title}
-                  <ExternalLink size={14} />
-                </a>
+                </CTAButton>
               )}
-              <a
-                href="/audit"
-                className="inline-flex items-center gap-2 px-5 py-3 border border-[color:var(--border-subtle)] text-[14px] text-[color:var(--ink)] !rounded-none hover:border-[color:var(--accent)]/60 hover:text-[color:var(--accent)] transition-colors"
-              >
+              <CTAButton href="/audit" variant="secondary" icon={ArrowRight} size="md">
                 Auditer ma stack
-                <ArrowRight size={14} />
-              </a>
+              </CTAButton>
             </div>
 
             {screenshot && (

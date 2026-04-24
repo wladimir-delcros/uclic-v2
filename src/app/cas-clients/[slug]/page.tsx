@@ -151,26 +151,18 @@ export default async function CasClientDetailPage({ params }: PageProps) {
           </div>
         </section>
 
-        <section className="relative py-12 lg:py-16 overflow-hidden">
+        <section className="relative py-12 lg:py-16">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--border-subtle)] to-transparent" />
           <div className="max-w-[1200px] mx-auto px-5 lg:px-10 relative grid grid-cols-1 lg:grid-cols-3 gap-10">
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-2 min-w-0">
               <div
-                className="prose prose-lg max-w-none
-                  prose-headings:text-[color:var(--ink)] prose-headings:font-semibold
-                  prose-p:text-[color:var(--ink)] prose-p:leading-relaxed
-                  prose-a:text-[color:var(--accent)] prose-a:no-underline hover:prose-a:underline
-                  prose-strong:text-[color:var(--ink)]
-                  prose-code:text-[color:var(--accent)] prose-code:bg-[color:var(--border-subtle)]/30 prose-code:px-1 prose-code:rounded
-                  prose-blockquote:border-[color:var(--accent)] prose-blockquote:text-[color:var(--ink-muted)]
-                  prose-img:rounded-xl prose-img:border prose-img:border-[color:var(--border-subtle)]
-                  prose-li:text-[color:var(--ink)]"
+                className="article-body max-w-none"
                 dangerouslySetInnerHTML={{ __html: cas.content_html }}
               />
             </div>
 
-            <aside className="lg:col-span-1">
-              <div className="lg:sticky lg:top-28 flex flex-col gap-6">
+            <aside className="lg:col-span-1 article-sidebar-sticky">
+              <div className="flex flex-col gap-6">
                 <div className="rounded-xl border border-[color:var(--border-subtle)] bg-[color:var(--bg)] p-6">
                   <div className="text-[11px] tracking-[0.22em] uppercase text-[color:var(--accent)]">
                     Vous vivez le même enjeu ?

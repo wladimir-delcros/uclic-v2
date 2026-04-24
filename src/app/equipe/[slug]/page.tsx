@@ -5,6 +5,7 @@ import Nav from '@/components/landing/Nav';
 import Footer from '@/components/landing/Footer';
 import CtaFinal from '@/components/landing/CtaFinal';
 import SectionAmbience from '@/components/ui/SectionAmbience';
+import CTAButton from '@/components/ui/CTAButton';
 import { jsonLdString } from '@/lib/schema';
 import {
   fetchAllTeamMembers,
@@ -285,20 +286,17 @@ export default async function TeamMemberDetailPage({ params }: PageProps) {
                   Besoin d&apos;un cadrage ou d&apos;un audit ? On part des leviers qui comptent — pas d&apos;une pitch deck générique.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-3">
-                  <a
-                    href="/audit"
-                    className="inline-flex items-center gap-2 px-5 py-3 text-[13px] font-mono uppercase tracking-[0.16em] bg-[color:var(--accent)] text-[color:var(--accent-ink)] !rounded-none hover:gap-3 transition-all"
-                  >
+                  <CTAButton href="/audit" icon={ArrowRight} size="md">
                     Demander un audit
-                    <ArrowRight size={14} />
-                  </a>
-                  <a
+                  </CTAButton>
+                  <CTAButton
                     href="/contact"
-                    className="inline-flex items-center gap-2 px-5 py-3 text-[13px] font-mono uppercase tracking-[0.16em] border border-[color:var(--border-subtle)] text-[color:var(--ink)] !rounded-none hover:border-[color:var(--accent)]/60 hover:text-[color:var(--accent)] transition-colors"
-                  >
-                    <Mail size={14} />
+                    variant="secondary"
+                    icon={Mail}
+                    iconPosition="left"
+                    size="md">
                     Nous contacter
-                  </a>
+                  </CTAButton>
                 </div>
               </div>
             </div>

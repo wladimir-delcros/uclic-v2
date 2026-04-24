@@ -998,180 +998,322 @@ summary:focus-visible {
 }
 
 /* -----------------------------------------------------------
- * Rich-text content (levee-de-fonds, blog) — HTML from CMS.
- * Tailwind typography plugin is not installed; these rules
- * provide a consistent editorial layout.
+ * Rich-text content (levee-de-fonds, blog, cas-clients, legal)
+ * HTML from CMS (WordPress → Supabase). The Tailwind typography
+ * plugin is NOT installed; these rules provide a consistent,
+ * editorial layout. `.article-body` is the canonical class;
+ * `.blog-content` and `.levee-content` remain as aliases.
  * ---------------------------------------------------------*/
+.article-body,
 .levee-content,
 .blog-content {
   color: color-mix(in srgb, var(--ink) 92%, transparent);
-  font-size: 16px;
-  line-height: 1.75;
+  font-size: 17px;
+  line-height: 1.7;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
+.article-body > *:first-child,
 .levee-content > *:first-child,
 .blog-content > *:first-child {
   margin-top: 0;
 }
+.article-body > *:last-child,
+.levee-content > *:last-child,
+.blog-content > *:last-child {
+  margin-bottom: 0;
+}
+.article-body h2,
 .levee-content h2,
 .blog-content h2 {
-  margin-top: 1.4em;
-  margin-bottom: 0.5em;
-  font-family: var(--font-instrument-serif), serif;
-  font-size: clamp(22px, 2.4vw, 28px);
+  margin-top: 1.8em;
+  margin-bottom: 0.55em;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: clamp(24px, 2.6vw, 30px);
   font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 1.25;
+  letter-spacing: -0.018em;
+  line-height: 1.2;
   color: var(--ink);
 }
+.article-body h3,
 .levee-content h3,
 .blog-content h3 {
   margin-top: 1.75em;
   margin-bottom: 0.5em;
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 600;
+  letter-spacing: -0.01em;
   line-height: 1.35;
   color: var(--ink);
 }
+.article-body h4,
 .levee-content h4,
 .blog-content h4 {
   margin-top: 1.5em;
-  margin-bottom: 0.5em;
-  font-size: 16px;
+  margin-bottom: 0.45em;
+  font-size: 13px;
   font-weight: 600;
   color: var(--ink);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
 }
+.article-body p,
 .levee-content p,
 .blog-content p {
-  margin: 0 0 1.15em 0;
+  margin: 0 0 1.2em 0;
 }
+.article-body a,
 .levee-content a,
 .blog-content a {
-  color: var(--accent);
+  color: var(--accent-text);
   text-decoration: none;
-  border-bottom: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
   transition: border-color .15s ease, color .15s ease;
 }
+.article-body a:hover,
 .levee-content a:hover,
 .blog-content a:hover {
   border-bottom-color: var(--accent);
+  color: var(--accent);
 }
+.article-body strong,
 .levee-content strong,
 .blog-content strong {
   color: var(--ink);
   font-weight: 600;
 }
+.article-body em,
 .levee-content em,
 .blog-content em {
   font-style: italic;
 }
+.article-body ul,
+.article-body ol,
 .levee-content ul,
 .levee-content ol,
 .blog-content ul,
 .blog-content ol {
-  margin: 0 0 1.25em 0;
+  margin: 0 0 1.3em 0;
   padding-left: 1.25em;
 }
+.article-body ul,
 .levee-content ul,
 .blog-content ul {
   list-style: none;
   padding-left: 0;
 }
+.article-body ul > li,
 .levee-content ul > li,
 .blog-content ul > li {
   position: relative;
-  padding-left: 1.4em;
+  padding-left: 1.5em;
   margin-bottom: 0.55em;
 }
+.article-body ul > li::before,
 .levee-content ul > li::before,
 .blog-content ul > li::before {
   content: '';
   position: absolute;
   left: 0;
   top: 0.78em;
-  width: 0.55em;
+  width: 0.65em;
   height: 1px;
   background: var(--accent);
 }
+.article-body ol,
 .levee-content ol,
 .blog-content ol {
   list-style: decimal;
+  padding-left: 1.5em;
 }
+.article-body ol > li,
 .levee-content ol > li,
 .blog-content ol > li {
   margin-bottom: 0.55em;
-  padding-left: 0.3em;
+  padding-left: 0.35em;
 }
+.article-body ol > li::marker,
 .levee-content ol > li::marker,
 .blog-content ol > li::marker {
   color: var(--accent);
   font-weight: 600;
 }
+.article-body li > ul,
+.article-body li > ol,
+.levee-content li > ul,
+.levee-content li > ol,
+.blog-content li > ul,
+.blog-content li > ol {
+  margin-top: 0.55em;
+  margin-bottom: 0;
+}
+.article-body blockquote,
 .levee-content blockquote,
 .blog-content blockquote {
   margin: 1.75em 0;
-  padding: 0.2em 0 0.2em 1.25em;
+  padding: 0.25em 0 0.25em 1.25em;
   border-left: 2px solid var(--accent);
-  color: color-mix(in srgb, var(--ink) 80%, transparent);
+  color: color-mix(in srgb, var(--ink) 82%, transparent);
   font-style: italic;
 }
+.article-body blockquote p,
+.levee-content blockquote p,
+.blog-content blockquote p {
+  margin-bottom: 0.6em;
+}
+.article-body code,
 .levee-content code,
 .blog-content code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.92em;
-  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  font-size: 0.9em;
+  background: var(--surface-raised);
   color: var(--ink);
   padding: 0.12em 0.42em;
+  border: 1px solid var(--border-subtle);
   border-radius: 3px;
 }
+.article-body pre,
 .levee-content pre,
 .blog-content pre {
   margin: 1.5em 0;
   padding: 1em 1.1em;
-  background: var(--card-elev-1, #141211);
+  background: var(--surface-raised);
   border: 1px solid var(--border-subtle);
+  border-radius: 6px;
   overflow-x: auto;
   font-size: 13.5px;
   line-height: 1.6;
 }
+.article-body pre code,
 .levee-content pre code,
 .blog-content pre code {
   background: transparent;
+  border: 0;
   padding: 0;
+  font-size: inherit;
 }
+.article-body figure,
+.levee-content figure,
+.blog-content figure {
+  margin: 1.75em 0;
+}
+.article-body figure img,
+.levee-content figure img,
+.blog-content figure img {
+  margin: 0;
+}
+.article-body figcaption,
+.levee-content figcaption,
+.blog-content figcaption {
+  margin-top: 0.6em;
+  font-size: 13px;
+  color: var(--ink-dim);
+  text-align: center;
+  font-style: italic;
+}
+.article-body img,
 .levee-content img,
 .blog-content img {
-  margin: 1.75em 0;
+  display: block;
+  margin: 1.75em auto;
   max-width: 100%;
   height: auto;
   border: 1px solid var(--border-subtle);
+  border-radius: 6px;
 }
+.article-body iframe,
+.article-body video,
+.levee-content iframe,
+.levee-content video,
+.blog-content iframe,
+.blog-content video {
+  display: block;
+  max-width: 100%;
+  margin: 1.75em auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  height: auto;
+}
+.article-body hr,
 .levee-content hr,
 .blog-content hr {
   margin: 2.5em 0;
   border: 0;
   border-top: 1px solid var(--border-subtle);
 }
+.article-body table,
 .levee-content table,
 .blog-content table {
+  display: block;
   width: 100%;
+  overflow-x: auto;
   margin: 1.5em 0;
   border-collapse: collapse;
   font-size: 14.5px;
+  border: 1px solid var(--border-subtle);
 }
+.article-body th,
+.article-body td,
 .levee-content th,
 .levee-content td,
 .blog-content th,
 .blog-content td {
-  padding: 0.65em 0.9em;
+  padding: 0.7em 0.95em;
   border-bottom: 1px solid var(--border-subtle);
   text-align: left;
   vertical-align: top;
 }
+.article-body th,
 .levee-content th,
 .blog-content th {
   color: var(--ink);
   font-weight: 600;
   background: color-mix(in srgb, var(--ink) 4%, transparent);
+}
+/* WordPress caption/alignment helpers */
+.article-body .wp-caption,
+.blog-content .wp-caption,
+.levee-content .wp-caption {
+  max-width: 100%;
+  margin: 1.75em auto;
+}
+.article-body .wp-caption-text,
+.blog-content .wp-caption-text,
+.levee-content .wp-caption-text {
+  margin-top: 0.5em;
+  font-size: 13px;
+  color: var(--ink-dim);
+  text-align: center;
+  font-style: italic;
+}
+.article-body .alignleft,
+.blog-content .alignleft,
+.levee-content .alignleft { margin-right: 1.25em; }
+.article-body .alignright,
+.blog-content .alignright,
+.levee-content .alignright { margin-left: 1.25em; }
+.article-body .aligncenter,
+.blog-content .aligncenter,
+.levee-content .aligncenter { margin-left: auto; margin-right: auto; }
+
+/* Sticky sidebars on article pages (lg+): the column becomes its own
+   sticky container with bounded height so long sidebars scroll instead
+   of overflowing. top-28 matches the page standard (pt-24 lg:pt-28). */
+@media (min-width: 1024px) {
+  .article-sidebar-sticky {
+    position: sticky;
+    top: 7rem;
+    align-self: start;
+    max-height: calc(100vh - 7.5rem);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
+  }
+  .article-sidebar-sticky::-webkit-scrollbar { width: 6px; }
+  .article-sidebar-sticky::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 3px;
+  }
 }

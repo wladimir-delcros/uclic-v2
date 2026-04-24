@@ -237,15 +237,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
         <article className="relative py-12 lg:py-16">
           <div
-            className="prose prose-lg max-w-[760px] mx-auto px-5 lg:px-10 blog-content
-              prose-headings:text-[color:var(--ink)] prose-headings:font-semibold
-              prose-p:text-[color:var(--ink)] prose-p:leading-relaxed
-              prose-a:text-[color:var(--accent)] prose-a:no-underline hover:prose-a:underline
-              prose-strong:text-[color:var(--ink)]
-              prose-code:text-[color:var(--accent)] prose-code:bg-[color:var(--border-subtle)]/30 prose-code:px-1 prose-code:rounded
-              prose-blockquote:border-[color:var(--accent)] prose-blockquote:text-[color:var(--ink-muted)]
-              prose-img:rounded-xl prose-img:border prose-img:border-[color:var(--border-subtle)]
-              prose-li:text-[color:var(--ink)]"
+            className="article-body blog-content max-w-[760px] mx-auto px-5 lg:px-10"
             dangerouslySetInnerHTML={{ __html: post.content || '' }}
           />
         </article>
