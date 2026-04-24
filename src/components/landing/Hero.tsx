@@ -53,14 +53,6 @@ const reviews = [
   { href: 'https://www.sortlist.com/fr/agency/uclic', label: 'Sortlist', rating: '4,96', count: '6', color: '#FFFFFF', Icon: SortlistIcon },
 ];
 
-const recommendedBy = [
-  { src: '/hero/brice-maurin.webp', alt: 'Brice Maurin' },
-  { src: '/hero/denis.webp',        alt: 'Denis Cohen' },
-  { src: '/hero/jean.webp',         alt: 'Jean' },
-  { src: '/hero/benoit.webp',       alt: 'Benoit Dubos' },
-  { src: '/hero/cabane.webp',       alt: 'Guillaume Cabane' },
-];
-
 export default function Hero() {
   return (
     <section className="relative overflow-hidden pt-14 lg:pt-20 pb-0">

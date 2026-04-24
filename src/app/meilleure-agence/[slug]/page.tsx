@@ -217,11 +217,11 @@ export default async function MeilleureAgenceSlugPage({ params }: PageProps) {
                       {c.name}
                     </h3>
                     <div className="flex flex-wrap gap-3 text-[12px] text-[color:var(--ink-muted)]">
-                      {c.rating != null && (
+                      {c.rating !== null && (
                         <span className="inline-flex items-center gap-1">
                           <Star size={12} className="text-[color:var(--accent)]" />
                           {c.rating.toFixed(1)}
-                          {c.reviewCount != null && ` · ${c.reviewCount} avis`}
+                          {c.reviewCount !== null && ` · ${c.reviewCount} avis`}
                         </span>
                       )}
                       <span className="inline-flex items-center gap-1 font-mono uppercase tracking-[0.18em]">
@@ -291,11 +291,11 @@ export default async function MeilleureAgenceSlugPage({ params }: PageProps) {
                       )}
                     </div>
                     <div className="flex flex-wrap gap-x-4 gap-y-1 text-[12px] text-[color:var(--ink-muted)]">
-                      {c.rating != null && (
+                      {c.rating !== null && (
                         <span className="inline-flex items-center gap-1">
                           <Star size={12} className="text-[color:var(--accent)]" />
                           {c.rating.toFixed(1)}
-                          {c.reviewCount != null && ` · ${c.reviewCount} avis`}
+                          {c.reviewCount !== null && ` · ${c.reviewCount} avis`}
                         </span>
                       )}
                       <span className="inline-flex items-center gap-1 font-mono uppercase tracking-[0.18em]">

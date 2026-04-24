@@ -19,8 +19,7 @@ import CtaFinal from '@/components/landing/CtaFinal';
 import SectionAmbience from '@/components/ui/SectionAmbience';
 import { jsonLdString } from '@/lib/schema';
 import { createClient as createAdminClient } from '@/lib/supabase/server-admin';
-import { getAuthorBySlug } from '@/lib/blog';
-import type { BlogPost } from '@/lib/blog';
+import { getAuthorBySlug, type BlogPost } from '@/lib/blog';
 
 const SITE_URL = 'https://uclic.fr';
 

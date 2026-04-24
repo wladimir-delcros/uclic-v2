@@ -1,5 +1,6 @@
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
+import nextPlugin from '@next/eslint-plugin-next';
 
 export default [
   {
@@ -36,6 +37,7 @@ export default [
     },
     plugins: {
       '@typescript-eslint': typescriptEslint,
+      '@next/next': nextPlugin,
     },
     rules: {
       // Disable overly strict React rules that are common patterns
@@ -44,7 +46,18 @@ export default [
       'react-hooks/immutability': 'off',
 
       // Enable useful rules that will actually fix code
-      '@typescript-eslint/no-unused-vars': 'error',
+      // `argsIgnorePattern: "^_"` + `varsIgnorePattern: "^_"` = leading
+      // underscore marks an intentional "present but unused" (rest-spread
+      // destructuring, required React callback params we don't use, etc.)
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+        },
+      ],
       '@typescript-eslint/no-explicit-any': 'warn',
       'prefer-const': 'error',
       'no-var': 'error',

@@ -1,12 +1,11 @@
 'use client';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import {
   motion,
   AnimatePresence,
   useScroll,
   useTransform,
   useReducedMotion,
-  useMotionValueEvent,
   useSpring,
 } from 'framer-motion';
 import {
@@ -28,7 +27,6 @@ import {
   X,
 } from 'lucide-react';
 import SectionAmbience from '../ui/SectionAmbience';
-import { useState, useEffect } from 'react';
 
 /* ───────────────────── data ───────────────────── */
 
@@ -885,7 +883,6 @@ export default function MethodeSection() {
     );
     stepRefs.forEach((r) => r.current && observer.observe(r.current));
     return () => observer.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prefersReducedMotion]);
 
   return (

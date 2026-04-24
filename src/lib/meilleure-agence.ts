@@ -113,9 +113,9 @@ function isMarketingRelatedType(competitorTypes: string | null): boolean {
 function calculateScore(comp: RawCompetitor, isUclic: boolean): number {
   if (isUclic) {return 98;}
   let score = 0;
-  if (comp.competitor_rating != null) {
+  if (comp.competitor_rating !== null) {
     score += parseFloat(String(comp.competitor_rating)) * 8;
-  } else if (comp.competitor_ai_rating != null) {
+  } else if (comp.competitor_ai_rating !== null) {
     score += parseFloat(String(comp.competitor_ai_rating)) * 8;
   }
   const rc = comp.competitor_review_count ?? 0;
@@ -125,7 +125,7 @@ function calculateScore(comp: RawCompetitor, isUclic: boolean): number {
   else if (rc >= 20) {score += 15;}
   else if (rc >= 10) {score += 10;}
   else if (rc >= 5) {score += 5;}
-  if (comp.competitor_ai_rating != null && comp.competitor_rating == null) {
+  if (comp.competitor_ai_rating !== null && comp.competitor_rating === null) {
     score += parseFloat(String(comp.competitor_ai_rating)) * 4;
   }
   if (comp.competitor_verified) {score += 5;}
@@ -204,7 +204,7 @@ function deduplicateAndScore(
     name: extractAgencyName(comp),
     score: comp.calculatedScore,
     rating:
-      comp.competitor_rating != null
+      comp.competitor_rating !== null
         ? parseFloat(String(comp.competitor_rating))
         : null,
     reviewCount: comp.competitor_review_count,

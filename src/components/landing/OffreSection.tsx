@@ -8,7 +8,7 @@ import { useCounter } from '@/hooks/useCounter';
 
 /* ─── uclic pictogram (the shape in front of the wordmark) — used as LED mask ─── */
 const UCLIC_LOGO_SVG = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'><path d='M37.2543 33.4178C37.2465 33.2182 37.2329 33.0187 37.2173 32.8181L37.2115 32.7549C37.1949 32.5544 37.1755 32.3538 37.1531 32.1543L35.803 18.2159C35.7494 17.6182 35.6988 17.0205 35.6569 16.4219C35.5791 15.3278 35.4564 14.2151 35.0661 13.1823C34.9385 12.8436 34.7789 12.5233 34.5998 12.2099C33.7237 10.74 32.3123 9.61865 30.6789 9.10566C30.0004 8.89248 29.2908 8.7854 28.5792 8.7854C26.3345 8.7854 24.4548 10.0713 22.8175 11.4808C20.8746 13.1522 18.92 14.8109 16.9663 16.4706C14.5201 18.5488 12.1995 20.5229 9.7338 22.6352C8.4411 23.743 7.08318 24.8575 5.74278 25.9059C4.53964 26.8472 3.12915 27.9063 2.12945 29.0773C0.836749 30.591 0.0424403 32.5436 0.00155668 34.6813C-0.0899447 39.5873 3.86409 43.6786 8.77013 43.7458C13.7404 43.8149 17.7918 39.8054 17.7918 34.8506C17.7918 33.3526 17.4229 31.8447 16.6675 30.5238C16.3073 29.894 15.5442 29.0053 14.9864 28.5419C14.4296 28.0786 13.8747 27.6211 13.4873 26.9942C12.914 26.0665 12.6103 24.986 12.6103 23.8958C12.6103 20.6319 15.256 17.9871 18.5189 17.9871C21.1082 17.9871 23.314 19.5991 24.6378 21.7406C26.1496 24.1859 26.169 26.8277 26.169 29.6098C26.169 31.211 26.169 32.8133 26.169 34.4155C26.169 37.4818 28.6551 39.9669 31.7204 39.9669C33.8639 39.9669 35.7981 38.682 36.7073 36.7527C37.193 35.7219 37.301 34.582 37.2553 33.4188L37.2543 33.4178Z' fill='black'/></svg>`;
-const UCLIC_LOGO_MASK = `url("data:image/svg+xml;utf8,${encodeURIComponent(UCLIC_LOGO_SVG)}")`;
+const _UCLIC_LOGO_MASK = `url("data:image/svg+xml;utf8,${encodeURIComponent(UCLIC_LOGO_SVG)}")`;
 
 /* ─── Mini abstract product mockups, full-width inside each pillar card ─── */
 
@@ -198,7 +198,7 @@ function MockIA() {
   );
 }
 
-const Mocks: Record<string, React.FC> = {
+const _Mocks: Record<string, React.FC> = {
   Inbound: MockInbound,
   Outbound: MockOutbound,
   'IA & Développement': MockIA,
@@ -263,7 +263,7 @@ const DOTS = [
   { left: '66.666%', top: '100%' }, // 6 bottom-int-2
   { left: '100%',    top: '100%' }, // 7 bottom-right
 ];
-const CARD_DOTS: Record<number, number[]> = {
+const _CARD_DOTS: Record<number, number[]> = {
   0: [0, 1, 5, 4], // card 0 corners
   1: [1, 2, 6, 5], // card 1 corners
   2: [2, 3, 7, 6], // card 2 corners

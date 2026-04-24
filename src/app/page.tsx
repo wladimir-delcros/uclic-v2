@@ -6,7 +6,6 @@ import MediaMarquee from '@/components/landing/MediaMarquee';
 import OffreSection from '@/components/landing/OffreSection';
 import DifferentSection from '@/components/landing/DifferentSection';
 import SectionDivider from '@/components/ui/SectionDivider';
-import PreuveSection from '@/components/landing/PreuveSection';
 import LinkedInProofSection from '@/components/landing/LinkedInProofSection';
 import MethodeSection from '@/components/landing/MethodeSection';
 import TarifsSection from '@/components/landing/TarifsSection';

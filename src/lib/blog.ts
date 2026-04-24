@@ -692,7 +692,7 @@ export async function getAllBlogAuthors(): Promise<Array<BlogAuthor & { count: n
     .eq('status', 'publish');
   const counts = new Map<number, number>();
   for (const p of (posts || []) as Array<{ author_id: number | null }>) {
-    if (p.author_id == null) {continue;}
+    if (p.author_id === null) {continue;}
     counts.set(p.author_id, (counts.get(p.author_id) || 0) + 1);
   }
 

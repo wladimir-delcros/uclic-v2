@@ -150,8 +150,8 @@ export default function MDECalculatorClient() {
                     />
                     <Metric
                       label="Durée estimée"
-                      value={daysNeeded != null ? fmtInt(daysNeeded) : '—'}
-                      suffix={daysNeeded != null ? 'jours' : undefined}
+                      value={daysNeeded !== null ? fmtInt(daysNeeded) : '—'}
+                      suffix={daysNeeded !== null ? 'jours' : undefined}
                     />
                   </div>
                 </>
