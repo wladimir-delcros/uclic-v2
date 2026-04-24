@@ -13,6 +13,7 @@ import {
 } from '@/lib/expertise';
 import { getCityPagesForCategory } from '@/lib/programmatic-pages';
 import CityLinksGrid from '@/components/expertise/CityLinksGrid';
+import ExpertiseBookingSection from '@/components/expertise/ExpertiseBookingSection';
 
 const SITE_URL = 'https://uclic.fr';
 
@@ -328,6 +329,8 @@ export default async function ExpertiseCategoryPage({ params }: PageProps) {
         )}
 
         <CityLinksGrid cities={cities} label={data.name} />
+
+        <ExpertiseBookingSection category={data.slug} />
 
         <CtaFinal />
       </main>

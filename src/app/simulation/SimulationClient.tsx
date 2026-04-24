@@ -1,8 +1,11 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Calendar, CheckCircle2, Clock, PlayCircle, Check } from 'lucide-react';
+import SectionAmbience from '@/components/ui/SectionAmbience';
 import { buildStrategy, type SimulationAnswers } from '@/lib/simulation';
+import { trackBookingClick } from '@/lib/datalayer';
 
 interface Choice {
   label: string;
@@ -98,10 +101,63 @@ export default function SimulationClient() {
   const [stepIdx, setStepIdx] = useState(0);
   const [answers, setAnswers] = useState<SimulationAnswers>({});
   const [done, setDone] = useState(false);
+  const [showBooking, setShowBooking] = useState(false);
+  const preconnected = useRef(false);
+  const bookingRef = useRef<HTMLDivElement | null>(null);
+  const bookingTracked = useRef(false);
 
   const strategy = useMemo(() => buildStrategy(answers), [answers]);
   const step = STEPS[stepIdx];
   const progress = Math.round(((stepIdx + (done ? 1 : 0)) / STEPS.length) * 100);
+
+  const preconnectHubSpot = useCallback(() => {
+    if (preconnected.current) return;
+    preconnected.current = true;
+    const link = document.createElement('link');
+    link.rel = 'preconnect';
+    link.href = 'https://meetings.hubspot.com';
+    document.head.appendChild(link);
+  }, []);
+
+  const openBooking = useCallback(() => {
+    setShowBooking(true);
+    try {
+      trackBookingClick('simulation');
+    } catch {
+      /* noop */
+    }
+  }, []);
+
+  // HubSpot meeting booked event → redirect vers merci
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      const origin = typeof event.origin === 'string' ? event.origin : '';
+      if (origin && !origin.includes('hubspot.com')) return;
+      let data: unknown = event.data;
+      if (typeof data === 'string') {
+        try {
+          data = JSON.parse(data);
+        } catch {
+          /* noop */
+        }
+      }
+      const d = (data ?? {}) as Record<string, unknown>;
+      const isBooked =
+        d.meetingBookSucceeded ||
+        d.meetingBookingSucceeded ||
+        d.type === 'meetingBookingSucceeded' ||
+        d.type === 'hubspot:meeting:booked' ||
+        d.eventName === 'meetingBookSucceeded' ||
+        (typeof event.data === 'string' &&
+          (event.data.includes('meetingBook') || event.data.includes('meetingBooking')));
+      if (isBooked && !bookingTracked.current) {
+        bookingTracked.current = true;
+        window.location.href = '/merci?source=simulation';
+      }
+    };
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
 
   const handleChoice = (value: string) => {
     if (!step) return;
@@ -129,7 +185,8 @@ export default function SimulationClient() {
   };
 
   return (
-    <section className="relative py-12 lg:py-16">
+    <>
+      <section className="relative py-12 lg:py-16">
       <div className="relative z-10 max-w-[900px] mx-auto px-5 lg:px-10">
         {/* Progress */}
         <div className="mb-8">
@@ -293,7 +350,16 @@ export default function SimulationClient() {
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <a
-                  href="/audit"
+                  href="#simulation-booking"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    openBooking();
+                    setTimeout(() => {
+                      bookingRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 60);
+                  }}
+                  onMouseEnter={preconnectHubSpot}
+                  onTouchStart={preconnectHubSpot}
                   className="inline-flex items-center gap-2 px-5 h-11 rounded-md text-[13px] font-semibold text-black light:text-white hover:scale-[1.02] transition-transform"
                   style={{
                     background:
@@ -316,5 +382,120 @@ export default function SimulationClient() {
         )}
       </div>
     </section>
+
+      {/* ─────────── HubSpot booking — fin de parcours (DA V2) ─────────── */}
+      {done && (
+        <section className="relative py-24 lg:py-32 overflow-hidden">
+          {/* Filet top canonique */}
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--border-subtle)] to-transparent" />
+          <SectionAmbience variant="medium" />
+
+          <div className="relative z-10 max-w-[1200px] mx-auto px-5 lg:px-10">
+            {/* Header section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="text-center"
+            >
+              <div className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)]">
+                <span className="w-6 h-px bg-[color:var(--accent)]" />
+                Réservez votre créneau
+                <span className="w-6 h-px bg-[color:var(--accent)]" />
+              </div>
+
+              <h2 className="mt-5 text-[clamp(32px,4.2vw,52px)] font-display font-medium tracking-[-0.02em] max-w-[780px] mx-auto">
+                Transformez cette simulation en{' '}
+                <span className="relative inline-block font-[family-name:var(--font-hand)] italic text-[color:var(--accent)] tracking-[0.005em]">
+                  plan d&apos;action.
+                  <span className="absolute -inset-x-4 -inset-y-2 -z-10 bg-[color:var(--accent)]/10 blur-2xl rounded-full" />
+                </span>
+              </h2>
+
+              <p className="mt-5 text-[15px] text-[color:var(--ink-muted)] max-w-[640px] mx-auto">
+                30 min avec Wladimir Delcros. On revient sur vos réponses, on priorise les leviers et on vous remet un rapport sous 48h. Gratuit, sans engagement.
+              </p>
+            </motion.div>
+
+            {/* Embed */}
+            <motion.div
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+              className="mt-14 max-w-[960px] mx-auto"
+            >
+              <div
+                id="simulation-booking"
+                ref={bookingRef}
+                className="relative !rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white overflow-hidden"
+              >
+                {showBooking ? (
+                  <iframe
+                    src="https://meetings.hubspot.com/wdelcros"
+                    width="100%"
+                    height="680"
+                    frameBorder="0"
+                    loading="lazy"
+                    title="Réserver un appel stratégie simulation"
+                    className="w-full"
+                    style={{ minHeight: '680px', backgroundColor: 'transparent' }}
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    onClick={openBooking}
+                    onMouseEnter={preconnectHubSpot}
+                    onTouchStart={preconnectHubSpot}
+                    aria-label="Ouvrir le calendrier de réservation"
+                    className="w-full flex flex-col items-center justify-center p-8 lg:p-10 min-h-[500px] text-center cursor-pointer group"
+                  >
+                    <span className="w-16 h-16 grid place-items-center border border-[color:var(--accent)]/40 bg-[color:var(--accent)]/10 text-[color:var(--accent)] mb-6 transition-transform duration-300 group-hover:scale-[1.06]">
+                      <Calendar size={28} strokeWidth={1.75} />
+                    </span>
+                    <h3 className="text-[22px] lg:text-[26px] font-display font-medium text-[color:var(--ink)] tracking-[-0.01em] leading-tight">
+                      Réservez votre appel stratégie
+                    </h3>
+                    <p className="mt-3 text-[14px] text-[color:var(--ink-muted)] leading-relaxed max-w-[380px]">
+                      Un expert senior uclic cadre votre situation, présente la méthode et vous remet un rapport personnalisé sous 48h.
+                    </p>
+
+                    <ul className="mt-6 flex flex-col items-start gap-2 text-[13px] text-[color:var(--ink)]">
+                      {[
+                        'Analyse fine de vos réponses + benchmarks',
+                        'Rapport stratégique + roadmap 12 mois en 48h',
+                        'Échange direct avec un expert senior · pas de SDR',
+                      ].map((f) => (
+                        <li key={f} className="flex items-start gap-2">
+                          <Check size={14} strokeWidth={2.6} className="text-[color:var(--accent)] mt-0.5 shrink-0" />
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <span
+                      className="mt-8 inline-flex items-center gap-2 px-7 py-3.5 rounded-md text-[15px] font-semibold text-black light:text-white transition-transform duration-200 group-hover:-translate-y-0.5 shadow-[0_10px_24px_-10px_rgba(107,255,149,0.55)]"
+                      style={{
+                        background:
+                          'radial-gradient(ellipse 140% 120% at 50% -20%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 35%, rgba(255,255,255,0.08) 65%, transparent 100%), var(--accent)',
+                      }}
+                    >
+                      <PlayCircle size={16} strokeWidth={2} className="text-black light:text-white" />
+                      Choisir un créneau
+                    </span>
+
+                    <p className="mt-5 flex items-center gap-1.5 text-[11.5px] font-mono uppercase tracking-[0.2em] text-[color:var(--ink-muted)]">
+                      <Clock size={11} strokeWidth={2} />
+                      Gratuit · Sans engagement · Places limitées
+                    </p>
+                  </button>
+                )}
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      )}
+    </>
   );
 }

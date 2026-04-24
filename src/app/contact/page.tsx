@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Mail, Phone, CalendarClock, ArrowRight } from 'lucide-react';
+import { Mail, Phone, CalendarClock, ArrowRight, Clock } from 'lucide-react';
 import Nav from '@/components/landing/Nav';
 import Footer from '@/components/landing/Footer';
 import SectionAmbience from '@/components/ui/SectionAmbience';
 import { jsonLdString } from '@/lib/schema';
+import ContactForm from './ContactForm';
 
 const SITE_URL = 'https://uclic.fr';
 
@@ -56,26 +57,40 @@ const breadcrumbSchema = {
   ],
 };
 
-const contactChannels = [
-  {
-    icon: CalendarClock,
-    title: 'Audit stratégique offert',
-    desc: '30 min avec un pilote senior. On regarde ensemble vos leviers, vos fuites, votre plan 90 jours. Gratuit, sans engagement.',
-    cta: { label: 'Réserver mon audit', href: '/audit' },
+const contactPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: 'Contact Uclic',
+  description:
+    "Contactez Uclic pour discuter de votre projet growth et IA. Réponse sous 24h ouvrées.",
+  url: `${SITE_URL}/contact`,
+  mainEntity: {
+    '@type': 'Organization',
+    name: 'Uclic',
+    url: SITE_URL,
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        telephone: '+33-6-17-12-54-28',
+        contactType: 'customer service',
+        areaServed: 'FR',
+        availableLanguage: ['French', 'English'],
+      },
+      {
+        '@type': 'ContactPoint',
+        email: 'hello@uclic.fr',
+        contactType: 'customer service',
+        areaServed: 'FR',
+        availableLanguage: ['French', 'English'],
+      },
+    ],
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Paris',
+      addressCountry: 'FR',
+    },
   },
-  {
-    icon: Mail,
-    title: 'Par email',
-    desc: 'Une question spécifique, un brief à nous envoyer, une demande presse ou partenariat.',
-    cta: { label: 'hello@uclic.fr', href: 'mailto:hello@uclic.fr' },
-  },
-  {
-    icon: Phone,
-    title: 'Par téléphone',
-    desc: 'Si vous préférez la voix — Wladimir décroche en direct (ou vous rappelle dans l’heure).',
-    cta: { label: '+33 6 17 12 54 28', href: 'tel:+33617125428' },
-  },
-];
+};
 
 export default function ContactPage() {
   return (
@@ -83,6 +98,10 @@ export default function ContactPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdString(contactPageSchema) }}
       />
       <a
         href="#main"
@@ -95,6 +114,7 @@ export default function ContactPage() {
         <section className="relative pt-24 lg:pt-28 pb-20 lg:pb-28 overflow-x-clip">
           <SectionAmbience variant="medium" />
           <div className="max-w-[1200px] mx-auto px-5 lg:px-10 relative">
+            {/* Header */}
             <div className="flex flex-col items-center text-center">
               <div className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)]">
                 <span className="w-6 h-px bg-[color:var(--accent)]" />
@@ -111,78 +131,90 @@ export default function ContactPage() {
               </h1>
 
               <p className="mt-5 text-[color:var(--ink-muted)] max-w-[620px] text-[16px] leading-relaxed">
-                Le plus simple : réserver un audit stratégique offert. Un pilote senior vous rappelle dans les 24h ouvrées avec un plan 90 jours concret.
+                Un brief, une question, une demande presse ? Remplissez le formulaire — un pilote senior vous répond sous 24h ouvrées. Pour aller plus vite, réservez directement un audit stratégique offert.
               </p>
-
-              <Link
-                href="/audit"
-                className="glass-pill mt-8 inline-flex items-center gap-2 px-7 py-3 text-[14px] font-semibold text-black light:text-white hover:scale-[1.02] transition-transform"
-                style={{
-                  borderRadius: '6px',
-                  background:
-                    'radial-gradient(ellipse 140% 120% at 50% -20%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 35%, rgba(255,255,255,0.08) 65%, transparent 100%), var(--accent)',
-                }}
-              >
-                <CalendarClock size={16} /> Mon audit gratuit
-              </Link>
             </div>
 
-            {/* Canaux de contact */}
-            <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-5">
-              {contactChannels.map((c) => {
-                const Icon = c.icon;
-                return (
-                  <div
-                    key={c.title}
-                    className="relative !rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white p-7 flex flex-col"
-                  >
-                    <div className="inline-flex items-center justify-center w-10 h-10 !rounded-none border border-[color:var(--border-subtle)] text-[color:var(--accent)]">
-                      <Icon size={18} />
-                    </div>
-                    <h2 className="mt-5 text-[18px] font-display font-medium tracking-[-0.01em]">
-                      {c.title}
-                    </h2>
-                    <p className="mt-2 text-[14px] text-[color:var(--ink-muted)] leading-relaxed flex-1">
-                      {c.desc}
-                    </p>
-                    <Link
-                      href={c.cta.href}
-                      className="mt-5 inline-flex items-center gap-2 text-[14px] font-medium text-[color:var(--accent)] hover:gap-3 transition-all"
-                    >
-                      {c.cta.label} <ArrowRight size={14} />
-                    </Link>
+            {/* Form + aside */}
+            <div className="mt-14 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-5 lg:gap-6 items-start">
+              {/* Contact form (client) */}
+              <ContactForm />
+
+              {/* Aside — canaux rapides */}
+              <aside className="space-y-5">
+                <div className="relative !rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white p-6">
+                  <div className="inline-flex items-center justify-center w-10 h-10 !rounded-none border border-[color:var(--border-subtle)] text-[color:var(--accent)]">
+                    <CalendarClock size={18} strokeWidth={1.75} />
                   </div>
-                );
-              })}
-            </div>
-
-            {/* Bloc équipe / localisation */}
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div className="relative !rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white p-7">
-                <div className="text-[11px] font-mono uppercase tracking-[0.22em] text-[color:var(--ink-muted)]">
-                  Qui vous répondra
+                  <h2 className="mt-4 text-[18px] font-display font-medium tracking-[-0.01em]">
+                    Audit stratégique offert
+                  </h2>
+                  <p className="mt-2 text-[13px] text-[color:var(--ink-muted)] leading-relaxed">
+                    30 min avec un pilote senior. Plan 90 jours concret. Gratuit, sans engagement.
+                  </p>
+                  <Link
+                    href="/audit"
+                    className="mt-4 inline-flex items-center gap-2 text-[13px] font-medium text-[color:var(--accent)] hover:gap-3 transition-all"
+                  >
+                    Réserver mon audit <ArrowRight size={14} />
+                  </Link>
                 </div>
-                <h2 className="mt-3 text-[20px] font-display font-medium tracking-[-0.01em]">
-                  Wladimir, co-fondateur
-                </h2>
-                <p className="mt-3 text-[14px] text-[color:var(--ink-muted)] leading-relaxed">
-                  Ex-Head of Growth CodinGame. 15 ans sur le terrain, 100% de croissance annuelle pendant 5 ans. Vous discutez directement avec lui — pas avec un commercial qui repasse le dossier.
-                </p>
-              </div>
-              <div className="relative !rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white p-7">
-                <div className="text-[11px] font-mono uppercase tracking-[0.22em] text-[color:var(--ink-muted)]">
-                  Où on est
-                </div>
-                <h2 className="mt-3 text-[20px] font-display font-medium tracking-[-0.01em]">
-                  Paris · France · Europe
-                </h2>
-                <p className="mt-3 text-[14px] text-[color:var(--ink-muted)] leading-relaxed">
-                  On travaille en remote first avec des passages Paris / Lyon / Bruxelles selon les clients. On répond en français et en anglais.
-                </p>
-              </div>
-            </div>
 
-            {/* TODO: form contact si besoin — aujourd'hui, tout converge vers /audit pour unifier le pilotage des leads. */}
+                <div className="relative !rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white p-6">
+                  <div className="inline-flex items-center justify-center w-10 h-10 !rounded-none border border-[color:var(--border-subtle)] text-[color:var(--accent)]">
+                    <Mail size={18} strokeWidth={1.75} />
+                  </div>
+                  <h2 className="mt-4 text-[18px] font-display font-medium tracking-[-0.01em]">
+                    Par email
+                  </h2>
+                  <p className="mt-2 text-[13px] text-[color:var(--ink-muted)] leading-relaxed">
+                    Brief, demande presse, partenariat.
+                  </p>
+                  <a
+                    href="mailto:hello@uclic.fr"
+                    className="mt-4 inline-flex items-center gap-2 text-[13px] font-medium text-[color:var(--accent)] hover:gap-3 transition-all"
+                    data-ga-event="contact_click"
+                    data-ga-method="email"
+                    data-ga-location="contact-aside"
+                  >
+                    hello@uclic.fr <ArrowRight size={14} />
+                  </a>
+                </div>
+
+                <div className="relative !rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white p-6">
+                  <div className="inline-flex items-center justify-center w-10 h-10 !rounded-none border border-[color:var(--border-subtle)] text-[color:var(--accent)]">
+                    <Phone size={18} strokeWidth={1.75} />
+                  </div>
+                  <h2 className="mt-4 text-[18px] font-display font-medium tracking-[-0.01em]">
+                    Par téléphone
+                  </h2>
+                  <p className="mt-2 text-[13px] text-[color:var(--ink-muted)] leading-relaxed">
+                    Wladimir décroche en direct (ou vous rappelle dans l&apos;heure).
+                  </p>
+                  <a
+                    href="tel:+33617125428"
+                    className="mt-4 inline-flex items-center gap-2 text-[13px] font-medium text-[color:var(--accent)] hover:gap-3 transition-all"
+                    data-ga-event="contact_click"
+                    data-ga-method="phone"
+                    data-ga-location="contact-aside"
+                  >
+                    +33 6 17 12 54 28 <ArrowRight size={14} />
+                  </a>
+                </div>
+
+                <div className="relative !rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white p-6">
+                  <div className="inline-flex items-center justify-center w-10 h-10 !rounded-none border border-[color:var(--border-subtle)] text-[color:var(--accent)]">
+                    <Clock size={18} strokeWidth={1.75} />
+                  </div>
+                  <h2 className="mt-4 text-[18px] font-display font-medium tracking-[-0.01em]">
+                    Réponse sous 24h
+                  </h2>
+                  <p className="mt-2 text-[13px] text-[color:var(--ink-muted)] leading-relaxed">
+                    Paris · remote first. FR / EN. Pas de commercial — un pilote senior dès le premier call.
+                  </p>
+                </div>
+              </aside>
+            </div>
           </div>
         </section>
       </main>
