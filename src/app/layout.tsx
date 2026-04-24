@@ -1,10 +1,15 @@
 import { Metadata, Viewport } from 'next';
 import { ReactNode } from 'react';
 import { Inter, Instrument_Serif } from 'next/font/google';
+import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import { LenisProvider } from '@/components/shared/LenisProvider';
+import { PHProvider } from '@/components/providers/PostHogProvider';
 import { jsonLdString, organizationSchema, websiteSchema } from '@/lib/schema';
 import './globals.css';
+
+// Lazy client tracker — pushes page_data, attaches auto-tracking + scroll depth
+const DataLayerInit = dynamic(() => import('@/components/tracking/DataLayerInit'));
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 const instrumentSerif = Instrument_Serif({
@@ -141,6 +146,12 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <link rel="dns-prefetch" href="https://mfpaumktscdkyqkbtgwc.supabase.co" />
         <link rel="preconnect" href="https://static.uclic.fr" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://static.uclic.fr" />
+        {/* DNS prefetch for deferred third-party trackers */}
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="https://snap.licdn.com" />
+        <link rel="dns-prefetch" href="https://eu.i.posthog.com" />
         {/* Site-wide JSON-LD: Organization (with aggregateRating + founders + contactPoint) */}
         <script
           type="application/ld+json"
@@ -169,7 +180,93 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         </noscript>
       </head>
       <body className="antialiased">
-        <LenisProvider>{children}</LenisProvider>
+        {/* Meta Pixel noscript — ad traffic attribution when JS is disabled */}
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            src="https://www.facebook.com/tr?id=892479800144291&ev=PageView&noscript=1"
+            alt=""
+            style={{ display: 'none' }}
+          />
+        </noscript>
+        {/* LinkedIn Insight noscript fallback */}
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: 'none' }}
+            alt=""
+            src="https://px.ads.linkedin.com/collect/?pid=525902400&fmt=gif"
+          />
+        </noscript>
+
+        <PHProvider>
+          <DataLayerInit />
+          <LenisProvider>{children}</LenisProvider>
+        </PHProvider>
+
+        {/* Google Analytics 4 + Google Ads */}
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-92TBJMXN72"
+        />
+        <Script
+          id="gtag-config"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              window.gtag = gtag;
+              gtag('js', new Date());
+              gtag('config', 'G-92TBJMXN72');
+              gtag('config', 'AW-637970941');
+            `,
+          }}
+        />
+
+        {/* Meta Pixel — loaded after interactive for ad attribution */}
+        <Script
+          id="meta-pixel"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '892479800144291');
+              fbq('track', 'PageView');
+            `,
+          }}
+        />
+
+        {/* LinkedIn Insight Tag */}
+        <Script
+          id="linkedin-insight"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              _linkedin_partner_id = "525902400";
+              window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+              window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+              (function(l) {
+                if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+                window.lintrk.q=[]}
+                var s = document.getElementsByTagName("script")[0];
+                var b = document.createElement("script");
+                b.type = "text/javascript";b.async = true;
+                b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+                s.parentNode.insertBefore(b, s);})(window.lintrk);
+            `,
+          }}
+        />
       </body>
     </html>
   );
