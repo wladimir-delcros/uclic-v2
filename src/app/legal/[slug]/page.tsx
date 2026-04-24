@@ -85,7 +85,7 @@ export default async function LegalDynamicPage({ params }: PageProps) {
       <main id="main" className="relative bg-[color:var(--bg)] text-[color:var(--ink)]">
         <section className="relative pt-24 pb-10 lg:pt-28 lg:pb-14 overflow-hidden">
           <SectionAmbience variant="medium" />
-          <div className="max-w-[860px] mx-auto px-5 lg:px-10 relative">
+          <div className="max-w-[1200px] mx-auto px-5 lg:px-10 relative">
             {/* Breadcrumb */}
             <nav
               aria-label="Fil d'Ariane"
@@ -146,13 +146,13 @@ export default async function LegalDynamicPage({ params }: PageProps) {
         </section>
 
         <section className="relative pb-24 lg:pb-32">
-          <div className="max-w-[860px] mx-auto px-5 lg:px-10">
+          <div className="max-w-[1200px] mx-auto px-5 lg:px-10">
             <article
-              className="article-body blog-content"
+              className="article-body blog-content max-w-[960px] mx-auto"
               dangerouslySetInnerHTML={{ __html: page.content_html }}
             />
 
-            <div className="mt-16 pt-8 border-t border-[color:var(--border-subtle)]">
+            <div className="max-w-[960px] mx-auto mt-16 pt-8 border-t border-[color:var(--border-subtle)]">
               <a
                 href="/legal"
                 className="inline-flex items-center gap-2 text-[13px] text-[color:var(--ink)] hover:text-[color:var(--accent)] transition-colors"

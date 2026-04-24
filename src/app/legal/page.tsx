@@ -81,7 +81,7 @@ export default function LegalIndexPage() {
       <main id="main" className="relative bg-[color:var(--bg)] text-[color:var(--ink)]">
         <section className="relative pt-24 lg:pt-28 pb-16 lg:pb-20 overflow-hidden">
           <SectionAmbience variant="medium" />
-          <div className="relative z-10 max-w-[980px] mx-auto px-5 lg:px-10">
+          <div className="relative z-10 max-w-[1200px] mx-auto px-5 lg:px-10">
             {/* Breadcrumb */}
             <nav
               aria-label="Fil d'Ariane"
@@ -119,7 +119,7 @@ export default function LegalIndexPage() {
 
         {/* Liste — bento canon V2 (!rounded-none, tokens V2) */}
         <section className="relative pb-24 lg:pb-32">
-          <div className="max-w-[980px] mx-auto px-5 lg:px-10">
+          <div className="max-w-[1200px] mx-auto px-5 lg:px-10">
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[color:var(--border-subtle)] border border-[color:var(--border-subtle)]">
               {LEGAL_LINKS.map((item) => (
                 <li key={item.href} className="bg-[color:var(--bg)]">

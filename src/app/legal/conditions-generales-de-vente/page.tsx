@@ -61,7 +61,7 @@ export default function CGVPage() {
       <main id="main" className="relative">
         <section className="relative pt-24 pb-16 lg:pt-28 lg:pb-24 overflow-hidden">
           <SectionAmbience variant="medium" />
-          <div className="max-w-[860px] mx-auto px-5 lg:px-8 relative">
+          <div className="max-w-[1200px] mx-auto px-5 lg:px-10 relative">
             <nav
               aria-label="Fil d'Ariane"
               className="flex items-center gap-2 text-[12px] font-mono uppercase tracking-[0.18em] text-[color:var(--ink-muted)] mb-10"
@@ -94,8 +94,8 @@ export default function CGVPage() {
         </section>
 
         <section className="relative pb-24 lg:pb-32">
-          <div className="max-w-[860px] mx-auto px-5 lg:px-8">
-            <article className="text-[17px] leading-relaxed text-[color:var(--ink)] space-y-6">
+          <div className="max-w-[1200px] mx-auto px-5 lg:px-10">
+            <article className="article-body text-[17px] leading-relaxed text-[color:var(--ink)] space-y-6 max-w-[960px] mx-auto">
               <h2 className="text-[clamp(24px,2.6vw,32px)] font-display font-medium tracking-[-0.01em] mt-10 mb-4">
                 Article 1 : Objet
               </h2>
@@ -273,7 +273,7 @@ export default function CGVPage() {
               </p>
             </article>
 
-            <div className="mt-16 pt-8 border-t border-[color:var(--border-subtle)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-[13px] text-[color:var(--ink-muted)]">
+            <div className="max-w-[960px] mx-auto mt-16 pt-8 border-t border-[color:var(--border-subtle)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-[13px] text-[color:var(--ink-muted)]">
               <span className="font-mono uppercase tracking-[0.18em]">
                 Dernière mise à jour — 2026
               </span>
