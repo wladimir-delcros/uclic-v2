@@ -10,16 +10,16 @@ import { getAllCasClients } from '@/lib/portfolio';
 const SITE_URL = 'https://uclic.fr';
 
 export const metadata: Metadata = {
-  title: 'Cas clients — Scale-ups B2B accompagnées',
+  title: 'Cas clients — Résultats mesurables en 90 jours | Uclic',
   description:
-    "Retours terrain : comment Uclic industrialise l'acquisition B2B chez CodinGame, Tehtris, Agicap, Deepki et d'autres scale-ups. Problème, solution, résultats mesurés.",
+    "CodinGame, Tehtris, Agicap, Deepki, MSC Cruises. Trois piliers activés : Inbound, Outbound, IA & Développement. Résultats mesurables en 90 jours.",
   alternates: { canonical: '/cas-clients' },
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/cas-clients`,
-    title: 'Cas clients — Scale-ups B2B accompagnées par Uclic',
+    title: 'Cas clients — Résultats mesurables en 90 jours | Uclic',
     description:
-      "Retours terrain : scale-ups B2B accompagnées par Uclic. Problème, solution, résultats mesurés.",
+      "Scale-ups B2B : trois piliers, une seule équipe, zéro silo. Résultats mesurables en 90 jours. Problème, solution, chiffres.",
     siteName: 'Uclic',
     locale: 'fr_FR',
     images: [
@@ -33,9 +33,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Cas clients — Scale-ups B2B accompagnées par Uclic',
+    title: 'Cas clients — Résultats mesurables en 90 jours | Uclic',
     description:
-      "Retours terrain : scale-ups B2B accompagnées par Uclic.",
+      "Scale-ups B2B : trois piliers, une seule équipe, zéro silo. Résultats mesurables en 90 jours.",
     site: '@uclic_fr',
   },
 };
@@ -77,7 +77,7 @@ export default async function CasClientsIndexPage() {
       />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[1000] focus:rounded-full focus:bg-[color:var(--accent)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[color:var(--accent-ink)] focus:shadow-lg"
+        className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[1000] focus-visible:rounded-full focus-visible:bg-[color:var(--accent)] focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-[color:var(--accent-ink)] focus-visible:shadow-lg"
       >
         Aller au contenu
       </a>
@@ -95,15 +95,15 @@ export default async function CasClientsIndexPage() {
               </div>
 
               <h1 className="mt-5 text-[clamp(34px,4.6vw,56px)] font-display font-medium tracking-[-0.02em] leading-[1.1] max-w-[900px]">
-                Ce qu&apos;on a livré{' '}
+                Résultats mesurables{' '}
                 <span className="relative inline-block isolate font-[family-name:var(--font-hand)] italic text-[color:var(--accent)] tracking-[0.005em]">
-                  pour de vrai.
+                  en 90 jours.
                   <span className="absolute -inset-x-4 -inset-y-2 -z-10 bg-[color:var(--accent)]/10 blur-2xl" />
                 </span>
               </h1>
 
-              <p className="mt-5 text-[color:var(--ink-muted)] max-w-[640px] text-[16px] leading-relaxed">
-                {cases.length} cas publiés, extraits de 40+ scale-ups B2B accompagnées. Du problème brut au résultat mesuré — sans enjolivure.
+              <p className="mt-5 text-[color:var(--ink-muted)] max-w-[680px] text-[16px] leading-relaxed">
+                {cases.length} cas publiés, extraits de 40+ scale-ups B2B accompagnées. Trois piliers mobilisés — Inbound, Outbound, IA & Développement — du problème brut au chiffre mesuré.
               </p>
             </div>
           </div>

@@ -70,7 +70,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     activity.meta_description_template
       ?.replace('{location}', department.name)
       .replace('{count}', '500') ||
-    `${service.name} ${activity.name.toLowerCase()} ${department.name} : base qualifiée, RGPD. Devis sous 24h.`;
+    `${service.name} ${activity.name.toLowerCase()} ${department.name} : base qualifiée, RGPD, branchée sur vos séquences outbound. Audit gratuit en 48 h.`;
   const canonical = `/scraping/${service.slug}/${categorySlug}/${activity.slug}/${regionSlug}/${department.slug}`;
   return {
     title,
@@ -244,14 +244,14 @@ export default async function DepartmentPage({ params }: PageProps) {
                     'radial-gradient(ellipse 140% 120% at 50% -20%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 35%, rgba(255,255,255,0.08) 65%, transparent 100%), var(--accent)',
                 }}
               >
-                Demander un devis
+                Mon audit gratuit — 48 h
                 <ArrowRight size={14} className="text-black light:text-white" />
               </a>
               <a
-                href="/contact"
+                href="/simulation"
                 className="inline-flex items-center gap-2 px-5 h-11 rounded-md border border-[color:var(--border-subtle)] text-[13px] font-medium text-[color:var(--ink)] hover:border-[color:var(--accent)]/40 transition-colors"
               >
-                Nous contacter
+                Simuler mon ROI
               </a>
             </div>
           </div>

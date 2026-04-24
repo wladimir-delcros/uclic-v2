@@ -8,9 +8,9 @@ import { jsonLdString } from '@/lib/schema';
 const SITE_URL = 'https://uclic.fr';
 
 export const metadata: Metadata = {
-  title: 'Charte du Freelance — Collectif',
+  title: 'Charte Freelance — Cadre qualité Uclic',
   description:
-    "La charte du freelance Uclic : collaboration, transparence totale, zéro commission sur apport d'affaires. Les valeurs qui font du collectif un partenaire unique.",
+    "Cadre qualité pour rejoindre Uclic : pilotage senior, résultats mesurables, agents IA en production. Zéro commission sur apport d'affaires, transparence totale.",
   keywords: [
     'charte freelance',
     'collectif freelance',
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/charte-freelance`,
-    title: 'Charte du Freelance | Collectif Uclic',
+    title: 'Charte Freelance — Cadre qualité Uclic',
     description:
-      "La charte du freelance Uclic : collaboration, transparence totale, zéro commission sur apport d'affaires.",
+      "Cadre qualité Uclic : pilotage senior, résultats mesurables, agents IA en production. Transparence totale, zéro commission sur apport d'affaires.",
     siteName: 'Uclic',
     locale: 'fr_FR',
     images: [
@@ -38,9 +38,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Charte du Freelance | Collectif Uclic',
+    title: 'Charte Freelance — Cadre qualité Uclic',
     description:
-      "La charte du freelance Uclic : collaboration, transparence totale, zéro commission sur apport d'affaires.",
+      "Cadre qualité Uclic : pilotage senior, résultats mesurables, agents IA en production. Transparence totale, zéro commission sur apport d'affaires.",
     site: '@uclic_fr',
   },
 };
@@ -63,7 +63,7 @@ export default function CharteFreelancePage() {
       />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[1000] focus:rounded-full focus:bg-[color:var(--accent)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[color:var(--accent-ink)] focus:shadow-lg"
+        className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[1000] focus-visible:rounded-full focus-visible:bg-[color:var(--accent)] focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-[color:var(--accent-ink)] focus-visible:shadow-lg"
       >
         Aller au contenu
       </a>

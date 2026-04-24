@@ -11,16 +11,16 @@ import SectionAmbience from '../ui/SectionAmbience';
 const pilots = [
   {
     name: 'Wladimir Delcros',
-    role: 'Founder · Growth Expert Lead',
-    seniority: '15 ans',
-    summary: 'Ex-Head of Growth CodinGame (x5), Muzzo, Obat. Product-Led Growth, stratégie acquisition B2B SaaS.',
+    role: 'CEO · Growth Strategist',
+    seniority: '16 ans',
+    summary: 'Ex-Head of Growth CodinGame (5 ans, 20M ARR), Muzzo, Obat. Product-Led Growth, stratégie acquisition B2B SaaS. Pilote le compte en première ligne.',
     past: ['CodinGame', 'Muzzo', 'Obat', 'StayHome'],
   },
   {
     name: 'Alexis Christine-Amara',
-    role: 'Co-Founder · Business Development',
+    role: 'Cofondateur · Business Development',
     seniority: '12 ans',
-    summary: 'Ex-Head of Sales CodinGame. Stratégie commerciale, outbound complexe, grands comptes B2B.',
+    summary: 'Ex-Head of Sales CodinGame. Tandem revenu + growth reconstitué chez Uclic. Outbound complexe, signaux d\'achat, grands comptes B2B.',
     past: ['CodinGame', 'Scale-ups SaaS'],
   },
 ];
@@ -67,7 +67,7 @@ export default function EquipeClient() {
             </h1>
 
             <p className="mt-5 text-[color:var(--ink-muted)] max-w-[640px] text-[16px] leading-relaxed">
-              Une seule équipe, trois niveaux opérés en interne. Même Slack, même pilote, même roadmap. Sans silo, sans sous-traitance déguisée.
+              Trois piliers. Une seule équipe. Zéro silo. Pilotage senior, experts canaux certifiés, agents IA en production — même Slack, même roadmap, résultats mesurables en 90 jours.
             </p>
           </div>
         </div>
@@ -80,10 +80,10 @@ export default function EquipeClient() {
             <span className="w-6 h-px bg-[color:var(--accent)]" /> N1 · Pilotage senior
           </div>
           <h2 className="mt-4 text-[clamp(28px,3.2vw,40px)] font-display font-medium tracking-[-0.02em] max-w-[720px]">
-            Les co-fondateurs restent en première ligne.
+            Les co-fondateurs ex-CodinGame restent en première ligne.
           </h2>
           <p className="mt-3 text-[color:var(--ink-muted)] max-w-[620px] text-[15px] leading-relaxed">
-            Vous rencontrez les pilotes dès le premier call. Ce sont eux qui cadrent, pilotent et rendent des comptes.
+            Vous rencontrez Wladimir et Alexis dès le premier call. Ce sont eux qui cadrent, pilotent et rendent des comptes — pas un junior d&apos;account management.
           </p>
 
           <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -126,10 +126,10 @@ export default function EquipeClient() {
             <span className="w-6 h-px bg-[color:var(--accent)]" /> N2 · Experts canaux certifiés
           </div>
           <h2 className="mt-4 text-[clamp(28px,3.2vw,40px)] font-display font-medium tracking-[-0.02em] max-w-[720px]">
-            Un spécialiste par canal, pas un généraliste qui touche à tout.
+            Un spécialiste par canal — Inbound, Outbound, IA & Développement.
           </h2>
           <p className="mt-3 text-[color:var(--ink-muted)] max-w-[620px] text-[15px] leading-relaxed">
-            Chaque canal est tenu par quelqu&apos;un dont c&apos;est le métier depuis 5 à 9 ans. Certifications à jour, process documenté, reporting hebdo.
+            Chaque pilier des trois est tenu par quelqu&apos;un dont c&apos;est le métier depuis 5 à 9 ans. Certifications à jour, process documenté, reporting hebdo — pas de junior livré seul.
           </p>
 
           <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -171,10 +171,10 @@ export default function EquipeClient() {
             <span className="w-6 h-px bg-[color:var(--accent)]" /> N3 · Agents IA en production
           </div>
           <h2 className="mt-4 text-[clamp(28px,3.2vw,40px)] font-display font-medium tracking-[-0.02em] max-w-[720px]">
-            Des agents qui tournent en continu — pas des démos.
+            Des agents IA en production — pas des démos.
           </h2>
           <p className="mt-3 text-[color:var(--ink-muted)] max-w-[620px] text-[15px] leading-relaxed">
-            Chaque expert canal s&apos;appuie sur un agent IA qui industrialise ses tâches répétitives. Vous récupérez le levier, pas la facture.
+            Chaque expert canal s&apos;appuie sur un agent IA qui industrialise les tâches répétitives. −70 % de temps manuel. Vous récupérez le levier, pas la facture.
           </p>
 
           <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

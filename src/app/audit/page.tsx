@@ -8,16 +8,16 @@ import { jsonLdString } from '@/lib/schema';
 const SITE_URL = 'https://uclic.fr';
 
 export const metadata: Metadata = {
-  title: 'Audit Growth Marketing | Gratuit · 48h',
+  title: 'Mon audit gratuit — 48h | Growth Inbound · Outbound · IA',
   description:
-    'Audit complet de votre stratégie growth en 48h. SEO, Ads, Funnel, Outbound — on identifie vos fuites et vos leviers. Gratuit, sans engagement.',
+    'Audit des 3 piliers uclic (Inbound, Outbound, IA & Dev) en 48h. Diagnostic chiffré, plan 90 jours, pilotage senior. Gratuit, sans engagement.',
   alternates: { canonical: '/audit' },
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/audit`,
-    title: 'Audit Growth Marketing | Gratuit · 48h',
+    title: 'Mon audit gratuit — 48h | Growth Inbound · Outbound · IA',
     description:
-      'Audit complet de votre stratégie growth. SEO, Ads, Funnel, Outbound — on identifie vos fuites et vos leviers. Gratuit, sans engagement.',
+      'Audit des 3 piliers uclic (Inbound, Outbound, IA & Dev). Diagnostic chiffré, plan 90 jours, pilotage senior. Note agrégée 4,76/30 (Google · Sortlist · Trustpilot).',
     images: [
       {
         url: '/og-image.png',
@@ -47,7 +47,7 @@ export default function AuditPage() {
       />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[1000] focus:rounded-full focus:bg-[color:var(--accent)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[color:var(--accent-ink)] focus:shadow-lg"
+        className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[1000] focus-visible:rounded-full focus-visible:bg-[color:var(--accent)] focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-[color:var(--accent-ink)] focus-visible:shadow-lg"
       >
         Aller au contenu
       </a>

@@ -32,7 +32,7 @@ function buildDescription(member: TeamMember): string {
   const extrait = member.equipeFields.extrait?.trim();
   if (extrait) {return extrait;}
   const role = member.equipeFields.role || 'Expert Growth';
-  return `${member.title}, ${role} chez Uclic. Expert growth marketing et stratégies data-driven pour accélérer la croissance des entreprises.`;
+  return `${member.title}, ${role} chez Uclic. Trois piliers, une seule équipe, zéro silo : Inbound, Outbound, IA & Développement pour scale-ups B2B. Résultats mesurables en 90 jours.`;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -156,7 +156,7 @@ export default async function TeamMemberDetailPage({ params }: PageProps) {
       />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[1000] focus:rounded-full focus:bg-[color:var(--accent)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[color:var(--accent-ink)] focus:shadow-lg"
+        className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[1000] focus-visible:rounded-full focus-visible:bg-[color:var(--accent)] focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-[color:var(--accent-ink)] focus-visible:shadow-lg"
       >
         Aller au contenu
       </a>
@@ -283,11 +283,11 @@ export default async function TeamMemberDetailPage({ params }: PageProps) {
                   Travailler avec {member.title.split(' ')[0]}
                 </h2>
                 <p className="mt-4 text-[15.5px] text-[color:var(--ink)]/90 leading-[1.7]">
-                  Besoin d&apos;un cadrage ou d&apos;un audit ? On part des leviers qui comptent — pas d&apos;une pitch deck générique.
+                  Inbound, Outbound, IA & Développement — on cadre vos leviers en 90 jours. Pilotage senior, experts canaux, agents IA en production. Pas de pitch deck générique.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-3">
                   <CTAButton href="/audit" icon={ArrowRight} size="md">
-                    Demander un audit
+                    Mon audit gratuit — 48h
                   </CTAButton>
                   <CTAButton
                     href="/contact"
@@ -325,7 +325,7 @@ export default async function TeamMemberDetailPage({ params }: PageProps) {
                     href="/audit"
                     className="mt-6 inline-flex items-center gap-1.5 text-[13px] text-[color:var(--accent)] hover:gap-2.5 transition-all"
                   >
-                    Faire auditer mon acquisition
+                    Mon audit gratuit — 48h
                     <ArrowRight size={14} />
                   </a>
                 </div>

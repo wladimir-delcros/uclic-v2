@@ -6,12 +6,12 @@ import SectionAmbience from '../ui/SectionAmbience';
 /* Charte éditoriale — lettre ouverte au futur freelance, préservée du legacy
    avec mise en forme DA V2 (card bg-#141211, !rounded-none, hairline border). */
 const PARAGRAPHS: string[] = [
-  'Cher futur membre du collectif,',
-  "Bienvenue dans l'univers d'Uclic, un collectif pas comme les autres. Nous avons créé cet espace unique où la collaboration et la transparence ne sont pas de simples mots, mais des engagements quotidiens.",
-  "Notre force réside dans la complémentarité de nos expertises. Chaque membre apporte sa pierre à l'édifice, permettant ainsi de relever des défis toujours plus ambitieux. C'est cette diversité qui nous rend uniques et efficaces.",
-  "La transparence est notre maître-mot. Pas de zones d'ombre, pas de surprises : nous communiquons clairement sur tous les aspects de notre collaboration, des projets aux tarifs. Et surtout, nous ne prélevons aucune commission sur l'apport d'affaires.",
-  "En rejoignant Uclic, vous intégrez un environnement où l'indépendance se conjugue avec la force du collectif. Ensemble, nous pouvons entreprendre des projets plus ambitieux tout en conservant notre liberté d'action.",
-  "Si ces valeurs résonnent en vous, si vous croyez comme nous en la puissance de la collaboration transparente, alors vous êtes au bon endroit. Uclic n'attend que vous pour écrire ensemble les prochains chapitres de son histoire.",
+  'Cher·e futur·e membre du collectif,',
+  "Uclic, c'est trois piliers, une seule équipe, zéro silo — Inbound, Outbound, IA & Développement. Si vous rejoignez le collectif, c'est pour tenir un pilier avec le niveau d'exigence que nos clients attendent : scale-ups B2B qui veulent des résultats mesurables en 90 jours, pas des slides.",
+  "Le cadre est simple. Un pilote senior garde la main sur chaque compte — vous livrez sous son mandat, jamais en autonomie déguisée. Certifications à jour, process documenté, reporting hebdo. On ne confie pas un client à un junior sans filet, et on attend la même rigueur de chaque expert canal.",
+  "Nos engagements en retour : transparence totale sur les projets et les tarifs, zéro commission sur l'apport d'affaires, pipe commercial partagé, agents IA mis à votre disposition pour industrialiser vos tâches répétitives (−70 % de temps manuel côté exécution).",
+  "Ce qu'on vous demande : des résultats mesurables, pas des livrables cosmétiques. Chaque euro client doit être traçable. Pas de promesses creuses. Pas de reporting qui cache les trous. Si un test ne rapporte pas, on coupe — ensemble.",
+  "Vous gardez votre indépendance, vous gagnez un cadre senior, un pipe B2B exigeant et des outils IA en production. Si ces règles du jeu résonnent, on en parle.",
 ];
 
 export default function CharteFreelanceClient() {
@@ -31,7 +31,7 @@ export default function CharteFreelanceClient() {
           </div>
 
           <h1 className="mt-5 text-[clamp(34px,4.6vw,56px)] font-display font-medium tracking-[-0.02em] leading-[1.1]">
-            La charte du{' '}
+            La charte{' '}
             <span className="relative inline-block isolate font-[family-name:var(--font-hand)] italic text-[color:var(--accent)] tracking-[0.005em]">
               Freelance.
               <span className="absolute -inset-x-4 -inset-y-2 -z-10 bg-[color:var(--accent)]/10 blur-2xl" />
@@ -39,7 +39,7 @@ export default function CharteFreelanceClient() {
           </h1>
 
           <p className="mt-5 text-[color:var(--ink-muted)] max-w-[620px] text-[16px] leading-relaxed">
-            Les valeurs qui font d&apos;Uclic un collectif unique et transparent.
+            Le cadre qualité pour rejoindre Uclic. Trois piliers, une seule équipe, zéro silo.
           </p>
         </div>
 

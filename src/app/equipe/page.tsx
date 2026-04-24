@@ -12,16 +12,16 @@ const SITE_URL = 'https://uclic.fr';
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: 'Équipe Growth Marketing & IA',
+  title: 'Équipe — Pilotage senior, experts canaux & IA | Uclic',
   description:
-    "L'équipe Uclic : un pilote senior, des experts canaux certifiés, et des agents IA en production. Seniors au pilotage, spécialistes au terrain.",
+    "Trois piliers, une seule équipe, zéro silo. Wladimir et Alexis (ex-CodinGame) pilotent, les experts canaux livrent, les agents IA industrialisent.",
   alternates: { canonical: '/equipe' },
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/equipe`,
-    title: 'Équipe Growth Marketing & IA | Agence Uclic',
+    title: 'Équipe — Pilotage senior, experts canaux & IA | Uclic',
     description:
-      "L'équipe Uclic : un pilote senior, des experts canaux certifiés, et des agents IA en production.",
+      "Trois piliers. Une seule équipe. Zéro silo. Pilotage senior, experts canaux certifiés et agents IA en production.",
     siteName: 'Uclic',
     locale: 'fr_FR',
     images: [
@@ -35,9 +35,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Équipe Growth Marketing & IA | Agence Uclic',
+    title: 'Équipe — Pilotage senior, experts canaux & IA | Uclic',
     description:
-      "L'équipe Uclic : un pilote senior, des experts canaux certifiés, et des agents IA en production.",
+      "Trois piliers. Une seule équipe. Zéro silo. Pilotage senior, experts canaux certifiés et agents IA en production.",
     site: '@uclic_fr',
   },
 };
@@ -77,7 +77,7 @@ export default async function EquipePage() {
       />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[1000] focus:rounded-full focus:bg-[color:var(--accent)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[color:var(--accent-ink)] focus:shadow-lg"
+        className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[1000] focus-visible:rounded-full focus-visible:bg-[color:var(--accent)] focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-[color:var(--accent-ink)] focus-visible:shadow-lg"
       >
         Aller au contenu
       </a>
@@ -95,17 +95,17 @@ export default async function EquipePage() {
               </div>
 
               <h1 className="mt-5 text-[clamp(34px,4.6vw,56px)] font-display font-medium tracking-[-0.02em] leading-[1.1] max-w-[900px]">
-                Des seniors,{' '}
+                Seniors au pilotage.{' '}
                 <span className="relative inline-block isolate font-[family-name:var(--font-hand)] italic text-[color:var(--accent)] tracking-[0.005em]">
-                  pas des stagiaires.
+                  Experts au terrain.
                   <span className="absolute -inset-x-4 -inset-y-2 -z-10 bg-[color:var(--accent)]/10 blur-2xl" />
                 </span>
               </h1>
 
               <p className="mt-5 text-[color:var(--ink-muted)] max-w-[640px] text-[16px] leading-relaxed">
                 {members.length > 0
-                  ? `${members.length} profils au pilotage : un head pilote le compte, des experts canaux exécutent, des agents IA accélèrent. Pas de pyramide junior.`
-                  : `Un head pilote le compte, des experts canaux exécutent, des agents IA accélèrent. Pas de pyramide junior.`}
+                  ? `${members.length} profils réunis autour d'un principe : trois piliers, une seule équipe, zéro silo. Wladimir et Alexis — co-fondateurs ex-CodinGame — pilotent le compte, les experts canaux livrent, les agents IA industrialisent.`
+                  : `Trois piliers, une seule équipe, zéro silo. Wladimir et Alexis — co-fondateurs ex-CodinGame — pilotent le compte, les experts canaux livrent, les agents IA industrialisent.`}
               </p>
             </div>
           </div>

@@ -10,24 +10,24 @@ import ContactForm from './ContactForm';
 const SITE_URL = 'https://uclic.fr';
 
 export const metadata: Metadata = {
-  title: 'Contact | Agence Growth & IA',
+  title: 'Contact | Uclic — Inbound · Outbound · IA',
   description:
-    "Contactez Uclic pour discuter de votre projet growth et IA. Audit stratégique offert, réponse sous 24h, équipe senior que vous rencontrez dès le premier call.",
+    "Parlez à un Growth Lead senior uclic. 3 piliers (Inbound, Outbound, IA & Dev), pilotage senior, résultats en 90 jours. Réponse sous 24h ouvrées.",
   keywords: [
-    'contact',
-    'agence growth marketing',
-    'audit growth',
-    'agence IA',
-    'freelance growth',
+    'contact uclic',
+    'agence growth scale-up B2B',
+    'audit growth gratuit',
+    'agents IA production',
+    'growth lead senior',
     'uclic',
   ],
   alternates: { canonical: '/contact' },
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/contact`,
-    title: 'Contact | Agence Growth & IA',
+    title: 'Contact | Uclic — Inbound · Outbound · IA',
     description:
-      "Contactez Uclic pour discuter de votre projet growth et IA. Audit stratégique offert, réponse sous 24h.",
+      "Growth Lead senior + experts canaux + agents IA en production. Note agrégée 4,76/30 (Google · Sortlist · Trustpilot). Réponse sous 24h ouvrées.",
     siteName: 'Uclic',
     locale: 'fr_FR',
     images: [
@@ -41,9 +41,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Contact | Agence Growth & IA',
+    title: 'Contact | Uclic — Inbound · Outbound · IA',
     description:
-      "Contactez Uclic pour discuter de votre projet growth et IA. Audit stratégique offert, réponse sous 24h.",
+      "Growth Lead senior + experts canaux + agents IA. Audit gratuit 48h. Réponse sous 24h ouvrées.",
     site: '@uclic_fr',
   },
 };
@@ -105,7 +105,7 @@ export default function ContactPage() {
       />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[1000] focus:rounded-full focus:bg-[color:var(--accent)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[color:var(--accent-ink)] focus:shadow-lg"
+        className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[1000] focus-visible:rounded-full focus-visible:bg-[color:var(--accent)] focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-[color:var(--accent-ink)] focus-visible:shadow-lg"
       >
         Aller au contenu
       </a>
@@ -123,15 +123,15 @@ export default function ContactPage() {
               </div>
 
               <h1 className="mt-5 text-[clamp(34px,4.6vw,56px)] font-display font-medium tracking-[-0.02em] leading-[1.1] max-w-[900px]">
-                Parlons de votre{' '}
+                Trois piliers. Une seule équipe.{' '}
                 <span className="relative inline-block isolate font-[family-name:var(--font-hand)] italic text-[color:var(--accent)] tracking-[0.005em]">
-                  croissance.
+                  Parlons-en.
                   <span className="absolute -inset-x-4 -inset-y-2 -z-10 bg-[color:var(--accent)]/10 blur-2xl" />
                 </span>
               </h1>
 
               <p className="mt-5 text-[color:var(--ink-muted)] max-w-[620px] text-[16px] leading-relaxed">
-                Un brief, une question, une demande presse ? Remplissez le formulaire — un pilote senior vous répond sous 24h ouvrées. Pour aller plus vite, réservez directement un audit stratégique offert.
+                Un brief, une question, une demande presse ? Remplissez le formulaire — un Growth Lead senior vous répond sous 24h ouvrées. Pour aller plus vite, réservez votre audit gratuit — 48h.
               </p>
             </div>
 
@@ -147,16 +147,16 @@ export default function ContactPage() {
                     <CalendarClock size={18} strokeWidth={1.75} />
                   </div>
                   <h2 className="mt-4 text-[18px] font-display font-medium tracking-[-0.01em]">
-                    Audit stratégique offert
+                    Mon audit gratuit — 48h
                   </h2>
                   <p className="mt-2 text-[13px] text-[color:var(--ink-muted)] leading-relaxed">
-                    30 min avec un pilote senior. Plan 90 jours concret. Gratuit, sans engagement.
+                    30 min avec un Growth Lead senior. Audit des 3 piliers + plan 90 jours chiffré. 0 €, sans engagement.
                   </p>
                   <Link
                     href="/audit"
                     className="mt-4 inline-flex items-center gap-2 text-[13px] font-medium text-[color:var(--accent)] hover:gap-3 transition-all"
                   >
-                    Réserver mon audit <ArrowRight size={14} />
+                    Réserver mon créneau <ArrowRight size={14} />
                   </Link>
                 </div>
 
@@ -207,10 +207,10 @@ export default function ContactPage() {
                     <Clock size={18} strokeWidth={1.75} />
                   </div>
                   <h2 className="mt-4 text-[18px] font-display font-medium tracking-[-0.01em]">
-                    Réponse sous 24h
+                    Note 4,76/30 · réponse 24h
                   </h2>
                   <p className="mt-2 text-[13px] text-[color:var(--ink-muted)] leading-relaxed">
-                    Paris · remote first. FR / EN. Pas de commercial — un pilote senior dès le premier call.
+                    Google 4,9 · Sortlist 4,96 · Trustpilot 4,3. Paris · remote first. FR / EN. Growth Lead senior dès le premier call — pas de SDR.
                   </p>
                 </div>
               </aside>

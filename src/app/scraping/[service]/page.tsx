@@ -97,11 +97,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: 'Service introuvable | Uclic', robots: { index: false, follow: false } };
   }
   const { service } = data;
-  const title = `${service.name} | Uclic — Constitution de bases B2B`;
+  const title = `${service.name} | Bases B2B RGPD — Uclic`;
   const description =
     service.seo_short_description ||
     service.description ||
-    `${service.name} : bases de données B2B qualifiées, conformes RGPD. Devis 24h.`;
+    `${service.name} : bases B2B qualifiées, RGPD, branchées sur vos séquences outbound. Audit gratuit en 48 h.`;
   const canonical = `/scraping/${service.slug}`;
   return {
     title,
@@ -174,14 +174,14 @@ export default async function ScrapingServicePage({ params }: PageProps) {
                     'radial-gradient(ellipse 140% 120% at 50% -20%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 35%, rgba(255,255,255,0.08) 65%, transparent 100%), var(--accent)',
                 }}
               >
-                Demander un devis
+                Mon audit gratuit — 48 h
                 <ArrowRight size={14} className="text-black light:text-white" />
               </a>
               <a
-                href="/contact"
+                href="/simulation"
                 className="inline-flex items-center gap-2 px-5 h-10 rounded-md border border-[color:var(--border-subtle)] text-[13px] font-medium text-[color:var(--ink)] hover:border-[color:var(--accent)]/40 transition-colors"
               >
-                Nous contacter
+                Simuler mon ROI
               </a>
             </div>
           </div>

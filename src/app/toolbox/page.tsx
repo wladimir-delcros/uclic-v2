@@ -14,16 +14,16 @@ const PAGE_SIZE = 48;
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: 'Toolbox Startups | Outils & Ressources pour scale-ups',
+  title: 'Toolbox Scale-ups — Outils Growth, Sales, Data, IA',
   description:
-    "Notre sélection d'outils growth, marketing, sales, data et IA. Ressources gratuites et payantes pour structurer votre stack acquisition — recommandations issues de la vraie vie.",
+    "La stack qu'on utilise vraiment chez nos clients scale-ups B2B : outils growth, marketing, sales, data, IA. Recommandations terrain, zéro affiliation.",
   alternates: { canonical: '/toolbox' },
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/toolbox`,
-    title: 'Toolbox Startups | Outils & Ressources pour scale-ups',
+    title: 'Toolbox Scale-ups — Outils Growth, Sales, Data, IA',
     description:
-      "Notre sélection d'outils growth, marketing, sales, data et IA. Recommandations issues de la vraie vie.",
+      "La stack qu'on utilise vraiment chez nos clients scale-ups B2B. Recommandations terrain, zéro affiliation.",
     siteName: 'Uclic',
     locale: 'fr_FR',
     images: [
@@ -80,7 +80,7 @@ export default async function ToolboxPage() {
       />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[1000] focus:rounded-full focus:bg-[color:var(--accent)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[color:var(--accent-ink)] focus:shadow-lg"
+        className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[1000] focus-visible:rounded-full focus-visible:bg-[color:var(--accent)] focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-[color:var(--accent-ink)] focus-visible:shadow-lg"
       >
         Aller au contenu
       </a>
@@ -105,10 +105,10 @@ export default async function ToolboxPage() {
                 </span>
               </h1>
 
-              <p className="mt-5 text-[color:var(--ink-muted)] max-w-[640px] text-[16px] leading-relaxed">
+              <p className="mt-5 text-[color:var(--ink-muted)] max-w-[680px] text-[16px] leading-relaxed">
                 {totalCount > 0
-                  ? `${totalCount} outils référencés — sélection growth, marketing, sales, data et IA qu'on déploie chez nos clients scale-ups B2B.`
-                  : `Les outils qu'on déploie chez nos clients scale-ups B2B — sans affiliation, sans top 10 copié-collé.`}
+                  ? `${totalCount} outils référencés — la stack inbound, outbound et IA qu'on déploie chez nos clients scale-ups B2B. Sans affiliation, sans top 10 copié-collé.`
+                  : `La stack inbound, outbound et IA qu'on déploie chez nos clients scale-ups B2B — sans affiliation, sans top 10 copié-collé.`}
               </p>
             </div>
           </div>

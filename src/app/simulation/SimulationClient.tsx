@@ -22,14 +22,14 @@ interface Step {
 const STEPS: Step[] = [
   {
     id: 'secteur',
-    question: 'Votre secteur d\'activite ?',
-    hint: 'Chaque marche a ses leviers de croissance.',
+    question: 'Votre secteur d\'activité ?',
+    hint: 'Chaque marché a ses leviers de croissance.',
     choices: [
       { label: 'SaaS / Logiciel B2B', value: 'SaaS B2B' },
       { label: 'Fintech / Assurance', value: 'Fintech' },
       { label: 'E-commerce', value: 'Ecommerce' },
       { label: 'Services B2B', value: 'Services B2B' },
-      { label: 'Sante / MedTech', value: 'Sante' },
+      { label: 'Santé / MedTech', value: 'Sante' },
       { label: 'Formation / EdTech', value: 'EdTech' },
       { label: 'Immobilier / PropTech', value: 'Immobilier' },
       { label: 'Autre secteur', value: 'Autre' },
@@ -49,13 +49,13 @@ const STEPS: Step[] = [
   {
     id: 'budget',
     question: 'Budget marketing mensuel ?',
-    hint: 'Toutes depenses : agences, Ads, outils.',
+    hint: 'Toutes dépenses : agences, Ads, outils.',
     choices: [
       { label: 'Moins de 2 000 €/mois', value: '<2k' },
       { label: '2 000 € - 10 000 €/mois', value: '2k-10k' },
       { label: '10 000 € - 30 000 €/mois', value: '10k-30k' },
       { label: 'Plus de 30 000 €/mois', value: '>30k' },
-      { label: 'Pas de budget defini', value: 'Indefini' },
+      { label: 'Pas de budget défini', value: 'Indefini' },
     ],
   },
   {
@@ -63,35 +63,35 @@ const STEPS: Step[] = [
     question: 'Vos sources d\'acquisition actuelles ?',
     hint: 'Sur quoi repose aujourd\'hui votre croissance ?',
     choices: [
-      { label: 'SEO / contenu', value: 'SEO' },
-      { label: 'Ads payants (Google, Meta, LinkedIn)', value: 'Ads' },
-      { label: 'Outbound / prospection', value: 'Outbound' },
-      { label: 'Reseau et recommandations', value: 'Reseau' },
-      { label: 'Multi-canal equilibre', value: 'Multi-canal' },
-      { label: 'Rien de structure', value: 'Aucun' },
+      { label: 'Inbound — SEO / Contenu', value: 'SEO' },
+      { label: 'Inbound — Google Ads / Meta Ads / LinkedIn Ads', value: 'Ads' },
+      { label: 'Outbound — Cold Email / LinkedIn / SDR', value: 'Outbound' },
+      { label: 'Réseau et recommandations', value: 'Reseau' },
+      { label: 'Multi-canal équilibré', value: 'Multi-canal' },
+      { label: 'Rien de structuré', value: 'Aucun' },
     ],
   },
   {
     id: 'defi',
-    question: 'Votre defi marketing n°1 ?',
-    hint: 'On concentre le plan sur ce point.',
+    question: 'Votre défi marketing n°1 ?',
+    hint: 'On concentre le plan 90 jours sur ce point.',
     choices: [
-      { label: 'Plus de leads qualifies', value: 'Plus de leads' },
-      { label: 'Reduire mon cout d\'acquisition', value: 'Reduire CAC' },
-      { label: 'Ameliorer les conversions', value: 'Conversion' },
-      { label: 'Automatiser l\'acquisition', value: 'Automatisation' },
+      { label: 'Plus de leads qualifiés', value: 'Plus de leads' },
+      { label: 'Réduire mon coût d\'acquisition', value: 'Reduire CAC' },
+      { label: 'Améliorer les conversions', value: 'Conversion' },
+      { label: 'Industrialiser avec des agents IA', value: 'Automatisation' },
       { label: 'Comprendre ce qui bloque', value: 'Diagnostic' },
-      { label: 'Se developper a l\'international', value: 'International' },
+      { label: 'Se développer à l\'international', value: 'International' },
     ],
   },
   {
     id: 'timing',
-    question: 'Quand souhaitez-vous demarrer ?',
-    hint: 'On s\'adapte a votre agenda.',
+    question: 'Quand souhaitez-vous démarrer ?',
+    hint: 'On s\'adapte à votre agenda.',
     choices: [
-      { label: 'Le plus tot possible', value: 'ASAP' },
+      { label: 'Le plus tôt possible', value: 'ASAP' },
       { label: 'Dans le mois', value: '1 mois' },
-      { label: 'Dans 1 a 3 mois', value: '3 mois' },
+      { label: 'Dans 1 à 3 mois', value: '3 mois' },
       { label: 'Je me renseigne pour l\'instant', value: 'Renseignement' },
     ],
   },
@@ -192,7 +192,7 @@ export default function SimulationClient() {
         <div className="mb-8">
           <div className="flex items-center justify-between text-[12px] text-[color:var(--ink-muted)] mb-2">
             <span>
-              {done ? 'Simulation complete' : `Etape ${stepIdx + 1} / ${STEPS.length}`}
+              {done ? 'Simulation complète' : `Étape ${stepIdx + 1} / ${STEPS.length}`}
             </span>
             <span className="text-[color:var(--accent)] font-medium">{progress}%</span>
           </div>
@@ -243,7 +243,7 @@ export default function SimulationClient() {
                 &larr; Retour
               </button>
               <span className="text-[12px] text-[color:var(--ink-muted)]">
-                Selectionnez une reponse pour continuer
+                Sélectionnez une réponse pour continuer
               </span>
             </div>
           </div>
@@ -270,8 +270,9 @@ export default function SimulationClient() {
                 />
               </div>
               <p className="mt-4 text-[14px] text-[color:var(--ink-muted)] max-w-[620px]">
-                Fort potentiel de croissance identifie sur {strategy.piliers.length} leviers
-                prioritaires. Estimations indicatives basees sur notre portefeuille clients.
+                Fort potentiel identifié sur {strategy.piliers.length} leviers prioritaires
+                (Inbound · Outbound · IA &amp; Développement). Benchmarks issus de notre
+                portefeuille scale-ups B2B · note agrégée 4,76/30.
               </p>
             </div>
 
@@ -279,13 +280,13 @@ export default function SimulationClient() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div className="!rounded-none border border-[color:var(--border-subtle)] bg-[color:var(--card-elev-1)] light:bg-white p-6 lg:p-8">
                 <div className="text-[11px] tracking-[0.25em] uppercase text-[color:var(--ink-muted)] mb-3">
-                  Leads qualifies
+                  Leads qualifiés
                 </div>
                 <div className="text-[32px] md:text-[40px] leading-none font-semibold text-[color:var(--accent)] tracking-tight">
                   {strategy.leadsGain}
                 </div>
                 <div className="mt-2 text-[12px] text-[color:var(--ink-muted)]">
-                  Gain attendu sur 6 mois
+                  Gain attendu sur 6 mois (réf. × 2,4)
                 </div>
               </div>
               <div className="!rounded-none border border-[color:var(--border-subtle)] bg-[color:var(--card-elev-1)] light:bg-white p-6 lg:p-8">
@@ -296,18 +297,18 @@ export default function SimulationClient() {
                   {strategy.cac}
                 </div>
                 <div className="mt-2 text-[12px] text-[color:var(--ink-muted)]">
-                  Reduction du cout d&apos;acquisition
+                  Réduction du coût d&apos;acquisition
                 </div>
               </div>
               <div className="!rounded-none border border-[color:var(--border-subtle)] bg-[color:var(--card-elev-1)] light:bg-white p-6 lg:p-8">
                 <div className="text-[11px] tracking-[0.25em] uppercase text-[color:var(--ink-muted)] mb-3">
-                  Premiers resultats
+                  Premiers résultats
                 </div>
                 <div className="text-[32px] md:text-[40px] leading-none font-semibold text-[color:var(--ink)] tracking-tight">
                   {strategy.delay}
                 </div>
                 <div className="mt-2 text-[12px] text-[color:var(--ink-muted)]">
-                  Apres kick-off
+                  Après kick-off · cadre 90 jours
                 </div>
               </div>
             </div>
@@ -316,7 +317,7 @@ export default function SimulationClient() {
             <div className="!rounded-none border border-[color:var(--border-subtle)] bg-[color:var(--card-elev-1)] light:bg-white p-6 lg:p-8">
               <div className="inline-flex items-center gap-2 text-[11px] leading-none tracking-[0.25em] uppercase text-[color:var(--accent)] mb-4">
                 <span className="w-6 h-px shrink-0 bg-[color:var(--accent)]" aria-hidden="true" />
-                <span>Plan d&apos;action recommande</span>
+                <span>Plan d&apos;action recommandé</span>
               </div>
               <ul className="space-y-4">
                 {strategy.piliers.map((p) => (
@@ -342,11 +343,12 @@ export default function SimulationClient() {
             {/* CTA */}
             <div className="!rounded-none border border-[color:var(--accent)]/40 bg-[color:var(--accent)]/5 p-6 lg:p-8">
               <h3 className="text-[22px] md:text-[28px] font-semibold text-[color:var(--ink)] tracking-tight">
-                Recevez votre plan d&apos;action detaille sous 24h.
+                Recevez votre plan 90 jours chiffré sous 24h.
               </h3>
               <p className="mt-3 text-[14px] leading-relaxed text-[color:var(--ink-muted)] max-w-[680px]">
-                Reservez un appel stratege avec Wladimir Delcros (30 min, gratuit) et recevez
-                un audit personnalise base sur vos reponses.
+                30 min avec Wladimir Delcros (Growth Lead senior, 10+ ans SaaS). On revient sur
+                vos réponses, on priorise les leviers sur les 3 piliers uclic et on vous remet
+                reco chiffrées + plan 90 jours. Gratuit, sans engagement.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <a
@@ -366,7 +368,7 @@ export default function SimulationClient() {
                       'radial-gradient(ellipse 140% 120% at 50% -20%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 35%, rgba(255,255,255,0.08) 65%, transparent 100%), var(--accent)',
                   }}
                 >
-                  Reserver mon audit offert
+                  Mon audit gratuit — 48h
                   <ArrowRight size={14} className="text-black light:text-white" />
                 </a>
                 <button
@@ -408,13 +410,13 @@ export default function SimulationClient() {
               <h2 className="mt-5 text-[clamp(32px,4.2vw,52px)] font-display font-medium tracking-[-0.02em] max-w-[780px] mx-auto">
                 Transformez cette simulation en{' '}
                 <span className="relative inline-block font-[family-name:var(--font-hand)] italic text-[color:var(--accent)] tracking-[0.005em]">
-                  plan d&apos;action.
+                  plan 90 jours.
                   <span className="absolute -inset-x-4 -inset-y-2 -z-10 bg-[color:var(--accent)]/10 blur-2xl rounded-full" />
                 </span>
               </h2>
 
               <p className="mt-5 text-[15px] text-[color:var(--ink-muted)] max-w-[640px] mx-auto">
-                30 min avec Wladimir Delcros. On revient sur vos réponses, on priorise les leviers et on vous remet un rapport sous 48h. Gratuit, sans engagement.
+                30 min avec Wladimir Delcros, Growth Lead senior. On priorise vos leviers sur les 3 piliers uclic et on vous remet reco chiffrées + plan 90 jours sous 48h.
               </p>
             </motion.div>
 
@@ -455,17 +457,17 @@ export default function SimulationClient() {
                       <Calendar size={28} strokeWidth={1.75} />
                     </span>
                     <h3 className="text-[22px] lg:text-[26px] font-display font-medium text-[color:var(--ink)] tracking-[-0.01em] leading-tight">
-                      Réservez votre appel stratégie
+                      Mon audit gratuit — 48h
                     </h3>
                     <p className="mt-3 text-[14px] text-[color:var(--ink-muted)] leading-relaxed max-w-[380px]">
-                      Un expert senior uclic cadre votre situation, présente la méthode et vous remet un rapport personnalisé sous 48h.
+                      Un Growth Lead senior uclic cadre votre situation sur les 3 piliers (Inbound · Outbound · IA) et vous remet un plan 90 jours personnalisé sous 48h.
                     </p>
 
                     <ul className="mt-6 flex flex-col items-start gap-2 text-[13px] text-[color:var(--ink)]">
                       {[
-                        'Analyse fine de vos réponses + benchmarks',
-                        'Rapport stratégique + roadmap 12 mois en 48h',
-                        'Échange direct avec un expert senior · pas de SDR',
+                        'Analyse de vos réponses + benchmarks scale-ups B2B',
+                        'Reco chiffrées + plan 90 jours sous 48h',
+                        'Growth Lead senior (10+ ans) · pas de SDR',
                       ].map((f) => (
                         <li key={f} className="flex items-start gap-2">
                           <Check size={14} strokeWidth={2.6} className="text-[color:var(--accent)] mt-0.5 shrink-0" />
@@ -482,7 +484,7 @@ export default function SimulationClient() {
                       }}
                     >
                       <PlayCircle size={16} strokeWidth={2} className="text-black light:text-white" />
-                      Choisir un créneau
+                      Mon audit gratuit — 48h
                     </span>
 
                     <p className="mt-5 flex items-center gap-1.5 text-[11.5px] font-mono uppercase tracking-[0.2em] text-[color:var(--ink-muted)]">

@@ -229,7 +229,7 @@ export default function ContactForm() {
             aria-invalid={!!errors.message}
             aria-describedby={errors.message ? 'message-error' : undefined}
             className={`${inputBase} !rounded-none resize-y ${errors.message ? inputError : ''}`}
-            placeholder="Décrivez votre contexte : stack actuelle, objectifs growth, échéances."
+            placeholder="Votre contexte : taille d'équipe, stack, objectif principal (Inbound, Outbound, IA & Dev), échéances."
           />
           {errors.message && (
             <p id="message-error" className="mt-1.5 text-[12px] text-red-500">

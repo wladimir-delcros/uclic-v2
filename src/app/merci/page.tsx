@@ -5,9 +5,9 @@ import Footer from '@/components/landing/Footer';
 import SectionAmbience from '@/components/ui/SectionAmbience';
 
 export const metadata: Metadata = {
-  title: 'Merci — Votre demande est reçue',
+  title: 'Merci — Votre demande est reçue | Uclic',
   description:
-    "Merci pour votre demande. L'équipe Uclic revient vers vous sous 24h ouvrées.",
+    "Merci. Un Growth Lead senior uclic revient vers vous sous 24h ouvrées pour cadrer vos 3 piliers et votre plan 90 jours.",
   alternates: { canonical: '/merci' },
   robots: { index: false, follow: false },
 };
@@ -32,12 +32,13 @@ export default function MerciPage() {
                 <span>Confirmation</span>
               </div>
               <h1 className="text-[30px] md:text-[36px] leading-[1.1] font-medium text-[color:var(--ink)] tracking-tight mb-3">
-                Merci, votre demande est reçue.
+                Demande reçue. On cadre ensemble.
               </h1>
               <p className="text-[15px] leading-relaxed text-[color:var(--ink-muted)]">
-                Un expert senior Uclic revient vers vous sous{' '}
+                Un Growth Lead senior uclic revient vers vous sous{' '}
                 <strong className="text-[color:var(--ink)]">24h ouvrées</strong> pour
-                cadrer votre besoin et vous proposer un créneau de diagnostic.
+                cadrer vos 3 piliers (Inbound · Outbound · IA &amp; Dev) et vous
+                proposer un créneau d&apos;audit gratuit.
               </p>
 
               <ul className="mt-6 space-y-3 text-[14px] text-[color:var(--ink)]">
@@ -46,21 +47,21 @@ export default function MerciPage() {
                     size={16}
                     className="text-[color:var(--accent)] mt-0.5 shrink-0"
                   />
-                  Vous recevez une confirmation par email dans les prochaines minutes.
+                  Confirmation par email dans les prochaines minutes.
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2
                     size={16}
                     className="text-[color:var(--accent)] mt-0.5 shrink-0"
                   />
-                  Vérifiez votre boîte spam si rien n'est arrivé sous 10 min.
+                  Livrable audit sous 48h : reco chiffrées + plan 90 jours.
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2
                     size={16}
                     className="text-[color:var(--accent)] mt-0.5 shrink-0"
                   />
-                  Aucune relance commerciale agressive — promis.
+                  Pas de SDR, pas de relance agressive — pilotage senior direct.
                 </li>
               </ul>
 
@@ -74,7 +75,7 @@ export default function MerciPage() {
                   }}
                 >
                   <Calendar size={14} />
-                  Réserver un créneau
+                  Mon audit gratuit — 48h
                 </a>
                 <a
                   href="/"
@@ -87,6 +88,8 @@ export default function MerciPage() {
             </div>
 
             <p className="mt-6 text-center text-[13px] text-[color:var(--ink-muted)]">
+              Note agrégée 4,76/30 · Google 4,9 · Sortlist 4,96 · Trustpilot 4,3.
+              <br />
               En attendant, explorez nos{' '}
               <a
                 href="/cas-clients"

@@ -11,8 +11,8 @@ const SITE_URL = 'https://uclic.fr';
 const currentYear = new Date().getFullYear();
 
 export const metadata: Metadata = {
-  title: `Agences Marketing en France ${currentYear} — Annuaire`,
-  description: `Annuaire éditorial des agences marketing en France ${currentYear}. SEO, Google Ads, Growth, Outbound — comparatifs par expertise et par ville, avec nos critères d'évaluation.`,
+  title: `Agences Marketing France ${currentYear} — Annuaire Uclic`,
+  description: `Annuaire éditorial ${currentYear} des agences marketing France : SEO, Ads, Growth, Outbound. Critères, comparatifs par ville. Audit Uclic gratuit 48 h.`,
   keywords: [
     'annuaire agences marketing france',
     'agences digitales',
@@ -25,8 +25,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/meilleure-agence`,
-    title: `Agences Marketing en France ${currentYear} | Annuaire Uclic`,
-    description: `Annuaire éditorial des agences marketing en France ${currentYear}. Comparatifs par expertise et par ville, avec nos critères d'évaluation.`,
+    title: `Agences Marketing France ${currentYear} — Annuaire Uclic`,
+    description: `Annuaire éditorial ${currentYear} des agences marketing France : SEO, Ads, Growth, Outbound. Critères, comparatifs par ville.`,
     siteName: 'Uclic',
     locale: 'fr_FR',
     images: [
@@ -40,8 +40,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `Agences Marketing en France ${currentYear}`,
-    description: `Annuaire éditorial des agences marketing en France. Comparatifs par expertise et par ville.`,
+    title: `Agences Marketing France ${currentYear} — Uclic`,
+    description: `Annuaire éditorial ${currentYear}. Critères d'évaluation, comparatifs par ville.`,
   },
 };
 
@@ -97,7 +97,7 @@ export default function MeilleureAgencePage() {
       />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[1000] focus:rounded-full focus:bg-[color:var(--accent)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[color:var(--accent-ink)] focus:shadow-lg"
+        className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[1000] focus-visible:rounded-full focus-visible:bg-[color:var(--accent)] focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-[color:var(--accent-ink)] focus-visible:shadow-lg"
       >
         Aller au contenu
       </a>
@@ -122,8 +122,8 @@ export default function MeilleureAgencePage() {
                 </span>
               </h1>
 
-              <p className="mt-5 text-[color:var(--ink-muted)] max-w-[640px] text-[16px] leading-relaxed">
-                Un annuaire éditorial des agences marketing reconnues en France, couvrant plusieurs expertises et villes. On partage nos critères d&apos;évaluation — à vous d&apos;arbitrer.
+              <p className="mt-5 text-[color:var(--ink-muted)] max-w-[680px] text-[16px] leading-relaxed">
+                Un annuaire éditorial des agences marketing reconnues en France, par expertise et par ville. On partage nos critères — à vous d&apos;arbitrer. Et si vous cherchez plutôt une équipe complète (inbound, outbound, IA) sans silos, on en parle en audit.
               </p>
             </div>
           </div>
@@ -197,13 +197,13 @@ export default function MeilleureAgencePage() {
             {/* Note sur contenu legacy */}
             <div className="mt-10 relative !rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white p-7">
               <p className="text-[15px] text-[color:var(--ink-muted)] leading-relaxed">
-                Les fiches détaillées par expertise et par ville sont en cours de republication. Pour un avis personnalisé sur l&apos;agence à choisir selon votre contexte, passez par un audit offert — on oriente, même si ce n&apos;est pas nous.
+                Les fiches détaillées par expertise et par ville sont en cours de republication. Chez Uclic, on assemble les trois piliers — inbound, outbound, agents IA — dans une seule équipe pilotée par un senior. Si vous voulez un avis franc sur l&apos;agence adaptée à votre stade, passez par un audit gratuit. On oriente, même si la bonne réponse n&apos;est pas nous.
               </p>
               <Link
                 href="/audit"
                 className="mt-5 inline-flex items-center gap-2 text-[14px] font-medium text-[color:var(--accent)] hover:gap-3 transition-all"
               >
-                Réserver mon audit <ArrowRight size={14} />
+                Mon audit gratuit — 48 h <ArrowRight size={14} />
               </Link>
             </div>
           </div>

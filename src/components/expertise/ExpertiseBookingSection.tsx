@@ -20,9 +20,9 @@ interface ExpertiseBookingSectionProps {
 }
 
 const BULLETS = [
-  'Diagnostic funnel + stack tech + maturité IA',
-  'Rapport stratégique + roadmap 12 mois en 48h',
-  'Échange direct avec un expert senior · pas de SDR',
+  'Diagnostic des 3 piliers : Inbound · Outbound · IA',
+  'Reco chiffrées + plan 90 jours sous 48h',
+  'Growth Lead senior (10+ ans) · pas de SDR',
 ];
 
 /**
@@ -33,10 +33,10 @@ const BULLETS = [
  */
 export default function ExpertiseBookingSection({
   category,
-  eyebrow = 'Prenez rendez-vous',
-  h2Plain = 'Parlez de votre projet avec',
-  h2Italic = 'un expert senior.',
-  subtitle = '30 min pour cadrer votre situation. Diagnostic funnel + stack tech + maturité IA. Rapport stratégique + roadmap 12 mois livrés sous 48h. Gratuit, sans engagement.',
+  eyebrow = 'Mon audit gratuit — 48h',
+  h2Plain = 'Trois piliers. Une équipe.',
+  h2Italic = 'Un Growth Lead senior.',
+  subtitle = '30 min pour cadrer vos 3 piliers — Inbound, Outbound, IA & Développement. Reco chiffrées + plan 90 jours livrés sous 48h. Gratuit, sans engagement. Note agrégée 4,76/30.',
 }: ExpertiseBookingSectionProps) {
   const reduceMotion = useReducedMotion();
   const [showBooking, setShowBooking] = useState(false);
@@ -169,11 +169,10 @@ export default function ExpertiseBookingSection({
                   <Calendar size={28} strokeWidth={1.75} />
                 </span>
                 <h3 className="text-[22px] lg:text-[26px] font-display font-medium text-[color:var(--ink)] tracking-[-0.01em] leading-tight">
-                  Réservez votre créneau — 30 min
+                  Mon audit gratuit — 48h
                 </h3>
                 <p className="mt-3 text-[14px] text-[color:var(--ink-muted)] leading-relaxed max-w-[420px]">
-                  Expert senior uclic. On cadre votre situation, on valide la faisabilité,
-                  on vous remet un rapport stratégique + roadmap 12 mois sous 48h.
+                  Growth Lead senior uclic (10+ ans). On cadre vos 3 piliers (Inbound · Outbound · IA) et on vous remet reco chiffrées + plan 90 jours sous 48h.
                 </p>
 
                 <ul className="mt-6 flex flex-col items-start gap-2 text-[13px] text-[color:var(--ink)]">
@@ -201,7 +200,7 @@ export default function ExpertiseBookingSection({
                     strokeWidth={2}
                     className="text-black light:text-white"
                   />
-                  Choisir un créneau
+                  Mon audit gratuit — 48h
                 </span>
 
                 <p className="mt-5 flex items-center gap-1.5 text-[11.5px] font-mono uppercase tracking-[0.2em] text-[color:var(--ink-muted)]">

@@ -64,7 +64,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: 'Auteur introuvable | Uclic', robots: { index: false, follow: false } };
   }
   const title = `${author.name} — Auteur | Blog Uclic`;
-  const description = author.bio || `Articles rédigés par ${author.name} sur le blog Uclic.`;
+  const description =
+    author.bio ||
+    `Articles signés ${author.name} sur le blog Uclic — agence Growth Marketing & IA. Trois piliers : Inbound, Outbound, IA & Développement pour scale-ups B2B.`;
   const canonical = `/auteur/${author.slug}`;
   return {
     title,

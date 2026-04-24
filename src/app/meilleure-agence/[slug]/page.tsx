@@ -47,8 +47,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const serviceName = parsed.expertise.replace(/^Agence\s+/i, '').trim();
   const currentYear = new Date().getFullYear();
-  const title = `Meilleure agence ${serviceName} ${parsed.ville} ${currentYear} — Comparatif`;
-  const description = `Classement éditorial des meilleures agences ${serviceName} à ${parsed.ville} en ${currentYear}. Scores, avis clients, analyse — par l'équipe growth Uclic.`;
+  const rawTitle = `Meilleure agence ${serviceName} ${parsed.ville} ${currentYear} — Comparatif`;
+  const title = rawTitle.length > 60 ? `Agences ${serviceName} ${parsed.ville} ${currentYear} — Comparatif` : rawTitle;
+  const description = `Classement éditorial des agences ${serviceName} à ${parsed.ville} en ${currentYear} : scores, avis, analyse par l'équipe growth Uclic. Audit gratuit en 48 h.`;
 
   return {
     title,
@@ -161,11 +162,11 @@ export default async function MeilleureAgenceSlugPage({ params }: PageProps) {
               <h1 className="text-[40px] md:text-[52px] lg:text-[60px] leading-[1.05] font-medium text-[color:var(--ink)] tracking-tight">
                 Meilleure agence {serviceName} à {parsed.ville}.
               </h1>
-              <p className="mt-6 text-[17px] lg:text-[18px] leading-relaxed text-[color:var(--ink-muted)] max-w-[680px]">
+              <p className="mt-6 text-[17px] lg:text-[18px] leading-relaxed text-[color:var(--ink-muted)] max-w-[720px]">
                 {competitors.length} agences {serviceName} analysées à {parsed.ville}.
                 Notre classement combine note Google, volume d&apos;avis, vérification
                 et lisibilité du positionnement. Pas un palmarès marketing — un outil
-                d&apos;arbitrage.
+                d&apos;arbitrage pour choisir la bonne équipe selon votre stade.
               </p>
               <div className="mt-6">
                 <a
@@ -354,14 +355,14 @@ export default async function MeilleureAgenceSlugPage({ params }: PageProps) {
               </h2>
               <p className="mt-3 text-[15px] text-[color:var(--ink-muted)] leading-relaxed max-w-[720px]">
                 {uclicRow
-                  ? `Uclic pilote des dispositifs ${serviceName.toLowerCase()} pour des scale-ups B2B. On oriente selon votre stade et votre budget — même si ce n'est pas nous la bonne réponse.`
-                  : `On oriente selon votre stade, votre budget et votre canal dominant — gratuitement, même si la bonne réponse n'est pas Uclic.`}
+                  ? `Chez Uclic, on pilote des dispositifs ${serviceName.toLowerCase()} pour des scale-ups B2B : pilotage senior, experts canaux, agents IA en production. Trois piliers, une équipe, zéro silo. On oriente selon votre stade — même si la bonne réponse n'est pas nous.`
+                  : `Pilotage senior, experts canaux, agents IA en production : trois piliers dans une seule équipe. On oriente selon votre stade, votre budget et votre canal dominant — gratuitement, même si la bonne réponse n'est pas Uclic.`}
               </p>
               <a
                 href="/audit"
                 className="mt-5 inline-flex items-center gap-2 text-[14px] font-medium text-[color:var(--accent)] hover:gap-3 transition-all"
               >
-                Réserver un audit offert <ArrowRight size={14} />
+                Mon audit gratuit — 48 h <ArrowRight size={14} />
               </a>
             </div>
           </div>

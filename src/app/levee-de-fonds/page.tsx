@@ -13,16 +13,16 @@ const PAGE_SIZE = 30;
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: 'Levées de fonds startups françaises — Veille',
+  title: 'Levées de fonds startups françaises — Veille Uclic',
   description:
-    "Veille éditoriale sur les levées de fonds des startups françaises. Montants, investisseurs, signaux faibles — lecture critique par l'équipe growth Uclic.",
+    "Veille critique sur les levées de fonds startups françaises : montants, investisseurs, signaux faibles. Lecture par l'équipe growth Uclic. Audit gratuit.",
   alternates: { canonical: '/levee-de-fonds' },
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/levee-de-fonds`,
-    title: 'Levées de fonds startups françaises | Veille Uclic',
+    title: 'Levées de fonds startups françaises — Veille Uclic',
     description:
-      "Veille éditoriale sur les levées de fonds des startups françaises. Montants, investisseurs, signaux faibles.",
+      "Veille critique sur les levées de fonds des startups françaises : montants, investisseurs, signaux faibles.",
     siteName: 'Uclic',
     locale: 'fr_FR',
     images: [
@@ -36,9 +36,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Levées de fonds startups françaises | Veille Uclic',
+    title: 'Levées de fonds startups françaises — Veille Uclic',
     description:
-      "Veille éditoriale sur les levées de fonds des startups françaises. Montants, investisseurs, signaux faibles.",
+      "Veille critique sur les levées de fonds des startups françaises : montants, investisseurs, signaux faibles.",
     site: '@uclic_fr',
   },
 };
@@ -79,7 +79,7 @@ export default async function LeveeDeFondsPage() {
       />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[1000] focus:rounded-full focus:bg-[color:var(--accent)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[color:var(--accent-ink)] focus:shadow-lg"
+        className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[1000] focus-visible:rounded-full focus-visible:bg-[color:var(--accent)] focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-[color:var(--accent-ink)] focus-visible:shadow-lg"
       >
         Aller au contenu
       </a>
@@ -104,10 +104,10 @@ export default async function LeveeDeFondsPage() {
                 </span>
               </h1>
 
-              <p className="mt-5 text-[color:var(--ink-muted)] max-w-[640px] text-[16px] leading-relaxed">
+              <p className="mt-5 text-[color:var(--ink-muted)] max-w-[680px] text-[16px] leading-relaxed">
                 {allLevees.length > 0
-                  ? `${allLevees.length} levées analysées par l'équipe qui structure la croissance de scale-ups françaises au quotidien. Lecture critique, zéro communiqué recopié.`
-                  : `Veille éditoriale signée par l'équipe qui structure la croissance de scale-ups françaises au quotidien.`}
+                  ? `${allLevees.length} levées analysées par l'équipe qui structure la croissance de scale-ups B2B au quotidien — pilotage senior, experts canaux, agents IA en production. Lecture critique, zéro communiqué recopié.`
+                  : `Veille signée par l'équipe qui structure la croissance de scale-ups B2B au quotidien — pilotage senior, experts canaux, agents IA en production.`}
               </p>
             </div>
           </div>

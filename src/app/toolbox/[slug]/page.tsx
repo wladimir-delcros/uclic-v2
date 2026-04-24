@@ -254,7 +254,7 @@ export default async function ToolboxDetailPage({ params }: PageProps) {
       />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[1000] focus:rounded-full focus:bg-[color:var(--accent)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[color:var(--accent-ink)] focus:shadow-lg"
+        className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[1000] focus-visible:rounded-full focus-visible:bg-[color:var(--accent)] focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-[color:var(--accent-ink)] focus-visible:shadow-lg"
       >
         Aller au contenu
       </a>
@@ -312,7 +312,7 @@ export default async function ToolboxDetailPage({ params }: PageProps) {
                 </CTAButton>
               )}
               <CTAButton href="/audit" variant="secondary" icon={ArrowRight} size="md">
-                Auditer ma stack
+                Mon audit gratuit — 48 h
               </CTAButton>
             </div>
 
@@ -422,10 +422,10 @@ export default async function ToolboxDetailPage({ params }: PageProps) {
                     Besoin d&apos;aide
                   </div>
                   <div className="mt-2 text-[16px] font-display font-medium tracking-[-0.01em] leading-snug">
-                    Faire auditer ma stack acquisition
+                    Faire auditer ma stack par un senior
                   </div>
                   <span className="mt-3 inline-flex items-center gap-1.5 text-[13px] text-[color:var(--ink-muted)] group-hover:text-[color:var(--accent)] group-hover:gap-2.5 transition-all">
-                    Prendre RDV
+                    Audit gratuit — 48 h
                     <ArrowRight size={13} />
                   </span>
                 </a>

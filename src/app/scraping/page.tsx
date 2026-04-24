@@ -12,16 +12,16 @@ const SITE_URL = 'https://uclic.fr';
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: 'Scraping B2B sur-mesure | Extraction de données RGPD',
+  title: 'Scraping B2B sur-mesure — Bases RGPD pour outbound',
   description:
-    'Services de scraping B2B sur-mesure : LinkedIn, emails, Google Maps, sites métier. Extraction de données conforme RGPD pour alimenter votre prospection B2B.',
+    'Scraping B2B sur-mesure : LinkedIn, emails, Google Maps, sites métier. Bases RGPD branchées sur vos séquences outbound. Audit gratuit en 48 h.',
   alternates: { canonical: '/scraping' },
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/scraping`,
-    title: 'Scraping B2B sur-mesure | Extraction de données RGPD',
+    title: 'Scraping B2B sur-mesure — Bases RGPD pour outbound',
     description:
-      'Services de scraping B2B sur-mesure : LinkedIn, emails, Google Maps, sites métier. Conforme RGPD.',
+      'Scraping B2B sur-mesure : LinkedIn, emails, Google Maps, sites métier. Bases RGPD branchées sur vos séquences outbound.',
     siteName: 'Uclic',
     locale: 'fr_FR',
     images: [
@@ -35,9 +35,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Scraping B2B sur-mesure | Extraction de données RGPD',
+    title: 'Scraping B2B sur-mesure — Bases RGPD pour outbound',
     description:
-      'Services de scraping B2B sur-mesure : LinkedIn, emails, Google Maps, sites métier.',
+      'Scraping B2B sur-mesure : LinkedIn, emails, Google Maps. Bases RGPD pour outbound.',
     site: '@uclic_fr',
   },
 };
@@ -150,7 +150,7 @@ export default async function ScrapingPage() {
       />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[1000] focus:rounded-full focus:bg-[color:var(--accent)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[color:var(--accent-ink)] focus:shadow-lg"
+        className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[1000] focus-visible:rounded-full focus-visible:bg-[color:var(--accent)] focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-[color:var(--accent-ink)] focus-visible:shadow-lg"
       >
         Aller au contenu
       </a>
@@ -175,8 +175,8 @@ export default async function ScrapingPage() {
                 </span>
               </h1>
 
-              <p className="mt-5 text-[color:var(--ink-muted)] max-w-[640px] text-[16px] leading-relaxed">
-                Services de scraping sur-mesure pour alimenter votre prospection B2B et votre intelligence marché. Extraction conforme RGPD, intégrée dans une stratégie outbound pilotée.
+              <p className="mt-5 text-[color:var(--ink-muted)] max-w-[680px] text-[16px] leading-relaxed">
+                Extraction sur-mesure, conforme RGPD, branchée sur des séquences outbound pilotées par des seniors et des agents IA en production. Le scraping comme brique d&apos;un vrai moteur de demande, pas comme fin en soi.
               </p>
 
               <a
@@ -188,7 +188,7 @@ export default async function ScrapingPage() {
                     'radial-gradient(ellipse 140% 120% at 50% -20%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 35%, rgba(255,255,255,0.08) 65%, transparent 100%), var(--accent)',
                 }}
               >
-                Cadrer mon besoin <ArrowRight size={16} />
+                Mon audit gratuit — 48 h <ArrowRight size={16} />
               </a>
             </div>
           </div>
@@ -206,8 +206,8 @@ export default async function ScrapingPage() {
                 ? `${services.length} sources d'extraction à combiner.`
                 : `Des briques d'extraction à combiner.`}
             </h2>
-            <p className="mt-3 text-[color:var(--ink-muted)] max-w-[640px] text-[15px] leading-relaxed">
-              Le scraping n&apos;est pas une fin : c&apos;est la matière première d&apos;une campagne outbound. On commence toujours par cadrer l&apos;ICP avant de lancer l&apos;extraction.
+            <p className="mt-3 text-[color:var(--ink-muted)] max-w-[680px] text-[15px] leading-relaxed">
+              Le scraping n&apos;est pas une fin : c&apos;est la matière première d&apos;une campagne outbound. Chez Uclic, ICP cadré par un senior, extraction tenue par nos experts data, séquences poussées par nos agents IA — trois piliers, une seule équipe, zéro silo.
             </p>
 
             {services.length === 0 ? (

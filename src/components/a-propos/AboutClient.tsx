@@ -10,15 +10,15 @@ const PARAGRAPHS: Array<string | { highlight: string; before: string; after: str
   "Je m'appelle Wladimir. J'ai commencé par la tech : développeur front-end, intégrateur, chef de projet web. Très vite, j'ai compris que mon ADN était de mettre la technologie et le développement au service des équipes marketing, commerciales et opérations. Pas coder pour coder. Coder pour faire croître.",
   "J'ai souvent été le premier salarié en startup. Celui qu'on recrute quand il n'y a encore rien : pas de process, pas de budget, pas de filet. Chez StayHome, j'étais le premier employé — on est passé de 1 à 13. Chez CodinGame, 5 ans en tant que Head of Growth puis Growth PM : 100% de croissance annuelle, stratégie Product-Led Growth, membre du codir. Dont 2 ans sous ère américaine après le rachat par un fonds US et la fusion avec CoderPad — 20M d'ARR, équipes internationales. Puis Head of Growth chez Muzzo, Growth Manager chez Obat. J'ai également enseigné le Growth Hacking en école de commerce.",
   "Plus de 10 ans sur le terrain. Ce que j'en retiens est simple : chaque euro investi doit être traçable, mesurable et rentable. Pas de slides. Pas de promesses. Des résultats. Quand on est le premier salarié marketing d'une entreprise qui bootstrappe, on apprend vite à ne rien gaspiller.",
-  "Et puis j'ai créé Uclic. Aujourd'hui, je suis de l'autre côté. Je suis entrepreneur, comme vous. Je sais ce que c'est de regarder ses métriques en se demandant où investir le prochain euro. Je connais la pression, les arbitrages, le besoin de résultats concrets. C'est pour ça qu'Uclic existe : pour offrir aux entrepreneurs ce que j'aurais voulu avoir — un partenaire qui comprend vos problématiques parce qu'il les vit au quotidien.",
+  "Et puis j'ai créé Uclic avec Alexis Christine-Amara, ex-Head of Sales CodinGame. Lui côté revenu, moi côté growth — on a retrouvé le tandem qui a fait scaler CodinGame à 20M d'ARR. Aujourd'hui, je suis de l'autre côté. Je suis entrepreneur, comme vous. Je sais ce que c'est de regarder ses métriques en se demandant où investir le prochain euro. Je connais la pression, les arbitrages, le besoin de résultats concrets. C'est pour ça qu'Uclic existe.",
   "Aujourd'hui, Agicap, Deepki, Tehtris, CodinGame, MSC Cruises... toutes ces entreprises structurent leur croissance avec nous. Avec un système. Automatisé. Scalable. Contrôlable.",
   {
-    before: "Notre approche ? ",
-    highlight: "Un pilote senior, des experts canaux certifiés, des agents IA en production.",
-    after: " On ne promet pas la lune. On cadre en 90 jours, on industrialise ce qui marche, on coupe ce qui ne rapporte pas. Sans silo. Sans prestataire de plus à orchestrer à votre place.",
+    before: "Notre promesse tient en une ligne : ",
+    highlight: "Trois piliers. Une seule équipe. Zéro silo.",
+    after: " Inbound pour captez la demande (SEO, Google & Meta Ads, pages de conversion, contenu — × 2,4 contacts organiques en 6 mois). Outbound pour créez la demande (signaux d'achat, séquences email + LinkedIn, SDR — +38 RDV qualifiés / mois). IA & Développement pour industrialisez sur-mesure (agents IA en production, apps métier, n8n — −70 % de temps manuel).",
   },
-  "Ce qui nous différencie des agences classiques ? La transparence totale. Pas de contrat qui vous enferme. Pas de reporting cosmétique. Pas de promesses creuses. Des tests concrets, mesurés, pilotés par un Growth Lead senior qui reste en première ligne.",
-  "Si vous cherchez un partenaire qui vous comprend parce qu'il est passé par là — on est là.",
+  "Ce qui nous différencie des agences classiques : un pilotage senior qui reste en première ligne, une équipe complète sans silo ni sous-traitance déguisée, des agents IA en production — pas des démos — et des résultats mesurables en 90 jours. Flexibilité 3 mois min. Pas de contrat qui enferme. Pas de reporting cosmétique.",
+  "Si vous cherchez une équipe qui comprend vos problématiques parce qu'elle les a vécues — on est là.",
 ];
 
 export default function AboutClient() {
@@ -46,7 +46,7 @@ export default function AboutClient() {
           </h1>
 
           <p className="mt-5 text-[color:var(--ink-muted)] max-w-[620px] text-[16px] leading-relaxed">
-            L&apos;histoire d&apos;un Head of Growth devenu fondateur d&apos;agence.
+            Trois piliers. Une seule équipe. Zéro silo. L&apos;histoire d&apos;un ex-Head of Growth CodinGame devenu fondateur d&apos;agence.
           </p>
         </div>
 

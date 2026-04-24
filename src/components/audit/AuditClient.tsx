@@ -5,32 +5,32 @@ import { Calendar, Clock, Sparkles, Check, PlayCircle } from 'lucide-react';
 import SectionAmbience from '../ui/SectionAmbience';
 
 const STATS = [
-  { value: '90j',  label: 'cadre éprouvé' },
-  { value: '48h',  label: 'rapport + roadmap livrés' },
+  { value: '90j',  label: 'résultats mesurables' },
+  { value: '48h',  label: 'rapport + plan livrés' },
   { value: '0€',   label: 'offert · sans engagement' },
 ];
 
-// Steps = Phase 01 de la méthode home (MethodeSection Audit stratégique)
+// Steps = Phase 01 — audit aligné sur les 3 piliers canon uclic
 const STEPS = [
   {
     n: '01',
-    title: 'Audit funnel & attribution',
-    desc: 'De la première visite au closing : on identifie où vos prospects décrochent et quels canaux sous-performent.',
+    title: 'Pilier Inbound — Captez la demande',
+    desc: 'SEO, Google Ads, Meta Ads, LinkedIn Ads, contenu, pages de conversion. On identifie vos fuites et vos leviers d’× 2,4 contacts organiques.',
   },
   {
     n: '02',
-    title: 'Audit stack tech & data',
-    desc: 'Cartographie de vos outils, intégrations, tracking et qualité d’attribution. On trouve les fuites de data.',
+    title: 'Pilier Outbound — Créez la demande',
+    desc: 'Signaux d’achat, ciblage, cold email + LinkedIn, SDR. On calibre l’objectif +38 RDV qualifiés / mois.',
   },
   {
     n: '03',
-    title: 'Maturité IA & automation',
-    desc: 'On évalue les leviers IA activables — scoring, outreach, content, ops — et on priorise ceux qui ont un ROI mesurable.',
+    title: 'Pilier IA & Développement — Industrialisez',
+    desc: 'Agents IA en production, apps custom, n8n, scoring, APIs. On vise −70 % de temps sur vos tâches manuelles.',
   },
   {
     n: '04',
-    title: 'Roadmap priorisée 12 mois',
-    desc: 'Quick wins 30j + chantiers structurants. Concret, actionnable, chiffré.',
+    title: 'Plan 90 jours chiffré',
+    desc: 'Quick wins 30j + chantiers structurants. Priorisé ICE, revu chaque semaine, KPIs pipeline / MQL / SQL / CAC / LTV.',
   },
 ];
 
@@ -103,24 +103,24 @@ export default function AuditClient() {
             {/* Eyebrow */}
             <div className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)]">
               <span className="w-6 h-px bg-[color:var(--accent)]" />
-              Audit Gratuit
+              Mon audit gratuit — 48h
               <span className="w-6 h-px bg-[color:var(--accent)]" />
             </div>
 
             {/* H1 */}
             <h1 className="mt-5 text-[clamp(34px,4.6vw,56px)] font-display font-medium tracking-[-0.02em] leading-[1.1]">
-              Votre marketing{' '}
+              Trois piliers passés au crible,{' '}
               <span className="relative inline-block isolate font-[family-name:var(--font-hand)] italic text-[color:var(--accent)] tracking-[0.005em]">
-                ne convertit pas&nbsp;?
+                votre plan 90 jours.
                 <span className="absolute -inset-x-4 -inset-y-2 -z-10 bg-[color:var(--accent)]/10 blur-2xl" />
               </span>
             </h1>
 
             {/* Subtitle */}
             <p className="mt-5 text-[17px] text-[color:var(--ink)] leading-relaxed max-w-[560px]">
-              Phase 01 de notre méthode en 90 jours, offerte. Diagnostic funnel, audit stack tech et évaluation de votre maturité IA &amp; automation.
+              On audite vos 3 piliers — Inbound, Outbound, IA &amp; Développement — sous pilotage senior. Reco chiffrées, quick wins 30j et plan 90 jours aligné sur vos KPIs pipeline.
               <br />
-              Livrable sous 48h : rapport stratégique + roadmap priorisée 12 mois.
+              Livrable sous 48h. 0 €. Sans engagement.
             </p>
 
             {/* Stats grid */}
@@ -170,10 +170,10 @@ export default function AuditClient() {
               </span>
               <div>
                 <div className="text-[15px] font-medium text-[color:var(--ink)]">
-                  Phase 01 offerte · 0€ · sans engagement
+                  Growth Scan · 0€ · sans engagement
                 </div>
                 <p className="mt-1 text-[14px] text-[color:var(--ink-muted)] leading-relaxed">
-                  Pas de sales, pas de discours marketing. Un expert senior uclic analyse votre situation et vous remet un diagnostic exécutif + une roadmap actionnable.
+                  Pas de SDR, pas de blabla. Un Growth Lead senior (10+ ans) analyse vos 3 piliers et vous remet reco chiffrées + plan 90 jours. Note agrégée 4,76/30 (Google 4,9 · Sortlist 4,96 · Trustpilot 4,3).
                 </p>
               </div>
             </div>
@@ -206,15 +206,15 @@ export default function AuditClient() {
                     <Calendar size={28} strokeWidth={1.75} />
                   </span>
                   <h2 className="text-[22px] lg:text-[26px] font-display font-medium text-[color:var(--ink)] tracking-[-0.01em] leading-tight">
-                    Réservez votre audit stratégique
+                    Mon audit gratuit — 48h
                   </h2>
                   <p className="mt-3 text-[14px] text-[color:var(--ink-muted)] leading-relaxed max-w-[340px]">
-                    30 min avec un expert senior uclic. On cadre votre situation, on vous présente notre méthode, on vous remet un rapport sous 48h.
+                    30 min avec un Growth Lead senior. On passe en revue vos 3 piliers (Inbound, Outbound, IA &amp; Dev), on vous remet un plan 90 jours sous 48h.
                   </p>
 
                   {/* Features list */}
                   <ul className="mt-6 flex flex-col items-start gap-2 text-[13px] text-[color:var(--ink)]">
-                    {['Diagnostic funnel + stack tech + maturité IA', 'Rapport stratégique + roadmap 12 mois en 48h', 'Échange direct avec un expert senior · pas de SDR'].map((f) => (
+                    {['Diagnostic des 3 piliers : Inbound · Outbound · IA', 'Reco chiffrées + plan 90 jours sous 48h', 'Growth Lead senior (10+ ans) · pas de SDR'].map((f) => (
                       <li key={f} className="flex items-start gap-2">
                         <Check size={14} strokeWidth={2.6} className="text-[color:var(--accent)] mt-0.5 shrink-0" />
                         <span>{f}</span>
@@ -231,7 +231,7 @@ export default function AuditClient() {
                     }}
                   >
                     <PlayCircle size={16} strokeWidth={2} className="text-black light:text-white" />
-                    Choisir un créneau
+                    Mon audit gratuit — 48h
                   </span>
 
                   <p className="mt-5 flex items-center gap-1.5 text-[11.5px] font-mono uppercase tracking-[0.2em] text-[color:var(--ink-muted)]">

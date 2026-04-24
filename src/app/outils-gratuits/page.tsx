@@ -9,9 +9,9 @@ import { jsonLdString } from '@/lib/schema';
 const SITE_URL = 'https://uclic.fr';
 
 export const metadata: Metadata = {
-  title: 'Outils Gratuits Growth Hacking — Calculateurs A/B',
+  title: 'Outils Gratuits Growth — Calculateurs A/B Uclic',
   description:
-    "Collection d'outils gratuits pour optimiser votre croissance : calculateurs A/B test, taille d'échantillon, analyses statistiques. Ressources growth hacking par Uclic.",
+    "Calculateurs A/B test, MDE, taille d'échantillon : les outils qu'on utilise vraiment chez nos clients scale-ups B2B. Audit gratuit Uclic en 48 h.",
   keywords: [
     'outils gratuits',
     'growth hacking',
@@ -132,7 +132,7 @@ export default function OutilsGratuitsPage() {
       />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[1000] focus:rounded-full focus:bg-[color:var(--accent)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[color:var(--accent-ink)] focus:shadow-lg"
+        className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[1000] focus-visible:rounded-full focus-visible:bg-[color:var(--accent)] focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-[color:var(--accent-ink)] focus-visible:shadow-lg"
       >
         Aller au contenu
       </a>
@@ -158,7 +158,7 @@ export default function OutilsGratuitsPage() {
               </h1>
 
               <p className="mt-5 text-[color:var(--ink-muted)] max-w-[680px] text-[16px] leading-relaxed">
-                Découvrez notre collection d&apos;outils gratuits spécialement conçus pour optimiser votre croissance. Des calculateurs et ressources essentielles pour vos tests A/B, analyses statistiques et stratégie marketing.
+                Les calculateurs qu&apos;on utilise au quotidien chez nos clients scale-ups B2B pour piloter l&apos;inbound et le CRO : MDE, sample size, significativité. Pas de pop-up, pas de compte à créer — juste les bons chiffres.
               </p>
             </div>
           </div>
@@ -246,15 +246,15 @@ export default function OutilsGratuitsPage() {
                 <div className="inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-[0.22em] text-[color:var(--accent)]">
                   Besoin d&apos;aller plus loin ?
                 </div>
-                <p className="mt-2 text-[15px] text-[color:var(--ink-muted)] leading-relaxed max-w-[640px]">
-                  Ces calculateurs donnent les bons chiffres — reste à en faire des décisions. Si vous voulez structurer votre programme d&apos;expérimentation ou piloter votre stack acquisition, on regarde ensemble via un audit offert.
+                <p className="mt-2 text-[15px] text-[color:var(--ink-muted)] leading-relaxed max-w-[680px]">
+                  Ces calculateurs donnent les bons chiffres — reste à en faire des décisions. Chez Uclic, on structure l&apos;inbound, l&apos;outbound et les agents IA dans une seule équipe pilotée par un senior. Trois piliers, zéro silo, résultats en 90 jours.
                 </p>
               </div>
               <a
                 href="/audit"
                 className="inline-flex items-center gap-2 text-[14px] font-medium text-[color:var(--accent)] hover:gap-3 transition-all"
               >
-                Demander un audit <ArrowRight size={14} />
+                Mon audit gratuit — 48 h <ArrowRight size={14} />
               </a>
             </div>
           </div>

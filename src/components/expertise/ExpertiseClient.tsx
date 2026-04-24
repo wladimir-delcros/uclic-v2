@@ -93,13 +93,13 @@ export default function ExpertiseClient({
                     'radial-gradient(ellipse 140% 120% at 50% -20%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 35%, rgba(255,255,255,0.08) 65%, transparent 100%), var(--accent)',
                 }}>
                 <PlayCircle size={16} />
-                Mon audit gratuit
+                Mon audit gratuit — 48h
               </a>
               <a
-                href="/#methode"
+                href="/simulation"
                 className="inline-flex items-center gap-2 px-7 py-3 text-[14px] font-medium text-[color:var(--ink)] border border-[color:var(--border-subtle)] hover:border-[color:var(--ink-muted)] transition-colors"
                 style={{ borderRadius: '6px' }}>
-                Voir la méthode
+                Simuler mon ROI
                 <ArrowRight size={15} />
               </a>
             </div>
@@ -109,10 +109,10 @@ export default function ExpertiseClient({
                 <Check size={13} className="text-[color:var(--accent)]" /> Résultats 90 jours
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <Check size={13} className="text-[color:var(--accent)]" /> Sans silo
+                <Check size={13} className="text-[color:var(--accent)]" /> Pilotage senior
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <Check size={13} className="text-[color:var(--accent)]" /> Audit offert · 0€
+                <Check size={13} className="text-[color:var(--accent)]" /> Note 4,76/30
               </span>
             </div>
           </div>
@@ -138,7 +138,7 @@ export default function ExpertiseClient({
               </p>
               <div className="mt-6 inline-flex items-center gap-2 text-[12px] font-mono uppercase tracking-[0.2em] text-[color:var(--ink-muted)]">
                 <Sparkles size={14} className="text-[color:var(--accent)]" />
-                Experts canaux + agents IA en production
+                Pilotage senior + experts canaux + agents IA
               </div>
             </Reveal>
 
@@ -255,10 +255,10 @@ export default function ExpertiseClient({
                   'radial-gradient(ellipse 140% 120% at 50% -20%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 35%, rgba(255,255,255,0.08) 65%, transparent 100%), var(--accent)',
               }}>
               <PlayCircle size={16} />
-              Réserver mon audit
+              Mon audit gratuit — 48h
             </a>
             <p className="mt-3 text-[12px] font-mono uppercase tracking-[0.2em] text-[color:var(--ink-muted)]">
-              Audit stratégique offert — 0€, sans engagement
+              Growth Scan · 0 € · plan 90 jours · sans engagement
             </p>
           </div>
         </div>

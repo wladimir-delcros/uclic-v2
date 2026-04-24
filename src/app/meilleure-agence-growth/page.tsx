@@ -11,9 +11,9 @@ const SITE_URL = 'https://uclic.fr';
 const currentYear = new Date().getFullYear();
 
 export const metadata: Metadata = {
-  title: `Agences Growth Marketing ${currentYear} | Panorama éditorial`,
+  title: `Agences Growth Marketing ${currentYear} — Panorama Uclic`,
   description:
-    "Panorama éditorial des agences Growth Marketing reconnues en France. Critères d'évaluation, spécialisations, positionnements — pour choisir l'agence growth adaptée à votre stade.",
+    "Panorama éditorial des agences Growth Marketing en France : positionnements, critères d'évaluation, adéquation au stade. Audit gratuit Uclic en 48 h.",
   keywords: [
     'agence growth',
     'agence growth marketing',
@@ -28,9 +28,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/meilleure-agence-growth`,
-    title: `Agences Growth Marketing ${currentYear} | Panorama éditorial`,
+    title: `Agences Growth Marketing ${currentYear} — Panorama Uclic`,
     description:
-      "Panorama éditorial des agences Growth Marketing reconnues en France. Critères d'évaluation, spécialisations, positionnements.",
+      "Panorama éditorial des agences Growth Marketing en France : positionnements, critères d'évaluation, adéquation au stade.",
     siteName: 'Uclic',
     locale: 'fr_FR',
     images: [
@@ -137,7 +137,7 @@ export default function MeilleureAgenceGrowthPage() {
       />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[1000] focus:rounded-full focus:bg-[color:var(--accent)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[color:var(--accent-ink)] focus:shadow-lg"
+        className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[1000] focus-visible:rounded-full focus-visible:bg-[color:var(--accent)] focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-[color:var(--accent-ink)] focus-visible:shadow-lg"
       >
         Aller au contenu
       </a>
@@ -162,8 +162,8 @@ export default function MeilleureAgenceGrowthPage() {
                 </span>
               </h1>
 
-              <p className="mt-5 text-[color:var(--ink-muted)] max-w-[640px] text-[16px] leading-relaxed">
-                Une grille de lecture pour comparer les agences Growth Marketing reconnues en France. Pas un classement — une cartographie des positionnements et des critères pour arbitrer.
+              <p className="mt-5 text-[color:var(--ink-muted)] max-w-[680px] text-[16px] leading-relaxed">
+                Une grille de lecture pour comparer les agences Growth Marketing en France. Pas un classement — une cartographie des positionnements, des critères pour arbitrer, et notre lecture franche : pilotage senior, experts canaux, agents IA en production.
               </p>
             </div>
           </div>
@@ -268,7 +268,7 @@ export default function MeilleureAgenceGrowthPage() {
                     'radial-gradient(ellipse 140% 120% at 50% -20%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 35%, rgba(255,255,255,0.08) 65%, transparent 100%), var(--accent)',
                 }}
               >
-                Réserver mon audit <ArrowRight size={16} />
+                Mon audit gratuit — 48 h <ArrowRight size={16} />
               </Link>
             </div>
           </div>
