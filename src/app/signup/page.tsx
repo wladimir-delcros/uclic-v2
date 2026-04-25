@@ -3,7 +3,7 @@ import SignupClient from './SignupClient';
 
 export const metadata: Metadata = {
   title: 'Créer un compte',
-  description: 'Création d\'un compte membre Uclic pour accéder aux workflows et ressources.',
+  description: "Créez votre compte membre Uclic pour accéder aux workflows n8n, agents IA partagés, ressources growth et au Slack du collectif.",
   alternates: { canonical: '/signup' },
   robots: { index: false, follow: false },
 };

@@ -745,3 +745,153 @@ export async function getPostsByAuthor(
 
   return { author, posts, total, totalPages };
 }
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Related posts
+// ──────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Renvoie jusqu'à `limit` articles "connexes" de `postId`.
+ * Stratégie : même catégorie (via post_categories OU legacy `categories[]`
+ * column), puis fallback sur les derniers posts si pas assez de matches.
+ * Les catégories affichées sur les cards viennent du vrai join CATEGORIES_TABLE.
+ */
+export async function getRelatedPosts(
+  postId: number,
+  limit = 3,
+): Promise<BlogPost[]> {
+  const supabase = createAdminClient();
+
+  // 1. Catégories du post courant — join post_categories + fallback legacy
+  const { data: pcData } = await supabase
+    .from(POST_CATEGORIES_TABLE)
+    .select('category_id')
+    .eq('post_id', postId);
+  const categoryIds = ((pcData || []) as Array<{ category_id: number }>).map(
+    (pc) => pc.category_id,
+  );
+
+  let categoryNames: string[] = [];
+  if (categoryIds.length > 0) {
+    const { data: catRows } = await supabase
+      .from(CATEGORIES_TABLE)
+      .select('name')
+      .in('id', categoryIds);
+    categoryNames = ((catRows || []) as Array<{ name: string }>).map((c) => c.name);
+  }
+
+  // Fallback : legacy `categories[]` sur blog_posts si post_categories vide
+  if (categoryNames.length === 0) {
+    const { data: currentPost } = await supabase
+      .from(POSTS_TABLE)
+      .select('categories')
+      .eq('id', postId)
+      .maybeSingle();
+    const legacy = (currentPost as { categories?: string[] | null } | null)?.categories;
+    if (legacy && legacy.length > 0) {
+      categoryNames = legacy;
+    }
+  }
+
+  const relatedIds = new Set<number>();
+  const collected: BlogPostRow[] = [];
+
+  // 2. Fetch same-category posts via post_categories first
+  if (categoryIds.length > 0) {
+    const { data: siblings } = await supabase
+      .from(POST_CATEGORIES_TABLE)
+      .select('post_id')
+      .in('category_id', categoryIds)
+      .neq('post_id', postId)
+      .limit(limit * 6);
+    const siblingIds = [
+      ...new Set(((siblings || []) as Array<{ post_id: number }>).map((s) => s.post_id)),
+    ];
+    if (siblingIds.length > 0) {
+      const { data: rows } = await supabase
+        .from(POSTS_TABLE)
+        .select(
+          'id, title, slug, excerpt, featured_image_url, author_name, author_id, published_at, created_at, updated_at, categories, tags',
+        )
+        .in('id', siblingIds)
+        .eq('status', 'publish')
+        .order('published_at', { ascending: false, nullsFirst: false })
+        .limit(limit);
+      ((rows || []) as BlogPostRow[]).forEach((r) => {
+        if (!relatedIds.has(r.id)) {
+          relatedIds.add(r.id);
+          collected.push(r);
+        }
+      });
+    }
+  }
+
+  // 3. Fallback legacy : overlap sur blog_posts.categories[]
+  if (collected.length < limit && categoryNames.length > 0) {
+    const { data: legacyMatches } = await supabase
+      .from(POSTS_TABLE)
+      .select(
+        'id, title, slug, excerpt, featured_image_url, author_name, author_id, published_at, created_at, updated_at, categories, tags',
+      )
+      .overlaps('categories', categoryNames)
+      .eq('status', 'publish')
+      .neq('id', postId)
+      .order('published_at', { ascending: false, nullsFirst: false })
+      .limit(limit * 2);
+    ((legacyMatches || []) as BlogPostRow[]).forEach((r) => {
+      if (collected.length >= limit) {return;}
+      if (!relatedIds.has(r.id)) {
+        relatedIds.add(r.id);
+        collected.push(r);
+      }
+    });
+  }
+
+  // 4. Dernier fallback — derniers posts de la même catégorie affichée
+  if (collected.length < limit) {
+    const { data: latest } = await supabase
+      .from(POSTS_TABLE)
+      .select(
+        'id, title, slug, excerpt, featured_image_url, author_name, author_id, published_at, created_at, updated_at, categories, tags',
+      )
+      .eq('status', 'publish')
+      .neq('id', postId)
+      .order('published_at', { ascending: false, nullsFirst: false })
+      .limit(limit * 2);
+    ((latest || []) as BlogPostRow[]).forEach((r) => {
+      if (collected.length >= limit) {return;}
+      if (!relatedIds.has(r.id)) {
+        relatedIds.add(r.id);
+        collected.push(r);
+      }
+    });
+  }
+
+  const finalRows = collected.slice(0, limit);
+  if (finalRows.length === 0) {return [];}
+
+  // 5. Résout les vrais noms de catégorie pour l'affichage des cards
+  const postIds = finalRows.map((r) => r.id);
+  const { data: pcAll } = await supabase
+    .from(POST_CATEGORIES_TABLE)
+    .select('post_id, category_id')
+    .in('post_id', postIds);
+  const pcRowsAll = (pcAll || []) as Array<{ post_id: number; category_id: number }>;
+  const allCatIds = [...new Set(pcRowsAll.map((pc) => pc.category_id))];
+  let catMap: Record<number, string> = {};
+  if (allCatIds.length > 0) {
+    const { data: catNames } = await supabase
+      .from(CATEGORIES_TABLE)
+      .select('id, name')
+      .in('id', allCatIds);
+    catMap = Object.fromEntries(
+      ((catNames || []) as Array<{ id: number; name: string }>).map((c) => [c.id, c.name]),
+    );
+  }
+
+  return finalRows.map((r) => {
+    const cat = pcRowsAll.find((pc) => pc.post_id === r.id);
+    const name = (cat && catMap[cat.category_id]) || r.categories?.[0] || 'Blog';
+    return mapRowToBlogPost(r, name, r.tags || []);
+  });
+}

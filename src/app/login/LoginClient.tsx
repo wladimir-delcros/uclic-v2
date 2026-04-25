@@ -3,9 +3,7 @@
 import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import Nav from '@/components/landing/Nav';
-import Footer from '@/components/landing/Footer';
-import SectionAmbience from '@/components/ui/SectionAmbience';
+import AuthSplitLayout from '@/components/auth/AuthSplitLayout';
 
 function LoginForm() {
   const router = useRouter();
@@ -89,34 +87,23 @@ function LoginForm() {
 
 export default function LoginClient() {
   return (
-    <>
-      <Nav />
-      <main className="relative bg-[color:var(--bg)]">
-        <section className="relative pt-24 lg:pt-28 pb-24 lg:pb-32 overflow-hidden min-h-[80vh]">
-          <SectionAmbience variant="medium" />
-          <div className="relative z-10 max-w-[440px] mx-auto px-5 lg:px-10">
-            <div className="relative !rounded-none border border-[color:var(--border-subtle)] bg-[color:var(--card-elev-1)] light:bg-white p-6 lg:p-8">
-              <div className="inline-flex items-center gap-2 text-[11px] leading-none tracking-[0.25em] uppercase text-[color:var(--accent)] mb-4">
-                <span className="w-6 h-px shrink-0 bg-[color:var(--accent)]" aria-hidden="true" />
-                <span>Espace membre</span>
-              </div>
-              <h1 className="text-[26px] md:text-[30px] leading-[1.15] font-semibold text-[color:var(--ink)] tracking-tight mb-6">
-                Se connecter
-              </h1>
-              <Suspense fallback={<p className="text-[color:var(--ink-muted)]">Chargement…</p>}>
-                <LoginForm />
-              </Suspense>
-            </div>
-            <p className="mt-5 text-center text-[12px] text-[color:var(--ink-muted)]">
-              Pas encore de compte ?{' '}
-              <a href="/signup" className="text-[color:var(--accent)] hover:underline">
-                Créer un compte
-              </a>
-            </p>
-          </div>
-        </section>
-      </main>
-      <Footer />
-    </>
+    <AuthSplitLayout
+      eyebrow="Espace membre"
+      title="Se connecter"
+      lead="Accédez à vos workflows, favoris et outils réservés aux membres Uclic."
+      planetId="login"
+      footer={
+        <p className="text-center">
+          Pas encore de compte ?{' '}
+          <a href="/signup" className="text-[color:var(--accent)] hover:underline">
+            Créer un compte
+          </a>
+        </p>
+      }
+    >
+      <Suspense fallback={<p className="text-[color:var(--ink-muted)]">Chargement…</p>}>
+        <LoginForm />
+      </Suspense>
+    </AuthSplitLayout>
   );
 }

@@ -99,11 +99,11 @@ export default function Nav() {
   return (
     <>
       <header
-        className={`header-blur top-0 inset-x-0 z-50 h-[64px] ${scrolled ? 'is-scrolled' : ''}`}
+        className={`header-blur top-0 inset-x-0 z-50 h-[72px] lg:h-[64px] ${scrolled ? 'is-scrolled' : ''}`}
         style={headerStyle}
         onMouseLeave={scheduleClose}>
-        <div className="max-w-[1200px] mx-auto h-full flex items-center justify-between px-5 lg:px-10 relative">
-          <div className="flex items-center gap-10 min-w-0">
+        <div className="max-w-[1200px] mx-auto h-full flex items-center justify-between px-5 sm:px-6 lg:px-10 relative">
+          <div className="flex items-center gap-6 lg:gap-10 min-w-0">
             <a href="/" className="flex items-center shrink-0" aria-label="uclic.fr">
               <img
                 src="/logo.svg"
@@ -174,7 +174,7 @@ export default function Nav() {
             </nav>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
             <div className="hidden lg:block">
               <ThemeToggle />
             </div>
@@ -197,8 +197,8 @@ export default function Nav() {
               aria-label="Ouvrir le menu"
               aria-expanded={mobileOpen}
               aria-controls="mobile-nav-drawer"
-              className="lg:hidden shrink-0 w-11 h-11 grid place-items-center rounded-md border border-[color:var(--border-strong)] bg-[color:var(--surface)]/40 text-[color:var(--ink)] hover:text-[color:var(--accent)] hover:border-[color:var(--accent)]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/50 transition-colors">
-              <Menu size={22} strokeWidth={1.75} aria-hidden="true" />
+              className="lg:hidden shrink-0 w-12 h-12 grid place-items-center rounded-lg border border-[color:var(--border-strong)] bg-[color:var(--surface)]/40 text-[color:var(--ink)] hover:text-[color:var(--accent)] hover:border-[color:var(--accent)]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/50 transition-colors">
+              <Menu size={24} strokeWidth={1.75} aria-hidden="true" />
             </button>
           </div>
 

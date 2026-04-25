@@ -6,6 +6,7 @@ import Footer from '@/components/landing/Footer';
 import SectionAmbience from '@/components/ui/SectionAmbience';
 import { jsonLdString } from '@/lib/schema';
 import ContactForm from './ContactForm';
+import OfficesMap from '@/components/contact/OfficesMap';
 
 const SITE_URL = 'https://uclic.fr';
 
@@ -137,11 +138,14 @@ export default function ContactPage() {
 
             {/* Form + aside */}
             <div className="mt-14 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-5 lg:gap-6 items-start">
-              {/* Contact form (client) */}
-              <ContactForm />
+              {/* Contact form + carte bureaux empilés dans la colonne principale */}
+              <div className="min-w-0 space-y-16 lg:space-y-20">
+                <ContactForm />
+                <OfficesMap />
+              </div>
 
-              {/* Aside — canaux rapides */}
-              <aside className="space-y-5">
+              {/* Aside — canaux rapides, sticky sur desktop */}
+              <aside className="space-y-5 article-sidebar-sticky">
                 <div className="relative !rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white p-6">
                   <div className="inline-flex items-center justify-center w-10 h-10 !rounded-none border border-[color:var(--border-subtle)] text-[color:var(--accent)]">
                     <CalendarClock size={18} strokeWidth={1.75} />

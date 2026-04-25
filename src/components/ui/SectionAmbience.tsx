@@ -1,6 +1,6 @@
 'use client';
 
-type Variant = 'medium' | 'full';
+type Variant = 'soft' | 'medium' | 'full';
 
 /**
  * Réutilise l'ambiance visuelle du Hero (grid + halos + noise) dans les autres

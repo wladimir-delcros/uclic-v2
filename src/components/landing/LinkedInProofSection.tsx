@@ -35,7 +35,7 @@ const ReviewCard = ({ r }: { r: Review }) => (
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={r.avatar || undefined}
-        alt=""
+        alt={r.name ? `Photo de ${r.name}` : 'Photo profil LinkedIn'}
         width={36}
         height={36}
         loading="lazy"

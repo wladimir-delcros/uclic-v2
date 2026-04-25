@@ -139,6 +139,7 @@ export default function ConvergingLinesBridge({
           <img
             src="/logo-mark.svg"
             alt=""
+            aria-hidden="true"
             style={{
               width: '36px',
               height: '32px',

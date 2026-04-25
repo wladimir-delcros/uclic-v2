@@ -44,6 +44,17 @@ const personSchema = {
   name: 'Wladimir Delcros',
   jobTitle: 'Founder · CEO Uclic',
   url: `${SITE_URL}/a-propos`,
+  description:
+    "Ex-Head of Growth CodinGame (5 ans, 100% croissance annuelle, codir, scale à 20M ARR). 10+ ans d'expérience growth marketing & IA. Fondateur Uclic.",
+  knowsAbout: [
+    'Growth Marketing',
+    'SEO',
+    'Product-Led Growth',
+    'Outbound B2B',
+    'Agents IA',
+    'Marketing Automation',
+    'Growth Hacking',
+  ],
   sameAs: [
     'https://www.linkedin.com/in/wladimirdelcros/',
     'https://x.com/delcros_w',
@@ -61,6 +72,31 @@ const personSchema = {
   ],
 };
 
+const aboutPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  url: `${SITE_URL}/a-propos`,
+  name: 'À propos — Pourquoi Uclic existe',
+  description:
+    "Manifeste, histoire, méthode 90 jours et engagements de l'agence Uclic. Trois piliers, une équipe, zéro silo.",
+  about: {
+    '@type': 'Organization',
+    name: 'Uclic',
+    url: SITE_URL,
+    foundingDate: '2023',
+    founder: {
+      '@type': 'Person',
+      name: 'Wladimir Delcros',
+    },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Paris',
+      addressCountry: 'FR',
+    },
+    knowsAbout: ['Inbound Marketing', 'Outbound B2B', 'IA & Développement', 'SEO', 'Google Ads', 'Meta Ads'],
+  },
+};
+
 export default function AProposPage() {
   return (
     <>
@@ -71,6 +107,10 @@ export default function AProposPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(personSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdString(aboutPageSchema) }}
       />
       <a
         href="#main"

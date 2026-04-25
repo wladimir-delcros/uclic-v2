@@ -8,7 +8,6 @@ import {
   Palette,
   Users,
   Workflow,
-  BookOpen,
   FileText,
   Wrench,
   Building2,
@@ -18,6 +17,7 @@ import {
   Phone,
   Briefcase,
   Sparkles,
+  UserPlus,
 } from 'lucide-react';
 
 export type NavLink = {
@@ -48,11 +48,10 @@ export const mainNav: Array<
   | { kind: 'mega'; label: string; href: string; id: 'expertises' }
   | { kind: 'dropdown'; label: string; href: string; id: 'ressources' }
 > = [
-  { kind: 'link', label: 'Manifeste', href: '/a-propos' },
   { kind: 'mega', label: 'Expertises', href: '/expertise', id: 'expertises' },
-  { kind: 'dropdown', label: 'Ressources', href: '#', id: 'ressources' },
   { kind: 'link', label: 'Cas clients', href: '/cas-clients' },
-  { kind: 'link', label: 'Tarifs', href: '/#tarifs' },
+  { kind: 'dropdown', label: 'Ressources', href: '#', id: 'ressources' },
+  { kind: 'link', label: 'Tarifs', href: '/tarifs' },
   { kind: 'link', label: 'Contact', href: '/contact' },
 ];
 
@@ -161,9 +160,11 @@ export const ressourceGroups: RessourceGroup[] = [
   {
     title: 'Équipe & valeurs',
     items: [
+      { label: 'Manifeste', href: '/a-propos', Icon: Sparkles, tagline: 'Pourquoi Uclic existe, ce qui nous guide.' },
       { label: 'L’équipe', href: '/equipe', Icon: Users, tagline: 'Les experts qui pilotent vos missions.' },
-      { label: 'Charte Freelance', href: '/charte-freelance', Icon: Handshake, tagline: 'Nos engagements réciproques.' },
-      { label: 'Cas clients', href: '/cas-clients', Icon: BookOpen, tagline: 'Preuves chiffrées par industrie.' },
+      { label: 'Collectif Freelance', href: '/charte-freelance', Icon: Handshake, tagline: 'Slack commun, entraide, agents IA partagés.' },
+      { label: 'Rejoindre le collectif', href: '/rejoindre', Icon: UserPlus, tagline: 'Candidature · assessment · missions.' },
+      { label: 'Presse', href: '/presse', Icon: Megaphone, tagline: 'Interviews, podcasts, kit presse.' },
     ],
   },
 ];

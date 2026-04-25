@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import Nav from '@/components/landing/Nav';
 import Footer from '@/components/landing/Footer';
-import MediaMarquee from '@/components/landing/MediaMarquee';
 import AuditClient from '@/components/audit/AuditClient';
+import AuditSections from '@/components/audit/AuditSections';
 import { jsonLdString } from '@/lib/schema';
 
 const SITE_URL = 'https://uclic.fr';
@@ -54,7 +54,7 @@ export default function AuditPage() {
       <Nav />
       <main id="main" className="relative">
         <AuditClient />
-        <MediaMarquee />
+        <AuditSections />
       </main>
       <Footer />
     </>

@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import SectionAmbience from '../ui/SectionAmbience';
+import FooterPartnersMarquee from './FooterPartnersMarquee';
 
 const IconLinkedIn = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg>);
 const IconX = () => (<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>);
@@ -45,7 +46,7 @@ const siteLinks = [
   { label: 'À propos', href: '/a-propos' },
   { label: 'Notre équipe', href: '/equipe' },
   { label: 'Levées de fonds', href: '/levee-de-fonds' },
-  { label: 'La charte du Freelance', href: '/charte-freelance' },
+  { label: 'Collectif Freelance', href: '/charte-freelance' },
   { label: 'Meilleures Agences', href: '/meilleure-agence' },
   { label: 'Meilleure Agence Growth', href: '/meilleure-agence-growth' },
   { label: 'Nous rejoindre', href: '/contact' },
@@ -89,24 +90,105 @@ export default function Footer() {
     input.value = '';
   };
   return (
-    <footer className="relative overflow-hidden border-t border-[color:var(--border-subtle)] bg-[color:var(--bg)] pt-20 pb-10">
+    <footer className="relative overflow-hidden border-t border-[color:var(--border-subtle)] bg-[color:var(--bg)] pb-10">
       {/* Filet top cohérent avec les sections standard */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--border-subtle)] to-transparent" />
+
+      {/* Stack partenaires + clients supplémentaires — même UI/UX
+          que le marquee sous le Hero, avec les logos non exposés là-haut. */}
+      <FooterPartnersMarquee />
+
+      {/* Spacer visuel après le marquee */}
+      <div className="pt-16 lg:pt-20">
 
       {/* Ambiance cohérente avec les sections finalisées */}
       <SectionAmbience variant="medium" />
 
       <div className="relative z-10 max-w-[1200px] mx-auto px-5 lg:px-10">
-        {/* Header: logo + baseline + socials */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 pb-10 border-b border-[color:var(--border-subtle)]">
-          <div>
-            <a href="/" className="flex items-center shrink-0" aria-label="uclic.fr">
-              <img src="/logo.svg" alt="uclic" width={132} height={38} loading="lazy" decoding="async" className="h-9 w-auto logo-themed" />
-            </a>
-            <p className="mt-4 text-[14px] text-[color:var(--ink-muted)] max-w-[320px] leading-relaxed">
-              Agence Growth Marketing & IA. Pilotage senior, experts canaux, agents IA en production.
-            </p>
-            <div className="mt-4 flex items-center gap-3 text-[14px] text-[color:var(--ink-muted)]">
+        {/* Header: 2 colonnes (logo+desc | badges) puis row phone | socials */}
+        <div className="pb-10 border-b border-[color:var(--border-subtle)]">
+          {/* Row 1 : logo + description à gauche, 3 badges à droite */}
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+            <div className="flex-1 min-w-0">
+              <a href="/" className="flex items-center shrink-0" aria-label="uclic.fr">
+                <img src="/logo.svg" alt="uclic" width={132} height={38} loading="lazy" decoding="async" className="h-9 w-auto logo-themed" />
+              </a>
+              <p className="mt-4 text-[14px] text-[color:var(--ink-muted)] max-w-[440px] leading-relaxed">
+                Uclic est une agence d&apos;experts en Intelligence Artificielle et Growth Marketing.
+                Notre automatisation IA transforme vos campagnes en générateurs de revenus,
+                multipliant vos résultats par 3x grâce à l&apos;automatisation complète de votre
+                funnel marketing.
+              </p>
+            </div>
+            <div className="flex flex-row flex-wrap md:flex-nowrap items-stretch gap-2 md:justify-end shrink-0">
+              {/* Activateur France Num */}
+              <a
+                href="https://www.francenum.gouv.fr/activateurs/uclic"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Uclic — Activateur France Num (fiche officielle)"
+                className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border-subtle)] bg-[color:var(--card)] px-2.5 py-1 hover:border-[color:var(--accent)]/30 hover:bg-[color:var(--card-elev-1)] transition-colors"
+              >
+                <img
+                  src="/france-num.jpeg"
+                  alt="Marque Activateur France Num"
+                  width={24}
+                  height={24}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-6 w-6 object-contain rounded-sm shrink-0"
+                />
+                <span className="text-[12px] font-medium text-[color:var(--ink)] whitespace-nowrap">
+                  Activateur France Num
+                </span>
+              </a>
+              {/* RGPD & CNIL */}
+              <a
+                href="/legal/rgpd"
+                aria-label="Uclic conforme RGPD — voir la politique"
+                className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border-subtle)] bg-[color:var(--card)] px-2.5 py-1 hover:border-[color:var(--accent)]/30 hover:bg-[color:var(--card-elev-1)] transition-colors"
+              >
+                <span
+                  aria-hidden="true"
+                  className="h-6 w-6 rounded-sm bg-[color:var(--accent)]/10 text-[color:var(--accent)] grid place-items-center shrink-0"
+                >
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 3l8 3v6c0 4.97-3.58 9-8 10-4.42-1-8-5.03-8-10V6l8-3z" />
+                    <path d="M9 12l2 2 4-4" />
+                  </svg>
+                </span>
+                <span className="text-[12px] font-medium text-[color:var(--ink)] whitespace-nowrap">
+                  RGPD &amp; CNIL
+                </span>
+              </a>
+              {/* IA Responsable — AI Act */}
+              <a
+                href="https://artificialintelligenceact.eu/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Uclic — IA responsable, aligné AI Act"
+                className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border-subtle)] bg-[color:var(--card)] px-2.5 py-1 hover:border-[color:var(--accent)]/30 hover:bg-[color:var(--card-elev-1)] transition-colors"
+              >
+                <span
+                  aria-hidden="true"
+                  className="h-6 w-6 rounded-sm bg-[color:var(--accent)]/10 text-[color:var(--accent)] grid place-items-center shrink-0"
+                >
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 2l1.8 4.5L18 8l-4.2 1.5L12 14l-1.8-4.5L6 8l4.2-1.5L12 2z" />
+                    <circle cx="18" cy="16" r="3" />
+                    <path d="M16.3 16.5l1.2 1.2 2.2-2.2" />
+                  </svg>
+                </span>
+                <span className="text-[12px] font-medium text-[color:var(--ink)] whitespace-nowrap">
+                  IA responsable · AI Act
+                </span>
+              </a>
+            </div>
+          </div>
+
+          {/* Row 2 : phone + audit à gauche, socials à droite */}
+          <div className="mt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div className="flex items-center gap-3 text-[14px] text-[color:var(--ink-muted)]">
               <a href="tel:+33617125428" className={linkClass}>
                 +33 6 17 12 54 28
               </a>
@@ -117,33 +199,33 @@ export default function Footer() {
                 Audit Gratuit
               </a>
             </div>
-          </div>
 
-          <div className="flex gap-3">
-            <a
-              href="https://www.linkedin.com/company/uclic-growth-marketing/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="w-9 h-9 rounded-full grid place-items-center border border-[color:var(--border-subtle)] text-[color:var(--ink-muted)] hover:text-[color:var(--accent)] hover:border-[color:var(--accent)]/30 transition-colors">
-              <IconLinkedIn />
-            </a>
-            <a
-              href="https://x.com/delcros_w"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="X (Twitter)"
-              className="w-9 h-9 rounded-full grid place-items-center border border-[color:var(--border-subtle)] text-[color:var(--ink-muted)] hover:text-[color:var(--accent)] hover:border-[color:var(--accent)]/30 transition-colors">
-              <IconX />
-            </a>
-            <a
-              href="https://github.com/wladimir-delcros"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-              className="w-9 h-9 rounded-full grid place-items-center border border-[color:var(--border-subtle)] text-[color:var(--ink-muted)] hover:text-[color:var(--accent)] hover:border-[color:var(--accent)]/30 transition-colors">
-              <IconGitHub />
-            </a>
+            <div className="flex gap-3">
+              <a
+                href="https://www.linkedin.com/company/uclic-growth-marketing/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="w-9 h-9 rounded-full grid place-items-center border border-[color:var(--border-subtle)] text-[color:var(--ink-muted)] hover:text-[color:var(--accent)] hover:border-[color:var(--accent)]/30 transition-colors">
+                <IconLinkedIn />
+              </a>
+              <a
+                href="https://x.com/delcros_w"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="X (Twitter)"
+                className="w-9 h-9 rounded-full grid place-items-center border border-[color:var(--border-subtle)] text-[color:var(--ink-muted)] hover:text-[color:var(--accent)] hover:border-[color:var(--accent)]/30 transition-colors">
+                <IconX />
+              </a>
+              <a
+                href="https://github.com/wladimir-delcros"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                className="w-9 h-9 rounded-full grid place-items-center border border-[color:var(--border-subtle)] text-[color:var(--ink-muted)] hover:text-[color:var(--accent)] hover:border-[color:var(--accent)]/30 transition-colors">
+                <IconGitHub />
+              </a>
+            </div>
           </div>
         </div>
 
@@ -256,7 +338,7 @@ export default function Footer() {
         </div>
 
         {/* Block ratings */}
-        <div className="mt-12 pt-8 border-t border-[color:var(--border-subtle)]">
+        <div className="mt-12 pt-12 pb-12 border-t border-b border-[color:var(--border-subtle)]">
           <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-4 sm:gap-8">
             {ratings.map((r) => (
               <a
@@ -279,8 +361,34 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom: copyright + legal links */}
-        <div className="mt-10 pt-8 border-t border-[color:var(--border-subtle)] flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-[12px] text-[color:var(--ink-muted)]">
+        {/* Fullwidth uclic logo — édito mark, accent vert. Marges haut/bas
+            symétriques au `mt-12` de la section avis ci-dessus. */}
+        <div className="mt-12 mb-12">
+          <a
+            href="/"
+            aria-label="Uclic — accueil"
+            className="block w-full text-[color:var(--accent)] opacity-90 hover:opacity-100 transition-opacity"
+          >
+            <svg
+              viewBox="0 0 162 44"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              className="block w-full h-auto"
+              preserveAspectRatio="xMidYMid meet"
+            >
+              <path d="M71.1029 31.3496L71.2626 15.6737L75.128 15.7126L74.8545 42.5557L70.989 42.5167L71.0377 37.6847C69.3926 41.0507 66.3653 43.1134 61.8555 43.0677C55.6275 43.0044 52.1242 39.0494 52.1904 32.6073L52.3646 15.4819L56.2836 15.5218L56.1162 31.9493C56.0617 37.2641 58.9868 40.0325 63.1209 40.0744C67.6308 40.1201 70.6688 37.0373 71.102 31.3496H71.1029Z" />
+              <path d="M95.2322 39.8111C99.6885 39.8569 103.147 37.6365 104.805 33.0361L106.904 37.8361C104.669 41.1418 100.298 43.2453 95.0366 43.1918C86.3936 43.1042 81.1907 37.252 81.2724 29.1999C81.3542 21.1468 86.6749 15.4026 95.3179 15.4902C100.579 15.5438 104.906 17.735 107.073 21.0864L104.877 25.8426C103.314 21.2091 99.9007 18.9196 95.4444 18.8739C89.1094 18.8096 85.3569 23.4966 85.2985 29.2408C85.2401 34.9849 88.8962 39.7469 95.2313 39.8111H95.2322Z" />
+              <path d="M113.837 0L117.703 0.0389391L117.266 42.9872L113.4 42.9482L113.837 0Z" />
+              <path d="M127.691 5.07999C129.262 5.09557 130.524 6.38243 130.507 7.95451C130.492 9.5256 129.205 10.7871 127.633 10.7706C126.062 10.755 124.8 9.46817 124.817 7.8961C124.832 6.325 126.119 5.06345 127.691 5.07999ZM125.645 16.2276L129.51 16.2665L129.238 43.1095L125.372 43.0706L125.645 16.2276Z" />
+              <path d="M149.613 40.3639C154.069 40.4096 157.528 38.1892 159.186 33.5889L161.284 38.3888C159.049 41.6945 154.679 43.7981 149.417 43.7446C140.774 43.6569 135.572 37.8047 135.653 29.7526C135.735 21.6995 141.056 15.9554 149.699 16.043C154.96 16.0965 159.287 18.2877 161.454 21.6392L159.258 26.3953C157.694 21.7618 154.282 19.4723 149.825 19.4266C143.49 19.3623 139.738 24.0494 139.679 29.7935C139.621 35.5377 143.277 40.2996 149.612 40.3639H149.613Z" />
+              <path d="M37.2543 33.4178C37.2465 33.2182 37.2329 33.0187 37.2173 32.8181L37.2115 32.7549C37.1949 32.5544 37.1755 32.3538 37.1531 32.1543L35.803 18.2159C35.7494 17.6182 35.6988 17.0205 35.6569 16.4219C35.5791 15.3278 35.4564 14.2151 35.0661 13.1823C34.9385 12.8436 34.7789 12.5233 34.5998 12.2099C33.7237 10.74 32.3123 9.61865 30.6789 9.10566C30.0004 8.89248 29.2908 8.7854 28.5792 8.7854C26.3345 8.7854 24.4548 10.0713 22.8175 11.4808C20.8746 13.1522 18.92 14.8109 16.9663 16.4706C14.5201 18.5488 12.1995 20.5229 9.7338 22.6352C8.4411 23.743 7.08318 24.8575 5.74278 25.9059C4.53964 26.8472 3.12915 27.9063 2.12945 29.0773C0.836749 30.591 0.0424403 32.5436 0.00155668 34.6813C-0.0899447 39.5873 3.86409 43.6786 8.77013 43.7458C13.7404 43.8149 17.7918 39.8054 17.7918 34.8506C17.7918 33.3526 17.4229 31.8447 16.6675 30.5238C16.3073 29.894 15.5442 29.0053 14.9864 28.5419C14.4296 28.0786 13.8747 27.6211 13.4873 26.9942C12.914 26.0665 12.6103 24.986 12.6103 23.8958C12.6103 20.6319 15.256 17.9871 18.5189 17.9871C21.1082 17.9871 23.314 19.5991 24.6378 21.7406C26.1496 24.1859 26.169 26.8277 26.169 29.6098C26.169 31.211 26.169 32.8133 26.169 34.4155C26.169 37.4818 28.6551 39.9669 31.7204 39.9669C33.8639 39.9669 35.7981 38.682 36.7073 36.7527C37.193 35.7219 37.301 34.582 37.2553 33.4188L37.2543 33.4178Z" />
+            </svg>
+          </a>
+        </div>
+
+        {/* Bottom: copyright + legal links — border-t collé au bas du logo */}
+        <div className="pt-8 border-t border-[color:var(--border-subtle)] flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-[12px] text-[color:var(--ink-muted)]">
           <span>
             © 2026 Uclic. Tous droits réservés. · Fait par{' '}
             <a
@@ -303,6 +411,7 @@ export default function Footer() {
             </a>
           </div>
         </div>
+      </div>
       </div>
     </footer>
   );

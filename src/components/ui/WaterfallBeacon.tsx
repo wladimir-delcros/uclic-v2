@@ -115,11 +115,11 @@ export default function WaterfallBeacon({ className = '', drawDuration = 1.8 }: 
 
       <svg
         width="100%"
-        height="auto"
         viewBox="0 83 650 281"
+        preserveAspectRatio="xMidYMid meet"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="block"
+        className="block h-auto w-full"
         style={{ overflow: 'visible' }}>
         <defs>
           {/* Gradient vertical : accent opaque en bas → transparent en haut */}

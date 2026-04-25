@@ -1,6 +1,8 @@
 'use client';
 import { useEffect, useState, useMemo } from 'react';
 
+// Liste alignée sur la source de vérité `uclic.fr` (section clients).
+// Hapik retiré : ne figure pas dans la liste officielle uclic.fr.
 const clients = [
   { src: '/partners/louisvuitton.png',     alt: 'Louis Vuitton' },
   { src: '/partners/oreal.png',            alt: "L'Oréal" },
@@ -18,7 +20,6 @@ const clients = [
   { src: '/partners/but.png',              alt: 'BUT' },
   { src: '/partners/digital-campus.png',   alt: 'Digital Campus' },
   { src: '/partners/france-parebrise.png', alt: 'France Pare-Brise' },
-  { src: '/partners/hapik.png',            alt: 'Hapik' },
   { src: '/partners/jobgether.png',        alt: 'Jobgether' },
   { src: '/partners/matchem.png',          alt: 'Matchem' },
   { src: '/partners/obat.png',             alt: 'OBat' },

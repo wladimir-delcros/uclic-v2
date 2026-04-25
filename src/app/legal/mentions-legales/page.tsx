@@ -7,14 +7,14 @@ import { jsonLdString } from '@/lib/schema';
 const SITE_URL = 'https://uclic.fr';
 
 export const metadata: Metadata = {
-  title: 'Mentions légales',
+  title: "Mentions légales — Éditeur, hébergeur et conditions d'utilisation Uclic",
   description:
     "Mentions légales UCLIC : informations sur l'éditeur, l'hébergement, la propriété intellectuelle et les conditions d'utilisation du site.",
   alternates: { canonical: `${SITE_URL}/legal/mentions-legales` },
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/legal/mentions-legales`,
-    title: 'Mentions légales | Uclic',
+    title: "Mentions légales — Éditeur, hébergeur et conditions d'utilisation Uclic",
     description:
       "Mentions légales UCLIC : informations sur l'éditeur, l'hébergement, la propriété intellectuelle et les conditions d'utilisation du site.",
     locale: 'fr_FR',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Mentions légales | Uclic',
+    title: "Mentions légales — Éditeur, hébergeur et conditions d'utilisation Uclic",
     description:
       "Mentions légales UCLIC : informations sur l'éditeur, l'hébergement, la propriété intellectuelle et les conditions d'utilisation du site.",
     site: '@uclic_fr',

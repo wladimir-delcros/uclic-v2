@@ -7,24 +7,24 @@ import { jsonLdString } from '@/lib/schema';
 const SITE_URL = 'https://uclic.fr';
 
 export const metadata: Metadata = {
-  title: 'RGPD',
+  title: 'RGPD & protection des données — Conformité Uclic',
   description:
-    'Politique de protection des données personnelles et conformité RGPD de UCLIC. Découvrez nos engagements en matière de confidentialité et vos droits concernant vos données.',
+    "Politique de protection des données et conformité RGPD d'Uclic : engagements, traitements, durées de conservation, vos droits et procédure d'exercice (DPO).",
   alternates: { canonical: `${SITE_URL}/legal/rgpd` },
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/legal/rgpd`,
-    title: 'RGPD | Uclic',
+    title: 'RGPD & protection des données — Conformité Uclic',
     description:
-      'Politique de protection des données personnelles et conformité RGPD de UCLIC. Découvrez nos engagements en matière de confidentialité et vos droits concernant vos données.',
+      "Politique de protection des données et conformité RGPD d'Uclic : engagements, traitements, durées de conservation, vos droits et procédure d'exercice (DPO).",
     locale: 'fr_FR',
     siteName: 'Agence Growth & IA',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'RGPD | Uclic',
+    title: 'RGPD & protection des données — Uclic',
     description:
-      'Politique de protection des données personnelles et conformité RGPD de UCLIC. Découvrez nos engagements en matière de confidentialité et vos droits concernant vos données.',
+      "Politique de protection des données et conformité RGPD d'Uclic : engagements, traitements, vos droits et procédure d'exercice.",
     site: '@uclic_fr',
   },
 };

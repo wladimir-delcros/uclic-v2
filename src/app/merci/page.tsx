@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { CheckCircle2, ArrowRight, Calendar } from 'lucide-react';
 import Nav from '@/components/landing/Nav';
 import Footer from '@/components/landing/Footer';
 import SectionAmbience from '@/components/ui/SectionAmbience';
+import MerciTracking from './MerciTracking';
 
 export const metadata: Metadata = {
   title: 'Merci — Votre demande est reçue | Uclic',
@@ -15,6 +17,10 @@ export const metadata: Metadata = {
 export default function MerciPage() {
   return (
     <>
+      {/* Conversion tracking (client only, suspended for useSearchParams) */}
+      <Suspense fallback={null}>
+        <MerciTracking />
+      </Suspense>
       <Nav />
       <main className="relative bg-[color:var(--bg)]">
         <section className="relative pt-24 lg:pt-28 pb-24 lg:pb-32 overflow-hidden min-h-[80vh]">

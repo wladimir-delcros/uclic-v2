@@ -30,13 +30,16 @@ const SITE_URL = 'https://uclic.fr';
 const SITE_NAME = 'Uclic';
 const DEFAULT_TITLE = 'Uclic — Agence Growth Marketing & IA | Résultats en 90 jours';
 const DEFAULT_DESCRIPTION =
-  'Pilotage senior + experts canaux + agents IA. Growth industrialisé pour scale-ups B2B. Acquisition, prospection, IA & Automation activées selon vos priorités.';
+  'Agence Growth Marketing & IA pour scale-ups B2B. Pilotage senior, experts canaux, agents IA en production. Résultats mesurables en 90 jours.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
+    // Pas de template `%s | Uclic` : la plupart des pages portent déjà
+    // « Uclic » dans leur title manuel, et le template créait des doublons
+    // « XXX | Uclic | Uclic ». Le `default` couvre les pages sans title.
     default: DEFAULT_TITLE,
-    template: '%s | Uclic',
+    template: '%s',
   },
   description: DEFAULT_DESCRIPTION,
   applicationName: SITE_NAME,

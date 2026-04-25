@@ -1,9 +1,19 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import {
+  ArrowLeft,
+  ArrowRight,
+  BadgeCheck,
+  Check,
+  ExternalLink,
+  Minus,
+  Star,
+} from 'lucide-react';
 import Nav from '@/components/landing/Nav';
 import Footer from '@/components/landing/Footer';
 import CtaFinal from '@/components/landing/CtaFinal';
+import CornerCross from '@/components/ui/CornerCross';
 import SectionAmbience from '@/components/ui/SectionAmbience';
 import { jsonLdString } from '@/lib/schema';
 import {
@@ -11,6 +21,7 @@ import {
   getTopAgencePaths,
   getOtherCityServices,
 } from '@/lib/programmatic-pages';
+import { getCompetitorsByExpertiseAndCity } from '@/lib/meilleure-agence';
 
 const SITE_URL = 'https://uclic.fr';
 
@@ -108,6 +119,28 @@ export default async function AgenceProgrammaticPage({ params }: PageProps) {
     (cityName ? `Agence ${serviceName} a ${cityName}` : `Agence ${serviceName}`);
 
   const canonicalUrl = `${SITE_URL}${pathSlug}`;
+  const currentYear = new Date().getFullYear();
+
+  // Load competitors (top 3) — best-effort: not all (service, city) tuples exist.
+  let competitors: Awaited<ReturnType<typeof getCompetitorsByExpertiseAndCity>> = [];
+  if (cityName) {
+    try {
+      // Try with the real expertise title first, fallback to "Agence <serviceName>".
+      competitors = await getCompetitorsByExpertiseAndCity(
+        `Agence ${serviceName}`,
+        cityName,
+      );
+      if (competitors.length === 0) {
+        competitors = await getCompetitorsByExpertiseAndCity(serviceName, cityName);
+      }
+    } catch {
+      competitors = [];
+    }
+  }
+  const top3 = competitors.slice(0, 3);
+  const compareSlug = cityName
+    ? `${serviceName.toLowerCase().replace(/\s+/g, '-')}-${cityName.toLowerCase().replace(/\s+/g, '-')}`
+    : null;
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -137,6 +170,36 @@ export default async function AgenceProgrammaticPage({ params }: PageProps) {
     availableLanguage: 'fr',
     url: canonicalUrl,
   };
+
+  const itemListSchema =
+    competitors.length > 0
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'ItemList',
+          name: `Top agences ${serviceName}${cityName ? ` ${cityName}` : ''}`,
+          itemListElement: competitors.slice(0, 10).map((c, idx) => ({
+            '@type': 'ListItem',
+            position: idx + 1,
+            item: {
+              '@type': 'Organization',
+              name: c.name,
+              ...(c.website ? { url: c.website } : {}),
+              ...(c.address ? { address: c.address } : {}),
+              ...(c.rating !== null && c.reviewCount !== null
+                ? {
+                    aggregateRating: {
+                      '@type': 'AggregateRating',
+                      ratingValue: c.rating,
+                      reviewCount: c.reviewCount,
+                      bestRating: '5',
+                      worstRating: '1',
+                    },
+                  }
+                : {}),
+            },
+          })),
+        }
+      : null;
 
   const faqItems = [
     { q: f.faqTitle1, a: f.faqDesc1 },
@@ -172,6 +235,54 @@ export default async function AgenceProgrammaticPage({ params }: PageProps) {
     { t: f.processTitre3, d: f.descriptionTitre3 },
   ].filter((x) => x.t);
 
+  // Fallback method steps (V1 had a 5-step growth method when DB empty).
+  const fallbackProcess = [
+    {
+      t: 'Cadrage business',
+      d: `Audit de votre stack ${serviceName.toLowerCase()}, baseline KPI, ICP et goulot prioritaire. Livrable : roadmap 90 jours chiffrée.`,
+    },
+    {
+      t: 'Mise en place',
+      d: `Branchement tracking (server-side, GA4, CAPI), data warehouse, dashboards de pilotage hebdo. Le compteur démarre.`,
+    },
+    {
+      t: 'Sprints d\'execution',
+      d: `Sprints de 2 semaines : tests d\'angles, optimisation funnel, automatisation. Reporting transparent par canal.`,
+    },
+    {
+      t: 'Itération & scale',
+      d: `Quand un canal devient profitable et stable, on le scale. Quand il ne l\'est pas, on coupe. Pas d\'attachement aux moyens.`,
+    },
+  ];
+
+  const stepsToRender = processItems.length > 0 ? processItems : fallbackProcess;
+
+  // Comparatif Uclic vs autres agences.
+  const comparativeRows = [
+    { label: 'Pilotage senior', uclic: 'Oui — partner direct', generic: 'Account manager junior' },
+    { label: 'Expert canal dédié', uclic: 'Oui — un par levier', generic: 'Pool partagé' },
+    { label: 'Agents IA en production', uclic: 'Oui — workflows custom', generic: 'Rare ou prompts génériques' },
+    { label: 'Engagement', uclic: 'Mensuel, sans tacite reconduction', generic: '12 mois minimum' },
+    { label: 'Reporting', uclic: 'Dashboards live, hebdo', generic: 'PDF mensuel' },
+    { label: 'Délai de démarrage', uclic: '7 à 14 jours', generic: '4 à 8 semaines' },
+  ];
+
+  // Cas d'usage typiques pour ce service.
+  const useCases = [
+    {
+      t: `Scale-up B2B SaaS qui plafonne en CAC`,
+      d: `On rebatit le mix acquisition pour casser le palier : lancement Demand Gen ABM, optimisation paid + outbound LinkedIn IA-augmenté.`,
+    },
+    {
+      t: `Levée de fonds ou go-to-market FR`,
+      d: `Plan ${serviceName.toLowerCase()} 90 jours pour valider product-market fit et générer un pipeline mesurable avant la due diligence.`,
+    },
+    {
+      t: `Migration tracking server-side / RGPD`,
+      d: `Audit conversions, GTM server-side, attribution multi-touch. Vous récupérez la donnée perdue par les bloqueurs.`,
+    },
+  ];
+
   const otherServices = await getOtherCityServices(citySlug, pathSlug, 9);
 
   return (
@@ -184,6 +295,12 @@ export default async function AgenceProgrammaticPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(serviceSchema) }}
       />
+      {itemListSchema ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLdString(itemListSchema) }}
+        />
+      ) : null}
       {faqSchema ? (
         <script
           type="application/ld+json"
@@ -197,26 +314,29 @@ export default async function AgenceProgrammaticPage({ params }: PageProps) {
         <section className="relative pt-24 lg:pt-28 pb-16 lg:pb-20 overflow-hidden">
           <SectionAmbience variant="medium" />
           <div className="relative z-10 max-w-[1200px] mx-auto px-5 lg:px-10">
-            <a
+            <Link
               href="/expertise"
               className="inline-flex items-center gap-2 text-[13px] text-[color:var(--ink-muted)] hover:text-[color:var(--accent)] transition-colors mb-6"
             >
               <ArrowLeft size={14} /> Retour aux expertises
-            </a>
-            {f.tag ? (
-              <div className="inline-flex items-center gap-2 text-[11px] leading-none tracking-[0.25em] uppercase text-[color:var(--accent)] mb-4">
-                <span className="w-6 h-px shrink-0 bg-[color:var(--accent)]" aria-hidden="true" />
-                <span>{f.tag}</span>
-              </div>
-            ) : null}
-            <h1 className="text-[44px] md:text-[56px] lg:text-[64px] leading-[1.05] font-medium text-[color:var(--ink)] tracking-tight max-w-[900px]">
+            </Link>
+            <div className="inline-flex items-center gap-2 text-[11px] leading-none tracking-[0.25em] uppercase text-[color:var(--accent)] mb-4">
+              <span className="w-6 h-px shrink-0 bg-[color:var(--accent)]" aria-hidden="true" />
+              <span>{f.tag || `Agence ${serviceName}${cityName ? ` · ${cityName}` : ''}`}</span>
+            </div>
+            <h1 className="font-display font-medium tracking-[-0.02em] text-[clamp(34px,4.6vw,56px)] leading-[1.05] text-[color:var(--ink)] max-w-[900px]">
               {finalH1}
             </h1>
             {f.subtitle ? (
               <p className="mt-6 text-[17px] lg:text-[18px] leading-relaxed text-[color:var(--ink-muted)] max-w-[720px]">
                 {f.subtitle}
               </p>
-            ) : null}
+            ) : (
+              <p className="mt-6 text-[17px] lg:text-[18px] leading-relaxed text-[color:var(--ink-muted)] max-w-[720px]">
+                Pilotage senior, experts canaux, agents IA en production. Trois piliers, une équipe, zéro silo —
+                {cityName ? ` à ${cityName} comme ailleurs.` : ' partout en France.'}
+              </p>
+            )}
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href="/audit"
@@ -236,51 +356,256 @@ export default async function AgenceProgrammaticPage({ params }: PageProps) {
                 Simuler mon ROI
               </a>
             </div>
+            {/* Mini stats bar */}
+            <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-px border border-[color:var(--border-subtle)] !rounded-none bg-[color:var(--border-subtle)]/40">
+              {[
+                { k: '90j', v: 'Roadmap chiffrée' },
+                { k: '7-14j', v: 'Démarrage opérationnel' },
+                { k: '+30%', v: 'Pipeline médian 6 mois' },
+                { k: 'Senior', v: 'Pilotage partner direct' },
+              ].map((s) => (
+                <div key={s.k} className="bg-[color:var(--bg)] p-5">
+                  <div className="text-[22px] font-display font-medium tracking-[-0.01em] text-[color:var(--ink)]">
+                    {s.k}
+                  </div>
+                  <div className="text-[12px] uppercase tracking-[0.18em] text-[color:var(--ink-muted)] mt-1">
+                    {s.v}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* 3 boxes */}
-        {(boxes.length > 0 || f.h21) && (
-          <section className="relative py-16 lg:py-20">
-            <div className="relative z-10 max-w-[1200px] mx-auto px-5 lg:px-10">
-              {f.h21 ? (
-                <h2 className="text-[28px] md:text-[36px] lg:text-[44px] font-medium text-[color:var(--ink)] tracking-tight mb-10 max-w-[780px]">
-                  {f.h21}
-                </h2>
-              ) : null}
-              {boxes.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                  {boxes.map((b, i) => (
-                    <div
-                      key={i}
-                      className="flex flex-col !rounded-none border border-[color:var(--border-subtle)] bg-[color:var(--card-elev-1)] light:bg-white p-6 lg:p-8"
-                    >
-                      <h3 className="text-[18px] font-semibold text-[color:var(--ink)]">{b.t}</h3>
-                      {b.d ? (
-                        <p className="mt-3 text-[14px] leading-relaxed text-[color:var(--ink-muted)]">
-                          {b.d}
-                        </p>
-                      ) : null}
-                    </div>
-                  ))}
+        {/* PRESENTATION LOCALE (si ville) */}
+        {cityName ? (
+          <section className="relative py-16 lg:py-20 overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--border-subtle)] to-transparent" />
+            <div className="relative z-10 max-w-[1200px] mx-auto px-5 lg:px-10 grid grid-cols-1 lg:grid-cols-12 gap-10">
+              <div className="lg:col-span-5">
+                <div className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)] mb-4">
+                  <span className="w-6 h-px bg-[color:var(--accent)]" aria-hidden="true" />
+                  <span>Contexte local</span>
                 </div>
-              )}
+                <h2 className="font-display font-medium tracking-[-0.02em] text-[clamp(28px,3.2vw,40px)] leading-[1.1] text-[color:var(--ink)]">
+                  {serviceName} à {cityName} —{' '}
+                  <span className="font-[family-name:var(--font-hand)] italic text-[color:var(--accent)]">
+                    pourquoi ça compte
+                  </span>
+                </h2>
+              </div>
+              <div className="lg:col-span-7 text-[15px] leading-relaxed text-[color:var(--ink-muted)] space-y-4">
+                <p>
+                  {cityName} concentre un tissu d&apos;entreprises B2B en pleine accélération : SaaS, services
+                  professionnels, industrie tech. La concurrence sur les requêtes locales est plus dense qu&apos;il
+                  y a trois ans, et les coûts médias paid montent.
+                </p>
+                <p>
+                  Les enjeux {serviceName.toLowerCase()} d&apos;une équipe basée à {cityName} ne sont pas les
+                  mêmes que ceux d&apos;une scale-up parisienne : marché adressable plus localisé, dépendance
+                  forte aux relais terrain, et exigence de ROI chiffré dès le premier trimestre.
+                </p>
+                <p>
+                  C&apos;est exactement là que notre approche fait la différence : on rebatit votre mix
+                  d&apos;acquisition autour de votre stade réel, pas d&apos;un template.
+                </p>
+              </div>
             </div>
           </section>
-        )}
+        ) : null}
 
-        {/* Content 2 */}
+        {/* 3 BENEFITS BOXES (DA bento corner-cross) */}
+        {boxes.length > 0 ? (
+          <section className="relative py-16 lg:py-20 overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--border-subtle)] to-transparent" />
+            <div className="relative z-10 max-w-[1200px] mx-auto px-5 lg:px-10">
+              <div className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)] mb-4">
+                <span className="w-6 h-px bg-[color:var(--accent)]" aria-hidden="true" />
+                <span>Ce qu&apos;on livre</span>
+              </div>
+              {f.h21 ? (
+                <h2 className="font-display font-medium tracking-[-0.02em] text-[clamp(28px,3.2vw,40px)] leading-[1.1] text-[color:var(--ink)] mb-10 max-w-[820px]">
+                  {f.h21}
+                </h2>
+              ) : (
+                <h2 className="font-display font-medium tracking-[-0.02em] text-[clamp(28px,3.2vw,40px)] leading-[1.1] text-[color:var(--ink)] mb-10 max-w-[820px]">
+                  Trois piliers,{' '}
+                  <span className="font-[family-name:var(--font-hand)] italic text-[color:var(--accent)]">
+                    une seule équipe.
+                  </span>
+                </h2>
+              )}
+              <div className="grid grid-cols-1 md:grid-cols-3 items-stretch border border-[color:var(--border-subtle)] !rounded-none relative">
+                {[
+                  { left: '0%', top: '0%' },
+                  { left: '33.333%', top: '0%' },
+                  { left: '66.666%', top: '0%' },
+                  { left: '100%', top: '0%' },
+                  { left: '0%', top: '100%' },
+                  { left: '33.333%', top: '100%' },
+                  { left: '66.666%', top: '100%' },
+                  { left: '100%', top: '100%' },
+                ].map((pos, idx) => (
+                  <CornerCross
+                    key={idx}
+                    size={14}
+                    className="hidden md:block absolute z-[2]"
+                    style={{ left: pos.left, top: pos.top, transform: 'translate(-50%, -50%)' }}
+                  />
+                ))}
+                {boxes.map((b, i) => (
+                  <article
+                    key={i}
+                    className={`relative p-7 lg:p-8 flex flex-col gap-3 !rounded-none bg-[#141211] light:bg-white ${
+                      i < boxes.length - 1 ? 'md:border-r md:border-[color:var(--border-subtle)]' : ''
+                    } ${i !== boxes.length - 1 ? 'border-b border-[color:var(--border-subtle)] md:border-b-0' : ''}`}
+                  >
+                    <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[color:var(--accent)]">
+                      0{i + 1}
+                    </span>
+                    <h3 className="text-[18px] font-display font-medium tracking-[-0.01em] text-[color:var(--ink)]">
+                      {b.t}
+                    </h3>
+                    {b.d ? (
+                      <p className="text-[14px] leading-relaxed text-[color:var(--ink-muted)]">
+                        {b.d}
+                      </p>
+                    ) : null}
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : null}
+
+        {/* TOP 3 AGENCES LOCALES (si compétitors disponibles) */}
+        {top3.length > 0 && cityName ? (
+          <section className="relative py-16 lg:py-20 overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--border-subtle)] to-transparent" />
+            <div className="relative z-10 max-w-[1200px] mx-auto px-5 lg:px-10">
+              <div className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)] mb-4">
+                <span className="w-6 h-px bg-[color:var(--accent)]" aria-hidden="true" />
+                <span>Top 3 · {cityName}</span>
+              </div>
+              <h2 className="font-display font-medium tracking-[-0.02em] text-[clamp(28px,3.2vw,40px)] leading-[1.1] text-[color:var(--ink)] mb-3">
+                Les agences {serviceName} qui ressortent à{' '}
+                <span className="font-[family-name:var(--font-hand)] italic text-[color:var(--accent)]">
+                  {cityName}
+                </span>
+              </h2>
+              <p className="text-[15px] text-[color:var(--ink-muted)] max-w-[640px] leading-relaxed mb-10">
+                Classement éditorial sur {currentYear} basé sur note Google, volume d&apos;avis,
+                fiche complète et lisibilité du positionnement.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 items-stretch border border-[color:var(--border-subtle)] !rounded-none relative">
+                {[
+                  { left: '0%', top: '0%' },
+                  { left: '33.333%', top: '0%' },
+                  { left: '66.666%', top: '0%' },
+                  { left: '100%', top: '0%' },
+                  { left: '0%', top: '100%' },
+                  { left: '33.333%', top: '100%' },
+                  { left: '66.666%', top: '100%' },
+                  { left: '100%', top: '100%' },
+                ].map((pos, idx) => (
+                  <CornerCross
+                    key={idx}
+                    size={14}
+                    className="hidden md:block absolute z-[2]"
+                    style={{ left: pos.left, top: pos.top, transform: 'translate(-50%, -50%)' }}
+                  />
+                ))}
+                {top3.map((c, i) => (
+                  <article
+                    key={`${c.rank}-${c.name}`}
+                    className={`relative p-7 lg:p-8 flex flex-col gap-4 !rounded-none bg-[#141211] light:bg-white ${
+                      c.isUclic ? 'bg-[color:var(--accent)]/[0.04]' : ''
+                    } ${i < top3.length - 1 ? 'md:border-r md:border-[color:var(--border-subtle)]' : ''} ${
+                      i !== top3.length - 1 ? 'border-b border-[color:var(--border-subtle)] md:border-b-0' : ''
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span
+                        className={`inline-flex items-center justify-center w-9 h-9 !rounded-none border text-[13px] font-mono ${
+                          c.isUclic
+                            ? 'border-[color:var(--accent)]/60 text-[color:var(--accent)]'
+                            : 'border-[color:var(--border-subtle)] text-[color:var(--ink-muted)]'
+                        }`}
+                      >
+                        #{c.rank}
+                      </span>
+                      {c.isUclic && (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-mono uppercase tracking-[0.2em] text-[color:var(--accent)]">
+                          <BadgeCheck size={12} />
+                          Uclic
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="text-[20px] font-display font-medium tracking-[-0.01em]">
+                      {c.name}
+                    </h3>
+                    <div className="flex flex-wrap gap-3 text-[12px] text-[color:var(--ink-muted)]">
+                      {c.rating !== null && (
+                        <span className="inline-flex items-center gap-1">
+                          <Star size={12} className="text-[color:var(--accent)]" />
+                          {c.rating.toFixed(1)}
+                          {c.reviewCount !== null && ` · ${c.reviewCount} avis`}
+                        </span>
+                      )}
+                      <span className="inline-flex items-center gap-1 font-mono uppercase tracking-[0.18em]">
+                        Score {c.score}
+                      </span>
+                    </div>
+                    {c.strengths && (
+                      <p className="text-[14px] text-[color:var(--ink-muted)] leading-relaxed line-clamp-5">
+                        {c.strengths}
+                      </p>
+                    )}
+                    {c.website && !c.isUclic && (
+                      <a
+                        href={c.website}
+                        target="_blank"
+                        rel="noopener noreferrer nofollow"
+                        className="mt-auto pt-2 inline-flex items-center gap-1.5 text-[13px] text-[color:var(--ink-muted)] hover:text-[color:var(--accent)] hover:gap-2.5 transition-all self-start"
+                      >
+                        Voir le site <ExternalLink size={13} />
+                      </a>
+                    )}
+                  </article>
+                ))}
+              </div>
+
+              {compareSlug ? (
+                <div className="mt-6">
+                  <Link
+                    href={`/meilleure-agence/${compareSlug}`}
+                    className="inline-flex items-center gap-1.5 text-[13px] text-[color:var(--accent)] hover:gap-2.5 transition-all"
+                  >
+                    Voir le comparatif complet ({competitors.length} agences) <ArrowRight size={13} />
+                  </Link>
+                </div>
+              ) : null}
+            </div>
+          </section>
+        ) : null}
+
+        {/* CONTENT 2 (free-form HTML from DB) */}
         {(f.h22 || f.content2) && (
-          <section className="relative py-16 lg:py-20">
+          <section className="relative py-16 lg:py-20 overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--border-subtle)] to-transparent" />
             <div className="relative z-10 max-w-[900px] mx-auto px-5 lg:px-10">
               {f.h22 ? (
-                <h2 className="text-[28px] md:text-[36px] font-medium text-[color:var(--ink)] tracking-tight mb-6">
+                <h2 className="font-display font-medium tracking-[-0.02em] text-[clamp(28px,3.2vw,40px)] leading-[1.1] text-[color:var(--ink)] mb-6">
                   {f.h22}
                 </h2>
               ) : null}
               {f.content2 ? (
                 <div
-                  className="blog-content"
+                  className="text-[15.5px] leading-[1.7] text-[color:var(--ink)]/90
+                    [&_a]:text-[color:var(--accent)] [&_a]:underline
+                    [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:font-display [&_h3]:font-medium [&_h3]:text-[20px]
+                    [&_p]:mt-3 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mt-3 [&_strong]:font-semibold"
                   dangerouslySetInnerHTML={{ __html: f.content2 }}
                 />
               ) : null}
@@ -288,67 +613,158 @@ export default async function AgenceProgrammaticPage({ params }: PageProps) {
           </section>
         )}
 
-        {/* Process 3 etapes */}
-        {processItems.length > 0 && (
-          <section className="relative py-16 lg:py-20">
-            <div className="relative z-10 max-w-[1200px] mx-auto px-5 lg:px-10">
-              {f.processLittleTitle ? (
-                <div className="inline-flex items-center gap-2 text-[11px] leading-none tracking-[0.25em] uppercase text-[color:var(--accent)] mb-4">
-                  <span className="w-6 h-px shrink-0 bg-[color:var(--accent)]" aria-hidden="true" />
-                  <span>{f.processLittleTitle}</span>
-                </div>
-              ) : null}
-              {f.processTitle ? (
-                <h2 className="text-[28px] md:text-[36px] lg:text-[44px] font-medium text-[color:var(--ink)] tracking-tight mb-4 max-w-[780px]">
-                  {f.processTitle}
-                </h2>
-              ) : null}
-              {f.processDescription ? (
-                <p className="text-[16px] leading-relaxed text-[color:var(--ink-muted)] max-w-[720px] mb-10">
-                  {f.processDescription}
-                </p>
-              ) : null}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {processItems.map((p, i) => (
-                  <div
-                    key={i}
-                    className="relative flex flex-col !rounded-none border border-[color:var(--border-subtle)] bg-[color:var(--card-elev-1)] light:bg-white p-6 lg:p-8"
-                  >
-                    <span className="absolute -top-3 left-6 bg-[color:var(--bg)] px-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)]">
-                      Etape {i + 1}
-                    </span>
-                    <h3 className="mt-2 text-[18px] font-semibold text-[color:var(--ink)]">{p.t}</h3>
-                    {p.d ? (
-                      <p className="mt-3 text-[14px] leading-relaxed text-[color:var(--ink-muted)]">
-                        {p.d}
-                      </p>
-                    ) : null}
-                  </div>
-                ))}
-              </div>
+        {/* CAS D'USAGE TYPIQUES */}
+        <section className="relative py-16 lg:py-20 overflow-hidden">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--border-subtle)] to-transparent" />
+          <div className="relative z-10 max-w-[1200px] mx-auto px-5 lg:px-10">
+            <div className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)] mb-4">
+              <span className="w-6 h-px bg-[color:var(--accent)]" aria-hidden="true" />
+              <span>Cas d&apos;usage</span>
             </div>
-          </section>
-        )}
+            <h2 className="font-display font-medium tracking-[-0.02em] text-[clamp(28px,3.2vw,40px)] leading-[1.1] text-[color:var(--ink)] mb-10 max-w-[820px]">
+              Quand on est{' '}
+              <span className="font-[family-name:var(--font-hand)] italic text-[color:var(--accent)]">
+                la bonne réponse
+              </span>
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {useCases.map((u, i) => (
+                <article
+                  key={i}
+                  className="!rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white p-7"
+                >
+                  <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[color:var(--accent)]">
+                    Scénario {i + 1}
+                  </span>
+                  <h3 className="mt-3 text-[18px] font-display font-medium tracking-[-0.01em] text-[color:var(--ink)]">
+                    {u.t}
+                  </h3>
+                  <p className="mt-3 text-[14px] leading-relaxed text-[color:var(--ink-muted)]">
+                    {u.d}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
 
-        {/* Autres services dans la meme ville */}
+        {/* METHODE GROWTH (process steps) */}
+        <section className="relative py-16 lg:py-20 overflow-hidden">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--border-subtle)] to-transparent" />
+          <div className="relative z-10 max-w-[1200px] mx-auto px-5 lg:px-10">
+            <div className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)] mb-4">
+              <span className="w-6 h-px bg-[color:var(--accent)]" aria-hidden="true" />
+              <span>{f.processLittleTitle || 'Méthode'}</span>
+            </div>
+            <h2 className="font-display font-medium tracking-[-0.02em] text-[clamp(28px,3.2vw,40px)] leading-[1.1] text-[color:var(--ink)] mb-4 max-w-[820px]">
+              {f.processTitle || `Comment on opère votre ${serviceName.toLowerCase()}.`}
+            </h2>
+            {f.processDescription ? (
+              <p className="text-[16px] leading-relaxed text-[color:var(--ink-muted)] max-w-[720px] mb-10">
+                {f.processDescription}
+              </p>
+            ) : (
+              <p className="text-[16px] leading-relaxed text-[color:var(--ink-muted)] max-w-[720px] mb-10">
+                Pas de slides. Pas de séminaires. Une roadmap chiffrée à 90 jours, des sprints de 2 semaines,
+                un dashboard de pilotage hebdo. Vous savez à tout moment où va l&apos;euro investi.
+              </p>
+            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+              {stepsToRender.map((p, i) => (
+                <div
+                  key={i}
+                  className="relative !rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white p-7"
+                >
+                  <span className="absolute -top-3 left-6 bg-[color:var(--bg)] px-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)]">
+                    Étape {i + 1}
+                  </span>
+                  <h3 className="mt-2 text-[17px] font-display font-medium tracking-[-0.01em] text-[color:var(--ink)]">
+                    {p.t}
+                  </h3>
+                  {p.d ? (
+                    <p className="mt-3 text-[13.5px] leading-relaxed text-[color:var(--ink-muted)]">
+                      {p.d}
+                    </p>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* COMPARATIF UCLIC VS AUTRES */}
+        <section className="relative py-16 lg:py-20 overflow-hidden">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--border-subtle)] to-transparent" />
+          <div className="relative z-10 max-w-[1200px] mx-auto px-5 lg:px-10">
+            <div className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)] mb-4">
+              <span className="w-6 h-px bg-[color:var(--accent)]" aria-hidden="true" />
+              <span>Comparatif</span>
+            </div>
+            <h2 className="font-display font-medium tracking-[-0.02em] text-[clamp(28px,3.2vw,40px)] leading-[1.1] text-[color:var(--ink)] mb-10 max-w-[820px]">
+              Uclic vs. agence{' '}
+              <span className="font-[family-name:var(--font-hand)] italic text-[color:var(--accent)]">
+                {serviceName.toLowerCase()}
+              </span>{' '}
+              classique
+            </h2>
+            <div className="!rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white overflow-x-auto">
+              <table className="w-full text-left border-collapse min-w-[640px]">
+                <thead>
+                  <tr className="border-b border-[color:var(--border-subtle)] text-[10px] font-mono uppercase tracking-[0.18em] text-[color:var(--ink-muted)]">
+                    <th className="px-5 py-4 font-normal min-w-[200px]">Critère</th>
+                    <th className="px-5 py-4 font-normal text-[color:var(--accent)]">Uclic</th>
+                    <th className="px-5 py-4 font-normal">Agence classique</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {comparativeRows.map((row, i) => (
+                    <tr
+                      key={i}
+                      className="border-b border-[color:var(--border-subtle)] last:border-b-0"
+                    >
+                      <td className="px-5 py-4 text-[13px] text-[color:var(--ink-muted)]">
+                        {row.label}
+                      </td>
+                      <td className="px-5 py-4 text-[14px] text-[color:var(--ink)] bg-[color:var(--accent)]/[0.04]">
+                        <span className="inline-flex items-center gap-2">
+                          <Check size={14} className="text-[color:var(--accent)] shrink-0" />
+                          {row.uclic}
+                        </span>
+                      </td>
+                      <td className="px-5 py-4 text-[14px] text-[color:var(--ink-muted)]">
+                        <span className="inline-flex items-center gap-2">
+                          <Minus size={14} className="text-[color:var(--ink-muted)]/50 shrink-0" />
+                          {row.generic}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* AUTRES SERVICES DANS LA MEME VILLE */}
         {otherServices.length > 0 && (
-          <section className="relative py-16 lg:py-20">
+          <section className="relative py-16 lg:py-20 overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--border-subtle)] to-transparent" />
             <div className="relative z-10 max-w-[1200px] mx-auto px-5 lg:px-10">
-              <div className="inline-flex items-center gap-2 text-[11px] leading-none tracking-[0.25em] uppercase text-[color:var(--accent)] mb-4">
-                <span className="w-6 h-px shrink-0 bg-[color:var(--accent)]" aria-hidden="true" />
+              <div className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)] mb-4">
+                <span className="w-6 h-px bg-[color:var(--accent)]" aria-hidden="true" />
                 <span>Autres expertises</span>
               </div>
-              <h2 className="text-[28px] md:text-[36px] font-medium text-[color:var(--ink)] tracking-tight mb-10">
-                {cityName ? `Nos autres services a ${cityName}` : 'Nos autres expertises'}
+              <h2 className="font-display font-medium tracking-[-0.02em] text-[clamp(28px,3.2vw,40px)] leading-[1.1] text-[color:var(--ink)] mb-10">
+                {cityName ? `Nos autres services à ${cityName}` : 'Nos autres expertises'}
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
                 {otherServices.map((s) => (
-                  <a
+                  <Link
                     key={s.path_slug}
                     href={s.path_slug}
-                    className="group flex flex-col !rounded-none border border-[color:var(--border-subtle)] bg-[color:var(--card-elev-1)] light:bg-white p-6 lg:p-8 hover:border-[color:var(--accent)]/40 transition-colors"
+                    className="group flex flex-col !rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white p-7 hover:border-[color:var(--accent)]/40 transition-colors"
                   >
-                    <h3 className="text-[18px] font-semibold text-[color:var(--ink)] group-hover:text-[color:var(--accent)] transition-colors line-clamp-2">
+                    <h3 className="text-[18px] font-display font-medium tracking-[-0.01em] text-[color:var(--ink)] group-hover:text-[color:var(--accent)] transition-colors line-clamp-2">
                       {s.title}
                     </h3>
                     {s.subtitle ? (
@@ -357,9 +773,9 @@ export default async function AgenceProgrammaticPage({ params }: PageProps) {
                       </p>
                     ) : null}
                     <span className="mt-auto pt-4 inline-flex items-center gap-1 text-[13px] font-medium text-[color:var(--accent)]">
-                      Decouvrir <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                      Découvrir <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                     </span>
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -368,16 +784,19 @@ export default async function AgenceProgrammaticPage({ params }: PageProps) {
 
         {/* FAQ */}
         {faqItems.length > 0 && (
-          <section className="relative py-16 lg:py-20">
+          <section className="relative py-16 lg:py-20 overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--border-subtle)] to-transparent" />
             <div className="relative z-10 max-w-[900px] mx-auto px-5 lg:px-10">
-              {f.faqSubtitle ? (
-                <div className="inline-flex items-center gap-2 text-[11px] leading-none tracking-[0.25em] uppercase text-[color:var(--accent)] mb-4">
-                  <span className="w-6 h-px shrink-0 bg-[color:var(--accent)]" aria-hidden="true" />
-                  <span>{f.faqSubtitle}</span>
-                </div>
-              ) : null}
-              <h2 className="text-[28px] md:text-[36px] font-medium text-[color:var(--ink)] tracking-tight mb-10">
-                Questions frequentes
+              <div className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)] mb-4">
+                <span className="w-6 h-px bg-[color:var(--accent)]" aria-hidden="true" />
+                <span>{f.faqSubtitle || 'Questions fréquentes'}</span>
+              </div>
+              <h2 className="font-display font-medium tracking-[-0.02em] text-[clamp(28px,3.2vw,40px)] leading-[1.1] text-[color:var(--ink)] mb-10">
+                Vos questions sur{' '}
+                <span className="font-[family-name:var(--font-hand)] italic text-[color:var(--accent)]">
+                  {serviceName.toLowerCase()}
+                </span>
+                {cityName ? ` à ${cityName}` : ''}
               </h2>
               <div className="space-y-4">
                 {faqItems.map((fa, i) => (

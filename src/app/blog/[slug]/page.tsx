@@ -7,12 +7,20 @@ import CtaFinal from '@/components/landing/CtaFinal';
 import SectionAmbience from '@/components/ui/SectionAmbience';
 import BlogListingSection from '@/components/blog/BlogListingSection';
 import { jsonLdString } from '@/lib/schema';
+import { extractFAQsFromContent, generateFAQPageSchema } from '@/lib/faq-schema';
 import {
   getAllBlogSlugs,
   getLatestPosts,
   getPostBySlug,
+  getRelatedPosts,
   estimateReadingTime,
 } from '@/lib/blog';
+import TableOfContents from '@/components/blog/TableOfContents';
+import ShareButtons from '@/components/blog/ShareButtons';
+import ReadingProgress from '@/components/blog/ReadingProgress';
+import FloatingShareRail from '@/components/blog/FloatingShareRail';
+import MidArticleCTA from '@/components/blog/MidArticleCTA';
+import BlogGrid from '@/components/blog/BlogGrid';
 
 const BLOG_PER_PAGE = 24;
 const isNumericSlug = (slug: string) => /^\d+$/.test(slug);
@@ -148,6 +156,13 @@ export default async function BlogDetailPage({ params }: PageProps) {
   if (!post) {notFound();}
 
   const reading = post.reading_time || estimateReadingTime(post.content || '');
+  const related = await getRelatedPosts(post.id, 3);
+  const shareUrl = `${SITE_URL}/blog/${post.slug}`;
+
+  // FAQ schema dérivé du contenu HTML (≥ 2 paires Q/R nécessaires)
+  const extractedFaqs = extractFAQsFromContent(post.content || '');
+  const faqSchema =
+    extractedFaqs.length >= 2 ? generateFAQPageSchema(extractedFaqs) : null;
 
   const articleSchema = {
     '@context': 'https://schema.org',
@@ -186,75 +201,170 @@ export default async function BlogDetailPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(breadcrumbSchema) }}
       />
+      {faqSchema ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLdString(faqSchema) }}
+        />
+      ) : null}
       <Nav />
-      <main className="relative bg-[color:var(--bg)]">
-        <section className="relative pt-24 lg:pt-28 pb-10 lg:pb-12 overflow-hidden">
+      <main className="relative bg-[color:var(--bg)] text-[color:var(--ink)]">
+        {/* Header éditorial — container canon 1200px */}
+        <section className="relative pt-24 lg:pt-28 pb-10 lg:pb-14 overflow-hidden">
           <SectionAmbience variant="medium" />
-          <div className="relative z-10 max-w-[860px] mx-auto px-5 lg:px-10">
-            <a
-              href="/blog"
-              className="inline-flex items-center gap-2 text-[13px] text-[color:var(--ink-muted)] hover:text-[color:var(--accent)] transition-colors mb-6"
-            >
-              <ArrowLeft size={14} /> Tous les articles
-            </a>
-            {post.category ? (
-              <span className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)] mb-4">
-                <span className="w-6 h-px bg-[color:var(--accent)]" />
-                {post.category}
-              </span>
-            ) : null}
-            <h1 className="text-[36px] md:text-[44px] lg:text-[52px] leading-[1.1] font-medium text-[color:var(--ink)] tracking-tight">
-              {post.title}
-            </h1>
-            {post.excerpt ? (
-              <p className="mt-5 text-[17px] lg:text-[18px] leading-relaxed text-[color:var(--ink-muted)]">
-                {post.excerpt}
-              </p>
-            ) : null}
-            <div className="mt-6 flex flex-wrap items-center gap-4 text-[13px] text-[color:var(--ink-muted)] pb-6 border-b border-[color:var(--border-subtle)]">
-              {post.author ? (
-                <span className="inline-flex items-center">
-                  Par <span className="ml-1 font-medium text-[color:var(--ink)]">{post.author}</span>
+          <div className="relative z-10 max-w-[1200px] mx-auto px-5 lg:px-10">
+            <div className="max-w-[860px] mx-auto">
+              {/* Breadcrumb canon site */}
+              <nav
+                aria-label="Fil d'Ariane"
+                className="flex items-center gap-2 text-[12px] font-mono uppercase tracking-[0.18em] text-[color:var(--ink-muted)] mb-8"
+              >
+                <a href="/" className="hover:text-[color:var(--accent)] transition-colors">Accueil</a>
+                <span aria-hidden="true">/</span>
+                <a href="/blog" className="hover:text-[color:var(--accent)] transition-colors">Blog</a>
+                {post.category ? (
+                  <>
+                    <span aria-hidden="true">/</span>
+                    <span className="text-[color:var(--ink)] line-clamp-1">{post.category}</span>
+                  </>
+                ) : null}
+              </nav>
+
+              {post.category ? (
+                <span className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)] mb-5">
+                  <span className="w-6 h-px bg-[color:var(--accent)]" />
+                  {post.category}
                 </span>
               ) : null}
-              {post.date ? <span>· {formatDate(post.date)}</span> : null}
-              <span className="inline-flex items-center gap-1">· <Clock size={12} /> {reading}</span>
+
+              {/* H1 DA canon — italique accent sur le dernier mot */}
+              <h1 className="text-[clamp(32px,4.2vw,52px)] font-display font-medium tracking-[-0.02em] leading-[1.1]">
+                {(() => {
+                  const words = (post.title || '').trim().split(/\s+/);
+                  if (words.length <= 1) {
+                    return (
+                      <span className="relative inline-block isolate font-[family-name:var(--font-hand)] italic text-[color:var(--accent)] tracking-[0.005em]">
+                        {post.title}
+                        <span aria-hidden="true" className="absolute -inset-x-4 -inset-y-2 -z-10 bg-[color:var(--accent)]/10 blur-2xl rounded-full" />
+                      </span>
+                    );
+                  }
+                  const last = words[words.length - 1];
+                  const prefix = words.slice(0, -1).join(' ');
+                  return (
+                    <>
+                      {prefix}{' '}
+                      <span className="relative inline-block isolate font-[family-name:var(--font-hand)] italic text-[color:var(--accent)] tracking-[0.005em]">
+                        {last}
+                        <span aria-hidden="true" className="absolute -inset-x-4 -inset-y-2 -z-10 bg-[color:var(--accent)]/10 blur-2xl rounded-full" />
+                      </span>
+                    </>
+                  );
+                })()}
+              </h1>
+
+              {post.excerpt ? (
+                <p className="mt-6 text-[16px] lg:text-[17px] leading-[1.55] text-[color:var(--ink-muted)]">
+                  {post.excerpt}
+                </p>
+              ) : null}
+
+              <div className="mt-8 flex flex-wrap items-center gap-4 text-[13px] text-[color:var(--ink-muted)] pb-6 border-b border-[color:var(--border-subtle)]">
+                {post.author ? (
+                  <span className="inline-flex items-center">
+                    Par <span className="ml-1 font-medium text-[color:var(--ink)]">{post.author}</span>
+                  </span>
+                ) : null}
+                {post.date ? <span>· {formatDate(post.date)}</span> : null}
+                <span className="inline-flex items-center gap-1">· <Clock size={12} /> {reading}</span>
+              </div>
             </div>
           </div>
         </section>
 
+        {/* Featured image — canon bento !rounded-none, container 1200 */}
         {post.featured_image_url ? (
-          <div className="max-w-[1100px] mx-auto px-5 lg:px-10">
-            <img
-              src={post.featured_image_url}
-              alt={post.title}
-              className="w-full aspect-[16/9] object-cover rounded-xl border border-[color:var(--border-subtle)]"
-              loading="eager"
-              decoding="async"
-            />
+          <div className="max-w-[1200px] mx-auto px-5 lg:px-10">
+            <div className="max-w-[1100px] mx-auto">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={post.featured_image_url}
+                alt={post.title}
+                className="w-full aspect-[16/9] object-cover !rounded-none border border-[color:var(--border-subtle)]"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
           </div>
         ) : null}
 
-        <article className="relative py-12 lg:py-16">
-          <div
-            className="article-body blog-content max-w-[760px] mx-auto px-5 lg:px-10"
-            dangerouslySetInnerHTML={{ __html: post.content || '' }}
-          />
-        </article>
+        {/* Barre de progression de lecture, fixée sous la Nav */}
+        <ReadingProgress />
 
-        {post.tags && post.tags.length > 0 ? (
-          <div className="max-w-[760px] mx-auto px-5 lg:px-10 pb-16">
-            <div className="flex flex-wrap gap-2 pt-6 border-t border-[color:var(--border-subtle)]">
-              {post.tags.map((t) => (
-                <span
-                  key={t}
-                  className="text-[12px] px-3 py-1 rounded-full border border-[color:var(--border-subtle)] text-[color:var(--ink-muted)]"
+        {/* Rail social flottant + back-to-top (desktop only, apparaît après 35vh scroll) */}
+        <FloatingShareRail url={shareUrl} title={post.title} />
+
+        {/* Article — single column centrée (reading width 720px) */}
+        <article className="relative py-12 lg:py-16">
+          <div className="max-w-[1200px] mx-auto px-5 lg:px-10">
+            <div className="max-w-[720px] mx-auto">
+              {/* Table des matières — collapsible en tête d'article (standard UX) */}
+              <div className="mb-10">
+                <TableOfContents />
+              </div>
+
+              <div
+                className="article-body blog-content"
+                dangerouslySetInnerHTML={{ __html: post.content || '' }}
+              />
+              {/* CTA injecté au milieu de l'article (avant le h2 central) */}
+              <MidArticleCTA />
+
+              {/* Share inline en fin d'article */}
+              <div className="mt-12 pt-8 border-t border-[color:var(--border-subtle)]">
+                <ShareButtons url={shareUrl} title={post.title} variant="inline" />
+              </div>
+
+              {/* Tags */}
+              {post.tags && post.tags.length > 0 ? (
+                <div className="mt-8 flex flex-wrap gap-2">
+                  {post.tags.map((t) => (
+                    <span
+                      key={t}
+                      className="text-[11px] px-3 py-1 rounded-full border border-[color:var(--border-subtle)] text-[color:var(--ink-muted)] font-mono uppercase tracking-[0.15em]"
+                    >
+                      #{t}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
+
+              {/* Back link */}
+              <div className="mt-12">
+                <a
+                  href="/blog"
+                  className="inline-flex items-center gap-2 text-[13px] text-[color:var(--ink)] hover:text-[color:var(--accent)] transition-colors"
                 >
-                  #{t}
-                </span>
-              ))}
+                  <ArrowLeft size={14} /> Tous les articles
+                </a>
+              </div>
             </div>
           </div>
+        </article>
+
+        {/* Related articles — largeur alignée avec le header éditorial (860px) */}
+        {related.length > 0 ? (
+          <section className="relative pb-20 lg:pb-28 pt-8 lg:pt-10">
+            <div className="max-w-[1200px] mx-auto px-5 lg:px-10">
+              <div className="max-w-[720px] mx-auto">
+                <div className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)] mb-6">
+                  <span className="w-6 h-px bg-[color:var(--accent)]" />
+                  Articles connexes
+                </div>
+                <BlogGrid posts={related} />
+              </div>
+            </div>
+          </section>
         ) : null}
 
         <CtaFinal />

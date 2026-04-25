@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Target, Users, ArrowRight, BadgeCheck } from 'lucide-react';
+import { Target, Users, ArrowRight, BadgeCheck, Star, Check, Minus } from 'lucide-react';
 import Nav from '@/components/landing/Nav';
 import Footer from '@/components/landing/Footer';
 import CtaFinal from '@/components/landing/CtaFinal';
@@ -124,6 +124,170 @@ const criteria = [
   'Adéquation au stade, au canal et au budget',
 ];
 
+type CheckState = true | false | 'partial';
+
+interface AgencyRow {
+  rank: number;
+  name: string;
+  score: number;
+  speciality: string;
+  rating: number;
+  reviews: number;
+  pricing: string;
+  setup: string;
+  team: string;
+  ai: CheckState;
+  seniorLead: CheckState;
+  fullFunnel: CheckState;
+  weekly: CheckState;
+  caseStudies: CheckState;
+}
+
+const growthAgencies: AgencyRow[] = [
+  {
+    rank: 1,
+    name: 'UCLIC',
+    score: 98,
+    speciality: 'Growth + IA full-funnel',
+    rating: 5.0,
+    reviews: 30,
+    pricing: 'Sur mesure',
+    setup: '3 mois',
+    team: '12+',
+    ai: true,
+    seniorLead: true,
+    fullFunnel: true,
+    weekly: true,
+    caseStudies: true,
+  },
+  {
+    rank: 2,
+    name: 'Growth Room',
+    score: 95,
+    speciality: 'Acquisition & SEO',
+    rating: 4.9,
+    reviews: 200,
+    pricing: '6 000 €/mois',
+    setup: '4 mois',
+    team: '40+',
+    ai: 'partial',
+    seniorLead: true,
+    fullFunnel: true,
+    weekly: true,
+    caseStudies: true,
+  },
+  {
+    rank: 3,
+    name: 'Deux.io',
+    score: 92,
+    speciality: 'Outils & Automatisation',
+    rating: 4.8,
+    reviews: 150,
+    pricing: '5 000 €/mois',
+    setup: '5 mois',
+    team: '25+',
+    ai: 'partial',
+    seniorLead: 'partial',
+    fullFunnel: 'partial',
+    weekly: true,
+    caseStudies: true,
+  },
+  {
+    rank: 4,
+    name: 'WeDoGrowth',
+    score: 90,
+    speciality: 'Growth Hacking pur',
+    rating: 4.7,
+    reviews: 100,
+    pricing: '7 000 €/mois',
+    setup: '3 mois',
+    team: '15+',
+    ai: false,
+    seniorLead: true,
+    fullFunnel: false,
+    weekly: true,
+    caseStudies: 'partial',
+  },
+  {
+    rank: 5,
+    name: 'Digital Corsaires',
+    score: 88,
+    speciality: 'Génération de trafic',
+    rating: 4.6,
+    reviews: 180,
+    pricing: '4 000 €/mois',
+    setup: '6 mois',
+    team: '20+',
+    ai: false,
+    seniorLead: 'partial',
+    fullFunnel: 'partial',
+    weekly: true,
+    caseStudies: true,
+  },
+  {
+    rank: 6,
+    name: 'Agence 404',
+    score: 85,
+    speciality: 'Croissance structurée',
+    rating: 4.5,
+    reviews: 220,
+    pricing: '5 500 €/mois',
+    setup: '5 mois',
+    team: '50+',
+    ai: false,
+    seniorLead: true,
+    fullFunnel: true,
+    weekly: 'partial',
+    caseStudies: true,
+  },
+  {
+    rank: 7,
+    name: 'CosaVostra',
+    score: 82,
+    speciality: 'Approche créative',
+    rating: 4.4,
+    reviews: 120,
+    pricing: '4 500 €/mois',
+    setup: '4 mois',
+    team: '30+',
+    ai: false,
+    seniorLead: 'partial',
+    fullFunnel: false,
+    weekly: 'partial',
+    caseStudies: 'partial',
+  },
+];
+
+const compareColumns: Array<{ key: keyof AgencyRow; label: string; tooltip: string }> = [
+  { key: 'ai', label: 'Agents IA', tooltip: 'Agents IA déployés en production' },
+  { key: 'seniorLead', label: 'Pilote senior', tooltip: 'Partner 10+ ans en première ligne' },
+  { key: 'fullFunnel', label: 'Full-funnel', tooltip: 'Inbound + outbound + paid intégrés' },
+  { key: 'weekly', label: 'Pilotage hebdo', tooltip: 'Reporting et cadence documentés' },
+  { key: 'caseStudies', label: 'Cases chiffrés', tooltip: 'Études de cas avec chiffres vérifiables' },
+];
+
+const CheckCell = ({ state }: { state: CheckState }) => {
+  if (state === true) {
+    return (
+      <span className="inline-flex items-center justify-center w-6 h-6 !rounded-none border border-[color:var(--accent)]/40 text-[color:var(--accent)]">
+        <Check size={14} strokeWidth={2.5} />
+      </span>
+    );
+  }
+  if (state === 'partial') {
+    return (
+      <span className="inline-flex items-center justify-center w-6 h-6 !rounded-none border border-[color:var(--border-subtle)] text-[color:var(--ink-muted)] text-[10px] font-mono">
+        ½
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center justify-center w-6 h-6 !rounded-none border border-[color:var(--border-subtle)]/40 text-[color:var(--ink-muted)]/40">
+      <Minus size={14} />
+    </span>
+  );
+};
+
 export default function MeilleureAgenceGrowthPage() {
   return (
     <>
@@ -203,6 +367,229 @@ export default function MeilleureAgenceGrowthPage() {
                   </p>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CLASSEMENT TOP 7 */}
+        <section className="relative py-16 lg:py-20 overflow-hidden">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--border-subtle)] to-transparent" />
+          <div className="max-w-[1200px] mx-auto px-5 lg:px-10 relative">
+            <div className="flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)]">
+              <span className="w-6 h-px bg-[color:var(--accent)]" /> Classement {currentYear}
+            </div>
+            <h2 className="mt-4 text-[clamp(28px,3.2vw,40px)] font-display font-medium tracking-[-0.02em] max-w-[820px]">
+              Top 7 des meilleures agences Growth en France.
+            </h2>
+            <p className="mt-3 text-[color:var(--ink-muted)] max-w-[640px] text-[15px] leading-relaxed">
+              Notre lecture du marché — score sur 100 basé sur résultats clients, expertise technique et satisfaction. Pas un palmarès marketing, un outil d&apos;arbitrage.
+            </p>
+
+            {/* Tableau comparatif desktop — vraie matrice de comparaison */}
+            <div className="mt-10 hidden lg:block">
+              <div className="!rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-[color:var(--border-subtle)] text-[10px] font-mono uppercase tracking-[0.18em] text-[color:var(--ink-muted)]">
+                      <th className="sticky left-0 z-10 bg-[#141211] light:bg-white px-4 py-4 font-normal w-[60px]">#</th>
+                      <th className="sticky left-[60px] z-10 bg-[#141211] light:bg-white px-4 py-4 font-normal min-w-[180px]">Agence</th>
+                      <th className="px-3 py-4 font-normal text-center w-[80px]">Score</th>
+                      <th className="px-3 py-4 font-normal text-center w-[80px]">Note</th>
+                      <th className="px-3 py-4 font-normal w-[110px]">Tarif</th>
+                      <th className="px-3 py-4 font-normal text-center w-[80px]">Setup</th>
+                      <th className="px-3 py-4 font-normal text-center w-[70px]">Équipe</th>
+                      {compareColumns.map((c) => (
+                        <th
+                          key={c.key as string}
+                          title={c.tooltip}
+                          className="px-2 py-4 font-normal text-center w-[100px]"
+                        >
+                          {c.label}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {growthAgencies.map((agency) => {
+                      const isUclic = agency.rank === 1;
+                      return (
+                        <tr
+                          key={agency.name}
+                          className={`border-b border-[color:var(--border-subtle)] last:border-b-0 transition-colors ${
+                            isUclic ? 'bg-[color:var(--accent)]/5' : 'hover:bg-[color:var(--card-elev-1)]'
+                          }`}
+                        >
+                          <td
+                            className={`sticky left-0 z-[5] px-4 py-4 ${
+                              isUclic ? 'bg-[#1a1716] light:bg-[#fbfbfa]' : 'bg-[#141211] light:bg-white'
+                            }`}
+                          >
+                            <span
+                              className={`inline-flex items-center justify-center w-8 h-8 !rounded-none border text-[12px] font-mono ${
+                                isUclic
+                                  ? 'border-[color:var(--accent)]/60 text-[color:var(--accent)]'
+                                  : 'border-[color:var(--border-subtle)] text-[color:var(--ink-muted)]'
+                              }`}
+                            >
+                              {agency.rank}
+                            </span>
+                          </td>
+                          <td
+                            className={`sticky left-[60px] z-[5] px-4 py-4 ${
+                              isUclic ? 'bg-[#1a1716] light:bg-[#fbfbfa]' : 'bg-[#141211] light:bg-white'
+                            }`}
+                          >
+                            <div className="flex items-center gap-1.5 text-[15px] font-display font-medium leading-tight">
+                              {agency.name}
+                              {isUclic && <BadgeCheck size={13} className="text-[color:var(--accent)] shrink-0" />}
+                            </div>
+                            <div className="text-[11px] text-[color:var(--ink-muted)] mt-0.5">{agency.speciality}</div>
+                          </td>
+                          <td className="px-3 py-4 text-center">
+                            <div
+                              className={`text-[20px] font-display font-medium leading-none ${
+                                isUclic ? 'text-[color:var(--accent)]' : 'text-[color:var(--ink)]'
+                              }`}
+                            >
+                              {agency.score}
+                            </div>
+                          </td>
+                          <td className="px-3 py-4 text-center">
+                            <div className="inline-flex items-center gap-1 text-[12px] text-[color:var(--ink)]">
+                              <Star size={11} className="text-[color:var(--accent)]" />
+                              {agency.rating.toFixed(1)}
+                            </div>
+                            <div className="text-[10px] text-[color:var(--ink-muted)] mt-0.5">{agency.reviews} avis</div>
+                          </td>
+                          <td className="px-3 py-4 text-[12px] text-[color:var(--ink)] font-mono whitespace-nowrap">
+                            {agency.pricing}
+                          </td>
+                          <td className="px-3 py-4 text-center text-[12px] text-[color:var(--ink-muted)] font-mono">
+                            {agency.setup}
+                          </td>
+                          <td className="px-3 py-4 text-center text-[12px] text-[color:var(--ink-muted)] font-mono">
+                            {agency.team}
+                          </td>
+                          {compareColumns.map((c) => (
+                            <td key={c.key as string} className="px-2 py-4 text-center">
+                              <div className="inline-flex">
+                                <CheckCell state={agency[c.key] as CheckState} />
+                              </div>
+                            </td>
+                          ))}
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Légende */}
+              <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-[12px] text-[color:var(--ink-muted)]">
+                <span className="inline-flex items-center gap-2">
+                  <span className="inline-flex items-center justify-center w-5 h-5 !rounded-none border border-[color:var(--accent)]/40 text-[color:var(--accent)]">
+                    <Check size={11} strokeWidth={2.5} />
+                  </span>
+                  Présent
+                </span>
+                <span className="inline-flex items-center gap-2">
+                  <span className="inline-flex items-center justify-center w-5 h-5 !rounded-none border border-[color:var(--border-subtle)] text-[10px] font-mono">
+                    ½
+                  </span>
+                  Partiel
+                </span>
+                <span className="inline-flex items-center gap-2">
+                  <span className="inline-flex items-center justify-center w-5 h-5 !rounded-none border border-[color:var(--border-subtle)]/40 text-[color:var(--ink-muted)]/40">
+                    <Minus size={11} />
+                  </span>
+                  Absent
+                </span>
+                <span className="ml-auto">
+                  * Classement basé sur résultats clients, expertise technique et satisfaction client ({currentYear}).
+                </span>
+              </div>
+            </div>
+
+            {/* Mobile : carte par agence avec mini-matrice */}
+            <div className="mt-10 flex flex-col gap-3 lg:hidden">
+              {growthAgencies.map((agency) => {
+                const isUclic = agency.rank === 1;
+                return (
+                  <article
+                    key={agency.name}
+                    className={`relative !rounded-none border ${
+                      isUclic
+                        ? 'border-[color:var(--accent)]/60 bg-[color:var(--card-elev-1)] light:bg-white'
+                        : 'border-[color:var(--border-subtle)] bg-[#141211] light:bg-white'
+                    }`}
+                  >
+                    {/* Header */}
+                    <div className="flex items-start justify-between gap-4 p-5 border-b border-[color:var(--border-subtle)]">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <span
+                          className={`inline-flex items-center justify-center w-9 h-9 !rounded-none border text-[13px] font-mono shrink-0 ${
+                            isUclic
+                              ? 'border-[color:var(--accent)]/60 text-[color:var(--accent)]'
+                              : 'border-[color:var(--border-subtle)] text-[color:var(--ink-muted)]'
+                          }`}
+                        >
+                          #{agency.rank}
+                        </span>
+                        <div className="min-w-0">
+                          <h3 className="text-[17px] font-display font-medium tracking-[-0.01em] flex items-center gap-1.5">
+                            {agency.name}
+                            {isUclic && <BadgeCheck size={13} className="text-[color:var(--accent)] shrink-0" />}
+                          </h3>
+                          <p className="text-[11px] text-[color:var(--ink-muted)]">{agency.speciality}</p>
+                        </div>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <div
+                          className={`text-[22px] font-display font-medium leading-none ${
+                            isUclic ? 'text-[color:var(--accent)]' : 'text-[color:var(--ink)]'
+                          }`}
+                        >
+                          {agency.score}
+                        </div>
+                        <div className="mt-1 inline-flex items-center gap-1 text-[10px] text-[color:var(--ink-muted)]">
+                          <Star size={10} className="text-[color:var(--accent)]" />
+                          {agency.rating.toFixed(1)} · {agency.reviews}
+                        </div>
+                      </div>
+                    </div>
+                    {/* Métriques chiffrées */}
+                    <div className="grid grid-cols-3 divide-x divide-[color:var(--border-subtle)] border-b border-[color:var(--border-subtle)]">
+                      <div className="px-3 py-3">
+                        <div className="text-[10px] font-mono uppercase tracking-[0.18em] text-[color:var(--ink-muted)]">Tarif</div>
+                        <div className="text-[12px] text-[color:var(--ink)] font-mono mt-1">{agency.pricing}</div>
+                      </div>
+                      <div className="px-3 py-3">
+                        <div className="text-[10px] font-mono uppercase tracking-[0.18em] text-[color:var(--ink-muted)]">Setup</div>
+                        <div className="text-[12px] text-[color:var(--ink)] font-mono mt-1">{agency.setup}</div>
+                      </div>
+                      <div className="px-3 py-3">
+                        <div className="text-[10px] font-mono uppercase tracking-[0.18em] text-[color:var(--ink-muted)]">Équipe</div>
+                        <div className="text-[12px] text-[color:var(--ink)] font-mono mt-1">{agency.team}</div>
+                      </div>
+                    </div>
+                    {/* Critères booléens */}
+                    <ul className="p-5 grid grid-cols-1 gap-2.5">
+                      {compareColumns.map((c) => (
+                        <li
+                          key={c.key as string}
+                          className="flex items-center justify-between gap-3 text-[13px]"
+                        >
+                          <span className="text-[color:var(--ink-muted)]">{c.label}</span>
+                          <CheckCell state={agency[c.key] as CheckState} />
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
+                );
+              })}
+              <p className="mt-2 text-[11px] text-[color:var(--ink-muted)]">
+                * Classement basé sur résultats clients, expertise technique et satisfaction client ({currentYear}).
+              </p>
             </div>
           </div>
         </section>

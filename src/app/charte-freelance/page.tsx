@@ -3,28 +3,31 @@ import Nav from '@/components/landing/Nav';
 import Footer from '@/components/landing/Footer';
 import CtaFinal from '@/components/landing/CtaFinal';
 import CharteFreelanceClient from '@/components/charte-freelance/CharteFreelanceClient';
+import CharteSections from '@/components/charte-freelance/CharteSections';
 import { jsonLdString } from '@/lib/schema';
 
 const SITE_URL = 'https://uclic.fr';
 
 export const metadata: Metadata = {
-  title: 'Charte Freelance — Cadre qualité Uclic',
+  title: 'Collectif Freelance Uclic — Entraide, partage, Slack commun',
   description:
-    "Cadre qualité pour rejoindre Uclic : pilotage senior, résultats mesurables, agents IA en production. Zéro commission sur apport d'affaires, transparence totale.",
+    "Un collectif de freelances seniors growth, IA & développement. Slack commun, stand-up hebdo, partage d'agents IA et workflows, pipe commercial mutualisé. On avance ensemble.",
   keywords: [
-    'charte freelance',
     'collectif freelance',
+    'communauté freelance growth',
     'rejoindre uclic',
-    'freelance growth',
-    'valeurs uclic',
+    'freelance growth marketing',
+    'slack freelance',
+    'partage agents IA',
+    'entraide freelance',
   ],
   alternates: { canonical: '/charte-freelance' },
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/charte-freelance`,
-    title: 'Charte Freelance — Cadre qualité Uclic',
+    title: 'Collectif Freelance Uclic — Entraide & partage',
     description:
-      "Cadre qualité Uclic : pilotage senior, résultats mesurables, agents IA en production. Transparence totale, zéro commission sur apport d'affaires.",
+      "Un collectif de freelances seniors qui partagent Slack, stand-up, agents IA et pipe commercial. On avance ensemble.",
     siteName: 'Uclic',
     locale: 'fr_FR',
     images: [
@@ -38,9 +41,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Charte Freelance — Cadre qualité Uclic',
+    title: 'Collectif Freelance Uclic — Entraide & partage',
     description:
-      "Cadre qualité Uclic : pilotage senior, résultats mesurables, agents IA en production. Transparence totale, zéro commission sur apport d'affaires.",
+      "Un collectif de freelances seniors : Slack commun, stand-up hebdo, agents IA partagés, pipe commercial mutualisé.",
     site: '@uclic_fr',
   },
 };
@@ -70,6 +73,7 @@ export default function CharteFreelancePage() {
       <Nav />
       <main id="main" className="relative">
         <CharteFreelanceClient />
+        <CharteSections />
         <CtaFinal />
       </main>
       <Footer />

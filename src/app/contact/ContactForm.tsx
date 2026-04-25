@@ -242,11 +242,16 @@ export default function ContactForm() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="group inline-flex items-center justify-center gap-2 w-full md:w-auto bg-[color:var(--accent)] text-[color:var(--accent-ink)] font-semibold text-[14px] px-7 py-3.5 rounded-full hover:brightness-110 transition disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]"
+            style={{
+              background:
+                'radial-gradient(ellipse 140% 120% at 50% -20%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 35%, rgba(255,255,255,0.08) 65%, transparent 100%), var(--accent)',
+              borderRadius: '6px',
+            }}
+            className="group inline-flex items-center justify-center gap-2 w-full md:w-auto text-black light:text-white font-semibold text-[14px] px-7 py-3.5 hover:scale-[1.02] transition-transform disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]"
           >
             {isSubmitting ? (
               <>
-                <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-[color:var(--accent-ink)]/30 border-t-[color:var(--accent-ink)]" />
+                <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-black/30 border-t-black light:border-white/30 light:border-t-white" />
                 Envoi en cours...
               </>
             ) : (

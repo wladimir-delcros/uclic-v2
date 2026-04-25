@@ -420,7 +420,7 @@ function MockTeam() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/avatars/men-22.webp"
-            alt=""
+            alt="Growth Lead Senior Uclic"
             width={48}
             height={48}
             loading="lazy"
@@ -460,7 +460,7 @@ function MockTeam() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={x.photo}
-                alt=""
+                alt={`Expert ${x.role}${x.sub ? ' — ' + x.sub : ''}`}
                 width={36}
                 height={36}
                 loading="lazy"
@@ -665,36 +665,59 @@ const mockups = [MockAudit, MockArchitecture, MockTeam, MockAgentsDev];
    3 cards cliquables (YouTube / Spotify / LinkedIn) qui ouvrent
    un modal lightbox avec la vidéo/audio embed mis en avant sur uclic.fr.
 */
-type VideoSource = 'youtube' | 'spotify' | 'linkedin';
+type VideoSource = 'youtube' | 'spotify' | 'linkedin' | 'video';
 type FeaturedVideo = {
   platform: VideoSource;
+  kind: 'mp4' | 'iframe';
   label: string;
   title: string;
-  embedUrl: string;
+  /** URL source : soit chemin mp4 local, soit URL iframe embed */
+  src: string;
+  poster?: string;
+  invitedBy: { name: string; avatar: string; role?: 'Invité par' | 'Publié par' };
   externalUrl: string;
 };
 
+/* Vidéos mises en avant (témoignages home) — portées depuis V1 TestimonialClient.
+   4 références : Scalezia (Benoit Dubos) · Spotify Wild Marketer (Alexandre Brengues) ·
+   LinkedIn Jean Bonnenfant · La Growth Machine (Brice Maurin). */
 const FEATURED_VIDEOS: FeaturedVideo[] = [
   {
     platform: 'youtube',
-    label: 'YouTube',
-    title: 'Interview growth & IA — Wladimir Delcros',
-    embedUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    externalUrl: 'https://www.youtube.com/@uclic',
+    kind: 'mp4',
+    label: 'Interview Scalezia',
+    title: 'Automatiser sa prospection B2B',
+    src: '/scalezia.mp4',
+    poster: '/scalezia-poster.webp',
+    invitedBy: { name: 'Benoit Dubos', avatar: '/testimonials/benoit-dubos.jpg', role: 'Invité par' },
+    externalUrl: 'https://scalezia.co',
   },
   {
     platform: 'spotify',
-    label: 'Spotify',
-    title: 'Podcast — Growth industrialisé & agents IA',
-    embedUrl: 'https://open.spotify.com/embed/episode/5Dl8GapWjsIf6TWM1VLvM8',
-    externalUrl: 'https://open.spotify.com/show/uclic',
+    kind: 'iframe',
+    label: 'Podcast Wild Marketer',
+    title: 'Automatiser 100 % sa Lead Gen B2B',
+    src: 'https://open.spotify.com/embed/episode/6oN7OBOaooqdFnT0czddrc?utm_source=generator&theme=0',
+    invitedBy: { name: 'Alexandre Brengues', avatar: '/testimonials/alexandre-brengues.jpg', role: 'Invité par' },
+    externalUrl: 'https://open.spotify.com/episode/6oN7OBOaooqdFnT0czddrc',
   },
   {
     platform: 'linkedin',
-    label: 'LinkedIn',
-    title: 'Post — Les leçons de 10 ans de growth SaaS',
-    embedUrl: 'https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7240000000000000000',
-    externalUrl: 'https://www.linkedin.com/in/wladimirdelcros',
+    kind: 'mp4',
+    label: 'Webinar LinkedIn',
+    title: 'Growth hacking LinkedIn',
+    src: '/webinar-growthhacking-linkedin-linkedintips-linkedin-wladimir-delcros.mp4#t=0.1',
+    invitedBy: { name: 'Jean Bonnenfant', avatar: '/testimonials/jean-bonnenfant.jpg', role: 'Publié par' },
+    externalUrl: 'https://www.linkedin.com/in/jeanbonnenfant',
+  },
+  {
+    platform: 'video',
+    kind: 'mp4',
+    label: 'Interview La Growth Machine',
+    title: 'Le CEO LGM parle d’Uclic',
+    src: '/lagrowthmachine-wladimir-delcros.mp4#t=20',
+    invitedBy: { name: 'Brice Maurin', avatar: '/hero/brice-maurin.webp', role: 'Invité par' },
+    externalUrl: 'https://www.lagrowthmachine.com',
   },
 ];
 
@@ -715,7 +738,7 @@ const SpotifyIcon = ({ size = 22 }: { size?: number }) => (
   </svg>
 );
 
-function FeaturedVideos() {
+export function FeaturedVideos() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
 
   useEffect(() => {
@@ -730,13 +753,16 @@ function FeaturedVideos() {
   const Icon = ({ platform, size = 22 }: { platform: VideoSource; size?: number }) => {
     if (platform === 'youtube') {return <YoutubeIcon size={size} />;}
     if (platform === 'linkedin') {return <LinkedinIcon size={size} />;}
-    return <SpotifyIcon size={size} />;
+    if (platform === 'spotify') {return <SpotifyIcon size={size} />;}
+    // Generic video (mp4 local) → Play triangle
+    return <Play size={size} />;
   };
 
   const platformColor = (p: VideoSource) => {
     if (p === 'youtube') {return '#FF0000';}
     if (p === 'linkedin') {return '#0A66C2';}
-    return '#1DB954';
+    if (p === 'spotify') {return '#1DB954';}
+    return 'var(--accent)';
   };
 
   const current = openIdx !== null ? FEATURED_VIDEOS[openIdx] : null;
@@ -747,27 +773,54 @@ function FeaturedVideos() {
         <div className="text-[11px] font-mono uppercase tracking-[0.22em] text-[color:var(--ink-muted)]">
           Ils parlent de notre méthode
         </div>
-        <div className="flex flex-wrap items-center justify-center gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 w-full max-w-[1200px]">
           {FEATURED_VIDEOS.map((v, i) => (
             <button
-              key={v.platform}
+              key={v.platform + i}
               type="button"
               onClick={() => setOpenIdx(i)}
-              className="group relative flex items-center gap-2.5 px-4 py-2.5 border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white hover:!border-[color:var(--accent)]/60 transition-colors duration-200">
-              <span
-                className="w-8 h-8 grid place-items-center rounded-[4px] shrink-0 transition-transform duration-200 group-hover:scale-[1.05]"
-                style={{ color: platformColor(v.platform), backgroundColor: `${platformColor(v.platform)}1a` }}>
-                <Icon platform={v.platform} size={18} />
-              </span>
-              <span className="flex flex-col items-start min-w-0 text-left">
-                <span className="text-[10.5px] font-mono uppercase tracking-wider text-[color:var(--ink-muted)] leading-none">
+              className="group relative flex flex-col gap-3 p-4 border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white hover:!border-[color:var(--accent)]/60 transition-colors duration-200 w-full text-left">
+              {/* Ligne 1 : icon plateforme + play */}
+              <div className="flex items-center justify-between w-full">
+                <span
+                  className="w-8 h-8 grid place-items-center rounded-[4px] shrink-0 transition-transform duration-200 group-hover:scale-[1.05]"
+                  style={{ color: platformColor(v.platform), backgroundColor: `${platformColor(v.platform)}1a` }}>
+                  <Icon platform={v.platform} size={16} />
+                </span>
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-full border border-[color:var(--border-subtle)] text-[color:var(--ink-muted)] group-hover:text-[color:var(--accent)] group-hover:border-[color:var(--accent)]/40 transition-colors">
+                  <Play size={12} strokeWidth={2} />
+                </span>
+              </div>
+
+              {/* Ligne 2 : label + titre (2 lignes max via clamp) */}
+              <div className="min-w-0 w-full">
+                <div className="text-[10.5px] font-mono uppercase tracking-wider text-[color:var(--ink-muted)] leading-none mb-1.5">
                   {v.label}
-                </span>
-                <span className="text-[13px] text-[color:var(--ink)] leading-tight mt-0.5 max-w-[220px] truncate">
+                </div>
+                <div className="text-[13.5px] text-[color:var(--ink)] leading-tight line-clamp-2">
                   {v.title}
-                </span>
-              </span>
-              <Play size={14} strokeWidth={2} className="text-[color:var(--ink-muted)] group-hover:text-[color:var(--accent)] transition-colors shrink-0 ml-1" />
+                </div>
+              </div>
+
+              {/* Ligne 3 : avatar + nom invité (zone dédiée, jamais superposée) */}
+              <div className="flex items-center gap-2 pt-3 border-t border-[color:var(--border-subtle)] w-full min-w-0">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={v.invitedBy.avatar}
+                  alt={v.invitedBy.name}
+                  className="w-7 h-7 rounded-full object-cover border border-[color:var(--border-subtle)] shrink-0"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="min-w-0 flex flex-col leading-tight">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.18em] text-[color:var(--ink-dim)]">
+                    {v.invitedBy.role ?? 'Invité par'}
+                  </span>
+                  <span className="text-[12.5px] text-[color:var(--ink)] truncate">
+                    {v.invitedBy.name}
+                  </span>
+                </div>
+              </div>
             </button>
           ))}
         </div>
@@ -791,32 +844,59 @@ function FeaturedVideos() {
               transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
               onClick={(e) => e.stopPropagation()}
               className="relative w-full max-w-[900px] bg-[#141211] light:bg-white border border-[color:var(--border-subtle)] shadow-2xl">
-              <div className="flex items-center justify-between px-4 py-3 border-b border-[color:var(--border-subtle)]">
-                <div className="flex items-center gap-2.5 min-w-0">
+              <div className="flex items-center justify-between gap-4 px-4 py-3 border-b border-[color:var(--border-subtle)]">
+                <div className="flex items-center gap-3 min-w-0">
                   <span
                     className="w-7 h-7 grid place-items-center rounded-[4px] shrink-0"
                     style={{ color: platformColor(current.platform), backgroundColor: `${platformColor(current.platform)}1a` }}>
-                    <Icon platform={current.platform} size={15} />
+                    <Icon platform={current.platform} size={14} />
                   </span>
-                  <span className="text-[14px] text-[color:var(--ink)] truncate">{current.title}</span>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-[14px] text-[color:var(--ink)] truncate">{current.title}</span>
+                    <div className="flex items-center gap-1.5 text-[11px] text-[color:var(--ink-muted)] mt-0.5">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={current.invitedBy.avatar}
+                        alt={current.invitedBy.name}
+                        className="w-4 h-4 rounded-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <span>{current.invitedBy.role ?? 'Invité par'} · <span className="text-[color:var(--ink)]">{current.invitedBy.name}</span></span>
+                    </div>
+                  </div>
                 </div>
                 <button
                   type="button"
                   onClick={() => setOpenIdx(null)}
                   aria-label="Fermer"
-                  className="w-8 h-8 grid place-items-center border border-[color:var(--border-subtle)] hover:!border-[color:var(--accent)]/60 transition-colors text-[color:var(--ink-muted)] hover:text-[color:var(--ink)]">
+                  className="w-8 h-8 grid place-items-center border border-[color:var(--border-subtle)] hover:!border-[color:var(--accent)]/60 transition-colors text-[color:var(--ink-muted)] hover:text-[color:var(--ink)] shrink-0">
                   <X size={16} strokeWidth={2.2} />
                 </button>
               </div>
               <div className={`relative w-full ${current.platform === 'spotify' ? 'aspect-[16/5]' : 'aspect-video'} bg-black`}>
-                <iframe
-                  src={current.embedUrl}
-                  title={current.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full"
-                />
+                {current.kind === 'mp4' ? (
+                  <video
+                    src={current.src}
+                    poster={current.poster}
+                    controls
+                    autoPlay
+                    playsInline
+                    preload="metadata"
+                    className="absolute inset-0 w-full h-full"
+                  >
+                    <track kind="captions" />
+                  </video>
+                ) : (
+                  <iframe
+                    src={current.src}
+                    title={current.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full"
+                  />
+                )}
               </div>
             </motion.div>
           </motion.div>

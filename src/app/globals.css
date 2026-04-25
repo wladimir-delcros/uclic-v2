@@ -88,6 +88,13 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Smooth scroll global — ancres TOC, back-to-top, etc.
+   scroll-padding-top évite que le titre ciblé se cache sous la Nav sticky (64px + marge). */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
 h1, h2, h3, h4, h5 {
   font-family: var(--font-display);
   font-weight: 500;

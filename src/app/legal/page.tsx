@@ -9,7 +9,7 @@ import { jsonLdString } from '@/lib/schema';
 const SITE_URL = 'https://uclic.fr';
 
 export const metadata: Metadata = {
-  title: 'Informations légales',
+  title: 'Informations légales — Mentions, CGV, RGPD',
   description:
     "Mentions légales, CGV, RGPD, politique de confidentialité et cookies : retrouvez toutes les informations légales relatives à l'agence Uclic.",
   alternates: { canonical: '/legal' },

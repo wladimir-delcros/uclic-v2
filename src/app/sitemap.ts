@@ -43,6 +43,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: '/a-propos', changeFrequency: 'monthly', priority: 0.7 },
     { path: '/equipe', changeFrequency: 'monthly', priority: 0.7 },
     { path: '/contact', changeFrequency: 'monthly', priority: 0.8 },
+    { path: '/tarifs', changeFrequency: 'monthly', priority: 0.9 },
+    { path: '/presse', changeFrequency: 'monthly', priority: 0.6 },
+    { path: '/rejoindre', changeFrequency: 'monthly', priority: 0.7 },
   ];
 
   const mediumPriority: Array<{ path: string; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']; priority: number }> = [

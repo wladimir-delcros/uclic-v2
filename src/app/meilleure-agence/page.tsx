@@ -6,6 +6,9 @@ import Footer from '@/components/landing/Footer';
 import CtaFinal from '@/components/landing/CtaFinal';
 import SectionAmbience from '@/components/ui/SectionAmbience';
 import { jsonLdString } from '@/lib/schema';
+import { getAllMeilleureAgenceSlugs } from '@/lib/meilleure-agence';
+
+export const revalidate = 3600;
 
 const SITE_URL = 'https://uclic.fr';
 const currentYear = new Date().getFullYear();
@@ -88,7 +91,28 @@ const expertises = [
   { name: 'CRO & UX', desc: 'Optimisation conversion, landing pages, AB testing.' },
 ];
 
-export default function MeilleureAgencePage() {
+export default async function MeilleureAgencePage() {
+  const allSlugs = await getAllMeilleureAgenceSlugs();
+
+  const byExpertise = new Map<string, Array<{ ville: string; slug: string }>>();
+  for (const entry of allSlugs) {
+    const serviceName = entry.expertise.replace(/^Agence\s+/i, '').trim();
+    if (!byExpertise.has(serviceName)) {
+      byExpertise.set(serviceName, []);
+    }
+    byExpertise.get(serviceName)!.push({ ville: entry.ville, slug: entry.slug });
+  }
+  const sortedExpertises = Array.from(byExpertise.entries()).sort((a, b) =>
+    a[0].localeCompare(b[0], 'fr')
+  );
+  for (const [, cities] of sortedExpertises) {
+    cities.sort((a, b) => a.ville.localeCompare(b.ville, 'fr'));
+  }
+
+  const totalPages = allSlugs.length;
+  const totalExpertises = sortedExpertises.length;
+  const totalVilles = new Set(allSlugs.map((s) => s.ville)).size;
+
   return (
     <>
       <script
@@ -123,7 +147,9 @@ export default function MeilleureAgencePage() {
               </h1>
 
               <p className="mt-5 text-[color:var(--ink-muted)] max-w-[680px] text-[16px] leading-relaxed">
-                Un annuaire éditorial des agences marketing reconnues en France, par expertise et par ville. On partage nos critères — à vous d&apos;arbitrer. Et si vous cherchez plutôt une équipe complète (inbound, outbound, IA) sans silos, on en parle en audit.
+                {totalPages > 0
+                  ? `${totalPages} comparatifs couvrant ${totalExpertises} expertises dans ${totalVilles} villes. Trouvez l'agence idéale pour votre projet — on partage nos critères et notre lecture franche.`
+                  : `Un annuaire éditorial des agences marketing reconnues en France, par expertise et par ville. On partage nos critères — à vous d'arbitrer.`}
               </p>
             </div>
           </div>
@@ -194,20 +220,63 @@ export default function MeilleureAgencePage() {
               ))}
             </div>
 
-            {/* Note sur contenu legacy */}
-            <div className="mt-10 relative !rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white p-7">
-              <p className="text-[15px] text-[color:var(--ink-muted)] leading-relaxed">
-                Les fiches détaillées par expertise et par ville sont en cours de republication. Chez Uclic, on assemble les trois piliers — inbound, outbound, agents IA — dans une seule équipe pilotée par un senior. Si vous voulez un avis franc sur l&apos;agence adaptée à votre stade, passez par un audit gratuit. On oriente, même si la bonne réponse n&apos;est pas nous.
-              </p>
-              <Link
-                href="/audit"
-                className="mt-5 inline-flex items-center gap-2 text-[14px] font-medium text-[color:var(--accent)] hover:gap-3 transition-all"
-              >
-                Mon audit gratuit — 48 h <ArrowRight size={14} />
-              </Link>
-            </div>
           </div>
         </section>
+
+        {/* ANNUAIRE PAR EXPERTISE & VILLE */}
+        {sortedExpertises.length > 0 && (
+          <section className="relative py-16 lg:py-20 overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--border-subtle)] to-transparent" />
+            <div className="max-w-[1200px] mx-auto px-5 lg:px-10 relative">
+              <div className="flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-[color:var(--accent)]">
+                <span className="w-6 h-px bg-[color:var(--accent)]" /> Annuaire complet
+              </div>
+              <h2 className="mt-4 text-[clamp(28px,3.2vw,40px)] font-display font-medium tracking-[-0.02em] max-w-[820px]">
+                {totalPages} comparatifs · {totalExpertises} expertises · {totalVilles} villes.
+              </h2>
+              <p className="mt-3 text-[color:var(--ink-muted)] max-w-[640px] text-[15px] leading-relaxed">
+                Cliquez sur une ville pour ouvrir le classement local. Scoring, avis Google, vérification de la fiche, lisibilité du positionnement.
+              </p>
+
+              <div className="mt-12 space-y-12">
+                {sortedExpertises.map(([expertiseName, cities]) => (
+                  <div key={expertiseName}>
+                    <h3 className="text-[20px] lg:text-[24px] font-display font-medium tracking-[-0.01em] text-[color:var(--ink)] mb-5">
+                      Agence {expertiseName}
+                      <span className="ml-3 text-[12px] font-mono uppercase tracking-[0.18em] text-[color:var(--ink-muted)]">
+                        {cities.length} {cities.length > 1 ? 'villes' : 'ville'}
+                      </span>
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {cities.map((city) => (
+                        <Link
+                          key={city.slug}
+                          href={`/meilleure-agence/${city.slug}`}
+                          className="inline-flex items-center px-3.5 py-2 !rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white text-[13px] text-[color:var(--ink-muted)] hover:border-[color:var(--accent)]/40 hover:text-[color:var(--accent)] transition-colors"
+                        >
+                          {expertiseName} {city.ville}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Soft CTA */}
+              <div className="mt-16 relative !rounded-none border border-[color:var(--border-subtle)] bg-[#141211] light:bg-white p-7">
+                <p className="text-[15px] text-[color:var(--ink-muted)] leading-relaxed">
+                  Chez Uclic, on assemble les trois piliers — inbound, outbound, agents IA — dans une seule équipe pilotée par un senior. Si vous voulez un avis franc sur l&apos;agence adaptée à votre stade, passez par un audit gratuit. On oriente, même si la bonne réponse n&apos;est pas nous.
+                </p>
+                <Link
+                  href="/audit"
+                  className="mt-5 inline-flex items-center gap-2 text-[14px] font-medium text-[color:var(--accent)] hover:gap-3 transition-all"
+                >
+                  Mon audit gratuit — 48 h <ArrowRight size={14} />
+                </Link>
+              </div>
+            </div>
+          </section>
+        )}
 
         <CtaFinal />
       </main>

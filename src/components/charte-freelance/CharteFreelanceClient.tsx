@@ -3,15 +3,16 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import SectionAmbience from '../ui/SectionAmbience';
 
-/* Charte éditoriale — lettre ouverte au futur freelance, préservée du legacy
-   avec mise en forme DA V2 (card bg-#141211, !rounded-none, hairline border). */
+/* Lettre ouverte à la communauté freelance Uclic — ton collectif, entraide,
+   partage, valeurs alignées avec la home (3 piliers · collectif · zéro silo). */
 const PARAGRAPHS: string[] = [
   'Cher·e futur·e membre du collectif,',
-  "Uclic, c'est trois piliers, une seule équipe, zéro silo — Inbound, Outbound, IA & Développement. Si vous rejoignez le collectif, c'est pour tenir un pilier avec le niveau d'exigence que nos clients attendent : scale-ups B2B qui veulent des résultats mesurables en 90 jours, pas des slides.",
-  "Le cadre est simple. Un pilote senior garde la main sur chaque compte — vous livrez sous son mandat, jamais en autonomie déguisée. Certifications à jour, process documenté, reporting hebdo. On ne confie pas un client à un junior sans filet, et on attend la même rigueur de chaque expert canal.",
-  "Nos engagements en retour : transparence totale sur les projets et les tarifs, zéro commission sur l'apport d'affaires, pipe commercial partagé, agents IA mis à votre disposition pour industrialiser vos tâches répétitives (−70 % de temps manuel côté exécution).",
-  "Ce qu'on vous demande : des résultats mesurables, pas des livrables cosmétiques. Chaque euro client doit être traçable. Pas de promesses creuses. Pas de reporting qui cache les trous. Si un test ne rapporte pas, on coupe — ensemble.",
-  "Vous gardez votre indépendance, vous gagnez un cadre senior, un pipe B2B exigeant et des outils IA en production. Si ces règles du jeu résonnent, on en parle.",
+  "Uclic, c'est trois piliers — Inbound, Outbound, IA & Développement — portés par une seule équipe, zéro silo. Ce que nous construisons ensemble, c'est un collectif de freelances seniors qui partagent une conviction : on avance mieux à plusieurs qu'isolé·e dans son coin.",
+  "Le cœur du collectif, c'est un Slack commun où on échange chaque jour : retours d'expérience clients, tips canal par canal, prompts d'agents IA qui marchent, templates outbound qui convertissent, benchs d'outils. Les bonnes idées circulent, les ratés aussi — sans filtre, sans ego.",
+  "Chaque semaine, un stand-up collectif : revue des missions en cours, pairing sur les dossiers chauds, veille croisée growth/IA/produit. Chaque mois, un atelier ouvert pour approfondir un sujet (SEO technique, agents IA, cold outbound, attribution). Vous repartez avec des workflows prêts à déployer.",
+  "Nos engagements partagés : transparence totale sur les projets et les tarifs, zéro commission sur l'apport d'affaires entre membres, pipe commercial mutualisé, bibliothèque d'agents IA et de workflows n8n mis à votre disposition (−70 % de temps manuel côté exécution).",
+  "Ce qu'on vous propose : un cadre bienveillant, un collectif qui vous couvre, des clients scale-ups B2B exigeants et un terrain de jeu pour progresser chaque mois. Vous gardez votre indépendance — vous gagnez une tribu.",
+  "Si vous voulez bosser entouré·e, apprendre vite et livrer avec fierté, on se parle.",
 ];
 
 export default function CharteFreelanceClient() {
@@ -39,7 +40,8 @@ export default function CharteFreelanceClient() {
           </h1>
 
           <p className="mt-5 text-[color:var(--ink-muted)] max-w-[620px] text-[16px] leading-relaxed">
-            Le cadre qualité pour rejoindre Uclic. Trois piliers, une seule équipe, zéro silo.
+            Un collectif de freelances seniors. Slack commun, entraide quotidienne,
+            stand-up hebdo, partage d'agents IA. On avance ensemble — pas seul·e.
           </p>
         </div>
 

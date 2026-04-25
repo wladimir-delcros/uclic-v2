@@ -47,9 +47,10 @@ export default function AnimatedChars({
       animate="show"
       custom={stagger}
       variants={container}
-      transition={{ delayChildren: delayStart, staggerChildren: stagger }}
-      aria-label={text}>
-      {/* SSR-only copy for non-JS crawlers (Perplexity, ClaudeBot, SearchGPT) */}
+      transition={{ delayChildren: delayStart, staggerChildren: stagger }}>
+      {/* SSR-only copy for non-JS crawlers (Perplexity, ClaudeBot, SearchGPT) +
+          accessibility — the visible per-char spans below are aria-hidden,
+          so the screen reader only reads this once. */}
       <span className="sr-only">{text}</span>
       {words.map((word, wi) => (
         <span key={wi} className="inline-block whitespace-nowrap" aria-hidden="true">

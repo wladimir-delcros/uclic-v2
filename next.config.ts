@@ -23,12 +23,12 @@ const ContentSecurityPolicy = [
   // Tailwind + next/font injectent des styles inline
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.calendly.com",
   // Pixels + GA + LinkedIn + Facebook conversion pixels
-  "img-src 'self' data: blob: https://*.supabase.co https://media.licdn.com https://*.linkedin.com https://px.ads.linkedin.com https://uclic.fr https://*.uclic.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.google.fr https://googleads.g.doubleclick.net https://www.facebook.com https://connect.facebook.net",
+  "img-src 'self' data: blob: https://*.supabase.co https://media.licdn.com https://*.linkedin.com https://px.ads.linkedin.com https://uclic.fr https://*.uclic.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.google.fr https://googleads.g.doubleclick.net https://www.facebook.com https://connect.facebook.net https://*.basemaps.cartocdn.com https://*.tile.openstreetmap.org",
   "font-src 'self' data: https://fonts.gstatic.com",
   // Tracker APIs (GA collect, Meta Pixel tr, LinkedIn collect, PostHog ingest)
-  "connect-src 'self' https://*.supabase.co https://vitals.vercel-insights.com https://*.uclic.fr https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://region1.google-analytics.com https://connect.facebook.net https://www.facebook.com https://px.ads.linkedin.com https://eu.i.posthog.com https://eu-assets.i.posthog.com",
+  "connect-src 'self' https://*.supabase.co https://vitals.vercel-insights.com https://*.uclic.fr https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://region1.google-analytics.com https://connect.facebook.net https://www.facebook.com https://px.ads.linkedin.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://*.spotifycdn.com https://*.scdn.co",
   "media-src 'self' blob: https://*.supabase.co",
-  "frame-src 'self' https://calendly.com https://*.calendly.com https://www.linkedin.com https://platform.linkedin.com https://*.youtube.com https://www.google.com https://td.doubleclick.net",
+  "frame-src 'self' https://calendly.com https://*.calendly.com https://www.linkedin.com https://platform.linkedin.com https://*.youtube.com https://www.google.com https://td.doubleclick.net https://open.spotify.com https://embed.spotify.com",
   "worker-src 'self' blob:",
   "object-src 'none'",
   "base-uri 'self'",
