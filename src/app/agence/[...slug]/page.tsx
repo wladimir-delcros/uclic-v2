@@ -22,6 +22,7 @@ import {
   getOtherCityServices,
 } from '@/lib/programmatic-pages';
 import { getCompetitorsByExpertiseAndCity } from '@/lib/meilleure-agence';
+import { agenceRobots } from '@/lib/seo-quality';
 
 const SITE_URL = 'https://uclic.fr';
 
@@ -86,6 +87,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: finalTitle,
     description,
     alternates: { canonical },
+    robots: agenceRobots(slug),
     openGraph: {
       type: 'article',
       url: `${SITE_URL}${canonical}`,

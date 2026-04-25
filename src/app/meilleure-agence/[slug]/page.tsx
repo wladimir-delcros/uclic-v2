@@ -18,6 +18,7 @@ import {
   getAllMeilleureAgenceSlugs,
   getCompetitorsByExpertiseAndCity,
 } from '@/lib/meilleure-agence';
+import { meilleureAgenceRobots } from '@/lib/seo-quality';
 
 const SITE_URL = 'https://uclic.fr';
 const MAX_PRERENDER = 200;
@@ -62,6 +63,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       'uclic',
     ],
     alternates: { canonical: `/meilleure-agence/${slug}` },
+    robots: meilleureAgenceRobots(slug),
     openGraph: {
       type: 'website',
       url: `${SITE_URL}/meilleure-agence/${slug}`,

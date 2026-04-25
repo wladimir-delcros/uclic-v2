@@ -147,6 +147,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description,
     keywords,
     alternates: { canonical },
+    // Workflows individuels = semi-privé (cible membres). Désindexés pour
+    // éviter d'alimenter l'index bloat — le hub /membres/workflows reste
+    // indexable et fait figure de catalogue public.
+    robots: { index: false, follow: true },
     openGraph: {
       type: 'article',
       url: `${SITE_URL}${canonical}`,

@@ -29,6 +29,7 @@ import {
   getToolboxItemBySlug,
   getAllToolboxPosts,
 } from '@/lib/toolbox';
+import { toolboxRobots } from '@/lib/seo-quality';
 
 const TOOLBOX_PER_PAGE = 48;
 const isNumericSlug = (s: string) => /^\d+$/.test(s);
@@ -133,6 +134,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ...categoryTags,
     ],
     alternates: { canonical },
+    robots: toolboxRobots(slug),
     openGraph: {
       type: 'article',
       url: `${SITE_URL}${canonical}`,
