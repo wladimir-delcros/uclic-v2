@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: 'Politique de confidentialité',
   description:
     "Politique de confidentialité UCLIC : informations sur la collecte, l'utilisation, la conservation et la protection des données personnelles des utilisateurs du site.",
-  alternates: { canonical: `${SITE_URL}/legal/politique-de-confidentialite` },
+  alternates: { canonical: '/legal/politique-de-confidentialite' },
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/legal/politique-de-confidentialite`,

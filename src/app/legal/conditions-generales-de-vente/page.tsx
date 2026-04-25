@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: 'Conditions Générales de Vente',
   description:
     "Conditions Générales de Vente (CGV) UCLIC : tarifs, modalités de paiement, délais de réalisation et conditions d'utilisation de nos services.",
-  alternates: { canonical: `${SITE_URL}/legal/conditions-generales-de-vente` },
+  alternates: { canonical: '/legal/conditions-generales-de-vente' },
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/legal/conditions-generales-de-vente`,

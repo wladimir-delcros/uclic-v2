@@ -24,6 +24,14 @@ export const metadata: Metadata = {
     locale: 'fr_FR',
     images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Uclic — Informations légales' }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Informations légales — Uclic',
+    description: 'Mentions légales, CGV, RGPD, politique de confidentialité et cookies.',
+    images: ['/og-image.png'],
+    creator: '@wladimirdelcros',
+    site: '@uclic_fr',
+  },
 };
 
 const LEGAL_LINKS: Array<{ href: string; label: string; description: string }> = [

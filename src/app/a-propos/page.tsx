@@ -27,6 +27,15 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'À propos — Pourquoi Uclic existe',
+    description:
+      'Trois piliers, une seule équipe, zéro silo. Pilotage senior, experts canaux, agents IA. Growth industrialisé pour scale-ups B2B.',
+    images: ['/og-image.png'],
+    creator: '@wladimirdelcros',
+    site: '@uclic_fr',
+  },
 };
 
 const breadcrumbSchema = {

@@ -27,6 +27,15 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Mon audit gratuit — 48h | Growth Inbound · Outbound · IA',
+    description:
+      'Audit des 3 piliers Uclic en 48 h : diagnostic chiffré, plan 90 jours, pilotage senior. Gratuit, sans engagement.',
+    images: ['/og-image.png'],
+    creator: '@wladimirdelcros',
+    site: '@uclic_fr',
+  },
 };
 
 const breadcrumbSchema = {

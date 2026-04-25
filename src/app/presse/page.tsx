@@ -12,7 +12,7 @@ const SITE_URL = 'https://uclic.fr';
 export const metadata: Metadata = {
   title: 'Presse — Uclic dans les médias',
   description:
-    "Demandes presse, interviews, citations et kit presse Uclic. Agence Growth Marketing & IA — Pilotage senior, 3 piliers, agents IA en production. Contact : hello@uclic.fr.",
+    "Demandes presse, interviews et kit presse Uclic. Agence Growth Marketing & IA — Pilotage senior, 3 piliers, agents IA. Contact : hello@uclic.fr.",
   keywords: [
     'presse uclic',
     'uclic média',

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: 'RGPD & protection des données — Conformité Uclic',
   description:
     "Politique de protection des données et conformité RGPD d'Uclic : engagements, traitements, durées de conservation, vos droits et procédure d'exercice (DPO).",
-  alternates: { canonical: `${SITE_URL}/legal/rgpd` },
+  alternates: { canonical: '/legal/rgpd' },
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/legal/rgpd`,

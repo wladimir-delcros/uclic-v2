@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: 'Cookies',
   description:
     "Politique de cookies UCLIC : informations sur les traceurs déposés sur le site, leurs finalités, leur durée de conservation et les moyens de gérer vos préférences.",
-  alternates: { canonical: `${SITE_URL}/legal/cookies` },
+  alternates: { canonical: '/legal/cookies' },
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/legal/cookies`,

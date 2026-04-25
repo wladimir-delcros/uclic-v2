@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Mentions légales — Éditeur, hébergeur et conditions d'utilisation Uclic",
   description:
     "Mentions légales UCLIC : informations sur l'éditeur, l'hébergement, la propriété intellectuelle et les conditions d'utilisation du site.",
-  alternates: { canonical: `${SITE_URL}/legal/mentions-legales` },
+  alternates: { canonical: '/legal/mentions-legales' },
   openGraph: {
     type: 'website',
     url: `${SITE_URL}/legal/mentions-legales`,

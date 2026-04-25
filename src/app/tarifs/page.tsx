@@ -11,7 +11,7 @@ const SITE_URL = 'https://uclic.fr';
 export const metadata: Metadata = {
   title: 'Tarifs Uclic — Growth Marketing & IA à partir de 0 €',
   description:
-    "Nos tarifs : audit gratuit, 1 Pilier 1 490 € / mois, Duo 2 680 € (−10 %), Growth Machine 3 570 € (3 piliers, −20 %). Pilotage senior + experts canaux + agents IA en production. 3 mois min.",
+    "Tarifs Uclic : audit gratuit, 1 Pilier 1 490 €/mois, Duo 2 680 € (−10 %), Growth Machine 3 570 € (3 piliers, −20 %). Engagement 3 mois min.",
   keywords: [
     'tarifs agence growth',
     'tarifs growth marketing',

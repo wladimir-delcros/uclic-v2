@@ -120,14 +120,14 @@ export default function Footer() {
                 funnel marketing.
               </p>
             </div>
-            <div className="flex flex-row flex-wrap md:flex-nowrap items-stretch gap-2 md:justify-end shrink-0">
+            <div className="flex flex-row flex-wrap md:flex-nowrap items-center gap-2 md:justify-end shrink-0">
               {/* Activateur France Num */}
               <a
                 href="https://www.francenum.gouv.fr/activateurs/uclic"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Uclic — Activateur France Num (fiche officielle)"
-                className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border-subtle)] bg-[color:var(--card)] px-2.5 py-1 hover:border-[color:var(--accent)]/30 hover:bg-[color:var(--card-elev-1)] transition-colors"
+                className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border-subtle)] bg-[color:var(--card)] px-3 py-2.5 hover:border-[color:var(--accent)]/30 hover:bg-[color:var(--card-elev-1)] transition-colors"
               >
                 <img
                   src="/france-num.jpeg"
@@ -138,7 +138,7 @@ export default function Footer() {
                   decoding="async"
                   className="h-6 w-6 object-contain rounded-sm shrink-0"
                 />
-                <span className="text-[12px] font-medium text-[color:var(--ink)] whitespace-nowrap">
+                <span className="text-[11px] font-medium text-[color:var(--ink)] whitespace-nowrap">
                   Activateur France Num
                 </span>
               </a>
@@ -146,18 +146,18 @@ export default function Footer() {
               <a
                 href="/legal/rgpd"
                 aria-label="Uclic conforme RGPD — voir la politique"
-                className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border-subtle)] bg-[color:var(--card)] px-2.5 py-1 hover:border-[color:var(--accent)]/30 hover:bg-[color:var(--card-elev-1)] transition-colors"
+                className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border-subtle)] bg-[color:var(--card)] px-3 py-2.5 hover:border-[color:var(--accent)]/30 hover:bg-[color:var(--card-elev-1)] transition-colors"
               >
                 <span
                   aria-hidden="true"
                   className="h-6 w-6 rounded-sm bg-[color:var(--accent)]/10 text-[color:var(--accent)] grid place-items-center shrink-0"
                 >
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 3l8 3v6c0 4.97-3.58 9-8 10-4.42-1-8-5.03-8-10V6l8-3z" />
                     <path d="M9 12l2 2 4-4" />
                   </svg>
                 </span>
-                <span className="text-[12px] font-medium text-[color:var(--ink)] whitespace-nowrap">
+                <span className="text-[11px] font-medium text-[color:var(--ink)] whitespace-nowrap">
                   RGPD &amp; CNIL
                 </span>
               </a>
@@ -167,19 +167,19 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Uclic — IA responsable, aligné AI Act"
-                className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border-subtle)] bg-[color:var(--card)] px-2.5 py-1 hover:border-[color:var(--accent)]/30 hover:bg-[color:var(--card-elev-1)] transition-colors"
+                className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border-subtle)] bg-[color:var(--card)] px-3 py-2.5 hover:border-[color:var(--accent)]/30 hover:bg-[color:var(--card-elev-1)] transition-colors"
               >
                 <span
                   aria-hidden="true"
                   className="h-6 w-6 rounded-sm bg-[color:var(--accent)]/10 text-[color:var(--accent)] grid place-items-center shrink-0"
                 >
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 2l1.8 4.5L18 8l-4.2 1.5L12 14l-1.8-4.5L6 8l4.2-1.5L12 2z" />
                     <circle cx="18" cy="16" r="3" />
                     <path d="M16.3 16.5l1.2 1.2 2.2-2.2" />
                   </svg>
                 </span>
-                <span className="text-[12px] font-medium text-[color:var(--ink)] whitespace-nowrap">
+                <span className="text-[11px] font-medium text-[color:var(--ink)] whitespace-nowrap">
                   IA responsable · AI Act
                 </span>
               </a>

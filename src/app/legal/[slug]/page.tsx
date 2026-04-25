@@ -51,6 +51,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description,
       siteName: 'Uclic',
       locale: 'fr_FR',
+      images: [{ url: '/og-image.png', width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: ['/og-image.png'],
+      creator: '@wladimirdelcros',
+      site: '@uclic_fr',
     },
   };
 }

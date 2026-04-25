@@ -24,7 +24,7 @@ const SITE_URL = 'https://uclic.fr';
 export const metadata: Metadata = {
   title: 'Rejoindre le collectif Freelance Uclic',
   description:
-    "Le parcours pour rejoindre le collectif Uclic : candidature, assessment visio 30 min, cas pratique livrable sous 5 jours, onboarding, distribution des missions, commission sur apport d'affaires, signature électronique.",
+    "Rejoindre le collectif Uclic : candidature, assessment 30 min, cas pratique 5 jours, onboarding, missions et commissions sur apport d'affaires.",
   keywords: [
     'rejoindre uclic',
     'candidater uclic',
